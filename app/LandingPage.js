@@ -3,7 +3,7 @@ import ServiceCard from "./ServiceCard";
 
 export default function LandingPage() {
   return (
-    <Stack direction="column" sx={{ mt: 4 }}>
+    <Stack direction="column" sx={{ mt: 7 }}>
       <Box
         sx={{
           textAlign: "center",

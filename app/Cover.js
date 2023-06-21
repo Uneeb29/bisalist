@@ -28,7 +28,7 @@ export default function Cover() {
           position: "absolute",
           width: "100vw",
           height: "95vh",
-          background: "rgba(0, 0, 0, 0.5)", // Adjust the alpha value to make it darker or lighter
+          background: "rgba(0, 0, 0, 0.5)",
           zIndex: -1,
         },
       }}
@@ -108,7 +108,7 @@ export default function Cover() {
           p: 0.75,
           bgcolor: "rgba(255, 255, 255, 0.2)",
           borderRadius: "8px",
-          width: "70%",
+          width: "65%",
           mb: 5,
         }}
         id="search"

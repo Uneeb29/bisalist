@@ -14,15 +14,24 @@ export default function ServiceCard() {
   const cards = [
     {
       title: "Electrician",
+      category: "Electrician",
       backgroundImage: "electrician.jpg",
       createdBy: "By, admin",
       createdByPicture: "electrician.jpg",
     },
     {
       title: "Masonry",
+      category: "Masonry",
       backgroundImage: "masonry.jpg",
       createdBy: "By, admin",
       createdByPicture: "masonry.jpg",
+    },
+    {
+      title: "Event Planning",
+      category: "Events",
+      backgroundImage: "eventManagement.jpg",
+      createdBy: "By, admin",
+      createdByPicture: "eventManagement.jpg",
     },
   ];
 
@@ -37,6 +46,7 @@ export default function ServiceCard() {
             backgroundRepeat: "no-repeat",
             width: "30%",
             ml: 2,
+            mr: 3.5,
             mb: 2,
             borderRadius: "10px",
             cursor: "pointer",
@@ -130,7 +140,7 @@ export default function ServiceCard() {
               <Divider sx={{ bgcolor: "white", mb: 2 }}></Divider>
               <Box sx={{ display: "flex", flexDirection: "row" }}>
                 <Typography sx={{ color: "white", mr: 2, fontSize: "14px" }}>
-                  {card.title}
+                  {card.category}
                 </Typography>
                 <Box
                   sx={{
