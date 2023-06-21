@@ -15,15 +15,20 @@ import QueueOutlinedIcon from "@mui/icons-material/QueueOutlined";
 export default function Navbar() {
   return (
     <Stack
-      direction={"row"}
+      direction="row"
       sx={{
         display: "flex",
         justifyContent: "space-between",
         bgcolor: "#334576",
         alignItems: "center",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 999,
       }}
-      height={"5rem"}
-      width={"100%"}
+      height="5rem"
+      width="100%"
     >
       <Box sx={{ ml: 4 }} height={"40%"}>
         <img src="logo.png" style={{ height: "100%" }}></img>
@@ -37,6 +42,7 @@ export default function Navbar() {
           justifyContent: "center",
           alignItems: "center",
           p: 1,
+          cursor: "pointer",
         }}
         width={"13%"}
       >

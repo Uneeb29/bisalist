@@ -16,7 +16,7 @@ export default function Cover() {
       sx={{
         backgroundImage: 'url("landingImage.jpg")',
         backgroundSize: "cover",
-        height: "85vh",
+        height: "95vh",
         width: "100vw",
         display: "flex",
         zIndex: 0,
@@ -27,7 +27,7 @@ export default function Cover() {
           content: '""',
           position: "absolute",
           width: "100vw",
-          height: "85vh",
+          height: "95vh",
           background: "rgba(0, 0, 0, 0.5)", // Adjust the alpha value to make it darker or lighter
           zIndex: -1,
         },
@@ -111,6 +111,7 @@ export default function Cover() {
           width: "70%",
           mb: 5,
         }}
+        id="search"
       >
         <TextField
           InputProps={{

@@ -3,29 +3,33 @@ import ServiceCard from "./ServiceCard";
 
 export default function LandingPage() {
   return (
-    <Stack direction={"column"} sx={{ mt: 4 }}>
+    <Stack direction="column" sx={{ mt: 4 }}>
       <Box
         sx={{
           textAlign: "center",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: "grid",
+          placeItems: "center",
+          position: "relative",
         }}
       >
         <Typography
+          variant="h1"
           sx={{
-            position: "absolute",
-            left: "35vw",
-            zIndex: "-1",
-            opacity: "0.1",
             fontSize: "60px",
             fontWeight: "bold",
             textTransform: "capitalize",
+            color: "rgba(0, 0, 0, 0.1)",
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: "-1",
           }}
         >
           Fix it services
         </Typography>
         <Typography
+          variant="h2"
           sx={{
             color: "#607d8b",
             fontSize: "30px",
@@ -47,7 +51,7 @@ export default function LandingPage() {
           mb: 10,
         }}
       />
-      {/* <ServiceCard></ServiceCard> */}
+      {/* <ServiceCard /> */}
     </Stack>
   );
 }
