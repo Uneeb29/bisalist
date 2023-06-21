@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Cover from "./Cover";
 import LandingPage from "./LandingPage";
 import { CssBaseline, Stack } from "@mui/material";
+import ServiceCard from "./ServiceCard";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
         <Navbar></Navbar>
         <Cover></Cover>
         <LandingPage></LandingPage>
+        <ServiceCard></ServiceCard>
       </Stack>
     </CssBaseline>
   );

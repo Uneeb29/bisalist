@@ -47,16 +47,60 @@ export default function Cover() {
         width={"40%"}
       >
         <Link underline="none">
-          <Typography sx={{ color: "white" }}>Electrical</Typography>
+          <Typography
+            sx={{
+              color: "white",
+              "&:hover": {
+                color: "#4db4f9",
+              },
+              cursor: "pointer",
+              fontSize: "14px",
+            }}
+          >
+            Electrical
+          </Typography>
         </Link>
         <Link underline="none">
-          <Typography sx={{ color: "white" }}>Plumber</Typography>
+          <Typography
+            sx={{
+              color: "white",
+              "&:hover": {
+                color: "#4db4f9",
+              },
+              cursor: "pointer",
+              fontSize: "14px",
+            }}
+          >
+            Plumber
+          </Typography>
         </Link>
         <Link underline="none">
-          <Typography sx={{ color: "white" }}>Cleaning Services</Typography>
+          <Typography
+            sx={{
+              color: "white",
+              "&:hover": {
+                color: "#4db4f9",
+              },
+              cursor: "pointer",
+              fontSize: "14px",
+            }}
+          >
+            Cleaning Services
+          </Typography>
         </Link>
         <Link underline="none">
-          <Typography sx={{ color: "white" }}>Gypsum Works</Typography>
+          <Typography
+            sx={{
+              color: "white",
+              "&:hover": {
+                color: "#4db4f9",
+              },
+              cursor: "pointer",
+              fontSize: "14px",
+            }}
+          >
+            Gypsum Works
+          </Typography>
         </Link>
       </Stack>
       <Box
