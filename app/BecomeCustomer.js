@@ -9,7 +9,15 @@ import {
   Button,
 } from "@mui/material";
 
+import {useForm} from 'react-hook-form';
+
 export default function BecomeCustomer() {
+
+  const {register, handleSubmit, formState: {errors}} = useForm();
+
+  console.log(errors);
+
+
   return (
     <Stack
       sx={{
@@ -35,13 +43,18 @@ export default function BecomeCustomer() {
         <Typography sx={{ mt: 4, fontWeight: "bold", fontSize: "20px", mb: 4 }}>
           Register
         </Typography>
+    <form onSubmit={handleSubmit((data)=>{
+      console.log(data);
+    })} >
+
         <FormControl>
           <Box sx={{ display: "flex", flexDirection: "column", mb: 3 }}>
             <Typography sx={{ fontWeight: "bold", fontSize: "14px", mb: 1 }}>
               Name
             </Typography>
             <TextField
-              placeholder="Name"
+              {...register("name" , {required : "Name is required."})}
+
               size="small"
               sx={{ bgcolor: "#eeeeee", p: 1, borderRadius: "5px" }}
               variant="standard"
@@ -53,6 +66,7 @@ export default function BecomeCustomer() {
               Email address
             </Typography>
             <TextField
+            {...register("email" , {required: "Email Address is required."})}
               placeholder="Email address"
               size="small"
               sx={{ bgcolor: "#eeeeee", p: 1, borderRadius: "5px" }}
@@ -65,6 +79,7 @@ export default function BecomeCustomer() {
               Phone Number
             </Typography>
             <TextField
+            {...register("phone" , {required : "Phone Number is required."})}
               placeholder="(123) 456-7890"
               size="small"
               sx={{ bgcolor: "#eeeeee", p: 1, borderRadius: "5px" }}
@@ -77,6 +92,10 @@ export default function BecomeCustomer() {
               Password(Minimum 8 characters)
             </Typography>
             <TextField
+            {...register("password", {required: "Password is required.", minLength : {
+              value : 8,
+              message : "Minimum 8 characters required."
+            }} )}
               placeholder="Password"
               size="small"
               sx={{ bgcolor: "#eeeeee", p: 1, borderRadius: "5px" }}
@@ -89,6 +108,10 @@ export default function BecomeCustomer() {
               Confirm Password
             </Typography>
             <TextField
+            {...register("c_password",{required: "This field is required.", minLength : {
+              value : 8,
+              message : "Minimum 8 characters required."
+            }})}
               placeholder="Confirm Password"
               size="small"
               sx={{ bgcolor: "#eeeeee", p: 1, borderRadius: "5px" }}
@@ -99,7 +122,7 @@ export default function BecomeCustomer() {
           <Box
             sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
           >
-            <Checkbox></Checkbox>
+            <Checkbox {...register("spec_email")} ></Checkbox>
             <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
               Special Email Offers and Discount
             </Typography>
@@ -112,7 +135,7 @@ export default function BecomeCustomer() {
               mb: 2,
             }}
           >
-            <Checkbox></Checkbox>
+            <Checkbox {...register("agreement", {required: "Accepting the agreement is mandatory."})} ></Checkbox>
             <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
               I agree to the service agreement and terms of the Membership
               Agreement.
@@ -128,11 +151,15 @@ export default function BecomeCustomer() {
                 width: "100%",
                 p: 1.5,
               }}
+
+              type="submit"
             >
               Register
             </Button>
           </Box>
         </FormControl>
+      </form>
+
       </Container>
     </Stack>
   );
