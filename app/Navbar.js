@@ -30,7 +30,7 @@ export default function Navbar() {
       height="5rem"
       width="100%"
     >
-      <Box sx={{ ml: 4 }} height={"40%"}>
+      <Box sx={{ ml: 4 }} height={"100%"}>
         <img src="logo.png" style={{ height: "100%" }}></img>
       </Box>
       <Box
