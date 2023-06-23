@@ -8,23 +8,25 @@ import Footer from "./Footer";
 import LandingPage from "./Listings";
 import PopularPlaces from "./PopularPlaces";
 import Packages from "./Packages";
+import BecomeVendor from "./BecomeVendor";
 
 export default function Home() {
   return (
     <CssBaseline>
       <Stack direction={"column"}>
         <Navbar></Navbar>
-        <Cover></Cover>
+        {/* <Cover></Cover>
         <LandingPage></LandingPage>
         <ServiceCard></ServiceCard>
         <PopularPlaces></PopularPlaces>
         <Packages></Packages>
-        <Footer></Footer>
+        <Footer></Footer> */}
         {/* <Navbar></Navbar>
         <Cover></Cover>
         <LandingPage></LandingPage>
         <ServiceCard></ServiceCard> */}
         {/* <BecomeCustomer></BecomeCustomer> */}
+        <BecomeVendor></BecomeVendor>
       </Stack>
     </CssBaseline>
   );
