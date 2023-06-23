@@ -19,7 +19,7 @@ export default function BecomeCustomer() {
     setError,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
   } = useForm({
     defaultValues: {
       // name: "Ilean Dover",
@@ -245,6 +245,7 @@ export default function BecomeCustomer() {
                   p: 1.5,
                 }}
                 type="submit"
+                disabled={!isValid || !isDirty}
               >
                 Register
               </Button>
