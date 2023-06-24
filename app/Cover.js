@@ -41,7 +41,7 @@ export default function Cover() {
       <Typography sx={{ color: "white", fontSize: "14px", mb: 8 }}>
         Find the right pro for every project with ease.
       </Typography>
-      <Stack
+      {/* <Stack
         direction={"row"}
         sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}
         width={"40%"}
@@ -102,7 +102,7 @@ export default function Cover() {
             Gypsum Works
           </Typography>
         </Link>
-      </Stack>
+      </Stack> */}
       <Box
         sx={{
           p: 0.75,
@@ -152,7 +152,7 @@ export default function Cover() {
           }}
         ></TextField>
       </Box>
-      <Stack direction={"row"} spacing={5}>
+      {/* <Stack direction={"row"} spacing={5}>
         <Link underline="none" sx={{ cursor: "pointer" }}>
           <Typography
             sx={{
@@ -227,7 +227,7 @@ export default function Cover() {
             Home Services/Installation
           </Typography>
         </Link>
-      </Stack>
+      </Stack> */}
     </Stack>
   );
 }
