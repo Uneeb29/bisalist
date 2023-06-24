@@ -116,10 +116,23 @@ export default function BecomeCustomer() {
         <form onSubmit={handleSubmit(sendData)}>
           <FormControl>
             <Box sx={{ display: "flex", flexDirection: "column", mb: 3 }}>
-              <Typography sx={{ fontWeight: "bold", fontSize: "14px", mb: 1 }}>
-                Name
-              </Typography>
-              <p style={{ color: "red" }}>{errors.name?.message}</p>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  sx={{ fontWeight: "bold", fontSize: "14px", mr: 2 }}
+                >
+                  Name
+                </Typography>
+                <p style={{ color: "red", fontSize: "12px" }}>
+                  {errors.name?.message}
+                </p>
+              </Box>
+
               <TextField
                 {...register("name", { required: "Name is required." })}
                 size="small"
@@ -129,10 +142,23 @@ export default function BecomeCustomer() {
               ></TextField>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", mb: 3 }}>
-              <Typography sx={{ fontWeight: "bold", fontSize: "14px", mb: 1 }}>
-                Email address
-              </Typography>
-              <p style={{ color: "red" }}>{errors.email?.message}</p>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  sx={{ fontWeight: "bold", fontSize: "14px", mr: 2 }}
+                >
+                  Email address
+                </Typography>
+                <p style={{ color: "red", fontSize: "12px" }}>
+                  {errors.email?.message}
+                </p>
+              </Box>
+
               <TextField
                 {...register("email", {
                   required: "Email Address is required.",
@@ -145,10 +171,22 @@ export default function BecomeCustomer() {
               ></TextField>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", mb: 3 }}>
-              <Typography sx={{ fontWeight: "bold", fontSize: "14px", mb: 1 }}>
-                Phone Number
-              </Typography>
-              <p style={{ color: "red" }}>{errors.phone?.message}</p>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  sx={{ fontWeight: "bold", fontSize: "14px", mr: 2 }}
+                >
+                  Email address
+                </Typography>
+                <p style={{ color: "red", fontSize: "12px" }}>
+                  {errors.phone?.message}
+                </p>
+              </Box>
 
               <TextField
                 {...register("phone", {
@@ -162,10 +200,22 @@ export default function BecomeCustomer() {
               ></TextField>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", mb: 3 }}>
-              <Typography sx={{ fontWeight: "bold", fontSize: "14px", mb: 1 }}>
-                Password(Minimum 8 characters)
-              </Typography>
-              <p style={{ color: "red" }}>{errors.password?.message}</p>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  sx={{ fontWeight: "bold", fontSize: "14px", mr: 2 }}
+                >
+                  Password
+                </Typography>
+                <p style={{ color: "red", fontSize: "12px" }}>
+                  {errors.password?.message}
+                </p>
+              </Box>
 
               <TextField
                 {...register("password", {
@@ -177,16 +227,29 @@ export default function BecomeCustomer() {
                 })}
                 placeholder="Password"
                 size="small"
+                type="password"
                 sx={{ bgcolor: "#eeeeee", p: 1, borderRadius: "5px" }}
                 variant="standard"
                 InputProps={{ disableUnderline: true }}
               ></TextField>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", mb: 3 }}>
-              <Typography sx={{ fontWeight: "bold", fontSize: "14px", mb: 1 }}>
-                Confirm Password
-              </Typography>
-              <p style={{ color: "red" }}>{errors.c_password?.message}</p>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  sx={{ fontWeight: "bold", fontSize: "14px", mr: 2 }}
+                >
+                  Confirm Password
+                </Typography>
+                <p style={{ color: "red", fontSize: "12px" }}>
+                  {errors.c_password?.message}
+                </p>
+              </Box>
 
               <TextField
                 {...register("c_password", {
@@ -198,6 +261,7 @@ export default function BecomeCustomer() {
                 })}
                 placeholder="Confirm Password"
                 size="small"
+                type="password"
                 sx={{ bgcolor: "#eeeeee", p: 1, borderRadius: "5px" }}
                 variant="standard"
                 // onChange={handleConfirmationChange}
@@ -243,11 +307,16 @@ export default function BecomeCustomer() {
                   color: "white",
                   width: "100%",
                   p: 1.5,
+                  "&:hover": { bgcolor: "#245cbc" },
                 }}
                 type="submit"
                 disabled={!isValid || !isDirty}
               >
-                Register
+                <Typography
+                  sx={{ color: "white", textTransform: "capitalize" }}
+                >
+                  Register
+                </Typography>
               </Button>
             </Box>
           </FormControl>
