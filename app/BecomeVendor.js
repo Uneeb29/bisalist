@@ -36,8 +36,8 @@ export default function BecomeVendor() {
       startingCost: "300",
       email: " gor123@test.com ",
       password: "KanyeLeast",
-      documentType: "",
-      file: "",
+      // documentType: "",
+      // file: "",
     },
   });
 
@@ -58,10 +58,15 @@ export default function BecomeVendor() {
 
   /* New validation functions */
 
-  // a function to validate the file uploaded by the user (the size of the pdf)
-  function validateFile(file) {
-    // check if its size is less than 5MB
-    if (file.size > 5000000) {
+  function validateFileType(file) {
+    if (file[0].type !== "application/pdf") {
+      return false;
+    }
+    return true;
+  }
+
+  function validateFileSize(file) {
+    if (file[0].size > 5000000) {
       return false;
     }
     return true;
@@ -71,8 +76,10 @@ export default function BecomeVendor() {
     // log data in console if all checks are passed
     if (
       validateEmail(data.email) &&
-      validatePhone(data.phone) &&
-      validateFile(data.file)
+      validatePhone(data.telephoneNumber) &&
+      validateFileType(data.file) &&
+      validateFileSize(data.file) &&
+      data.startingCost > 0
     ) {
       console.log(data);
     } else {
@@ -83,16 +90,28 @@ export default function BecomeVendor() {
           message: "Invalid email address",
         });
       }
-      if (!validatePhone(data.phone)) {
-        setError("phone", {
+      if (!validatePhone(data.telephoneNumber)) {
+        setError("telephoneNumber", {
           type: "manual",
           message: "Invalid phone number",
         });
       }
-      if (!validateFile(data.file)) {
+      if (!validateFileSize(data.file)) {
         setError("file", {
           type: "manual",
           message: "File size must be less than 5MB",
+        });
+      }
+      if (!validateFileType(data.file)) {
+        setError("file", {
+          type: "manual",
+          message: "File must be a PDF",
+        });
+      }
+      if (data.startingCost <= 0) {
+        setError("startingCost", {
+          type: "manual",
+          message: "Starting cost must be greater than 0",
         });
       }
     }
@@ -144,7 +163,7 @@ export default function BecomeVendor() {
             <CreateIcon sx={{ fontSize: "20px" }}></CreateIcon>
           </Paper>
         </Box>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(sendData)}>
           <FormControl sx={{ width: "100%", mt: 4, ml: 3 }}>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -159,6 +178,11 @@ export default function BecomeVendor() {
                   <Typography
                     sx={{ fontSize: "14px", fontWeight: "bold", mb: 1 }}
                   >
+                    {errors.companyName ? (
+                      <Typography sx={{ fontSize: "12px", color: "red" }}>
+                        {errors.companyName.message}
+                      </Typography>
+                    ) : null}
                     Company Name*
                   </Typography>
                   <TextField
@@ -187,6 +211,11 @@ export default function BecomeVendor() {
                   <Typography
                     sx={{ fontSize: "14px", fontWeight: "bold", mb: 1 }}
                   >
+                    {errors.firstname ? (
+                      <Typography sx={{ fontSize: "12px", color: "red" }}>
+                        {errors.firstname.message}
+                      </Typography>
+                    ) : null}
                     Firstname
                   </Typography>
                   <TextField
@@ -218,6 +247,11 @@ export default function BecomeVendor() {
                   <Typography
                     sx={{ fontSize: "14px", fontWeight: "bold", mb: 1 }}
                   >
+                    {errors.lastname ? (
+                      <Typography sx={{ fontSize: "12px", color: "red" }}>
+                        {errors.lastname.message}
+                      </Typography>
+                    ) : null}
                     Lastname
                   </Typography>
                   <TextField
@@ -246,6 +280,11 @@ export default function BecomeVendor() {
                   <Typography
                     sx={{ fontSize: "14px", fontWeight: "bold", mb: 1 }}
                   >
+                    {errors.email ? (
+                      <Typography sx={{ fontSize: "12px", color: "red" }}>
+                        {errors.email.message}
+                      </Typography>
+                    ) : null}
                     Building No./Name & Street Name
                   </Typography>
                   <TextField
@@ -277,6 +316,11 @@ export default function BecomeVendor() {
                   <Typography
                     sx={{ fontSize: "14px", fontWeight: "bold", mb: 1 }}
                   >
+                    {errors.city ? (
+                      <Typography sx={{ fontSize: "12px", color: "red" }}>
+                        {errors.city.message}
+                      </Typography>
+                    ) : null}
                     Locality/Town & City
                   </Typography>
                   <TextField
@@ -303,6 +347,11 @@ export default function BecomeVendor() {
                   <Typography
                     sx={{ fontSize: "14px", fontWeight: "bold", mb: 1 }}
                   >
+                    {errors.postAddress ? (
+                      <Typography sx={{ fontSize: "12px", color: "red" }}>
+                        {errors.postAddress.message}
+                      </Typography>
+                    ) : null}
                     Ghana Post Address
                   </Typography>
                   <TextField
@@ -334,6 +383,11 @@ export default function BecomeVendor() {
                   <Typography
                     sx={{ fontSize: "14px", fontWeight: "bold", mb: 1 }}
                   >
+                    {errors.telephoneNumber ? (
+                      <Typography sx={{ fontSize: "12px", color: "red" }}>
+                        {errors.telephoneNumber.message}
+                      </Typography>
+                    ) : null}
                     Telephone Number (Business Number/Person's Number)
                   </Typography>
                   <TextField
@@ -362,6 +416,11 @@ export default function BecomeVendor() {
                   <Typography
                     sx={{ fontSize: "14px", fontWeight: "bold", mb: 1 }}
                   >
+                    {errors.service ? (
+                      <Typography sx={{ fontSize: "12px", color: "red" }}>
+                        {errors.service.message}
+                      </Typography>
+                    ) : null}
                     Service you provide
                   </Typography>
                   <TextField
@@ -393,6 +452,11 @@ export default function BecomeVendor() {
                 <Typography
                   sx={{ fontSize: "14px", fontWeight: "bold", mb: 1 }}
                 >
+                  {errors.description ? (
+                    <Typography sx={{ fontSize: "12px", color: "red" }}>
+                      {errors.description.message}
+                    </Typography>
+                  ) : null}
                   Tell us a bit about yourself
                 </Typography>
                 <TextField
@@ -425,6 +489,11 @@ export default function BecomeVendor() {
                 <Typography
                   sx={{ fontSize: "14px", fontWeight: "bold", mb: 1 }}
                 >
+                  {errors.startingCost ? (
+                    <Typography sx={{ fontSize: "12px", color: "red" }}>
+                      {errors.startingCost.message}
+                    </Typography>
+                  ) : null}
                   Starting cost
                 </Typography>
                 <TextField
@@ -454,6 +523,11 @@ export default function BecomeVendor() {
                   <Typography
                     sx={{ fontSize: "14px", fontWeight: "bold", mb: 1 }}
                   >
+                    {errors.email ? (
+                      <Typography sx={{ fontSize: "12px", color: "red" }}>
+                        {errors.email.message}
+                      </Typography>
+                    ) : null}
                     Email Address
                   </Typography>
                   <TextField
@@ -482,6 +556,11 @@ export default function BecomeVendor() {
                   <Typography
                     sx={{ fontSize: "14px", fontWeight: "bold", mb: 1 }}
                   >
+                    {errors.password ? (
+                      <Typography sx={{ fontSize: "12px", color: "red" }}>
+                        {errors.password.message}
+                      </Typography>
+                    ) : null}
                     Password(Minimum 8 characters)
                   </Typography>
                   <TextField
@@ -533,13 +612,15 @@ export default function BecomeVendor() {
                     Type of document*
                   </Typography>
                   <Select
-                    {...register("documentType", {
-                      required: "Document Type is required.",
-                    })}
+                    defaultValue=""
                     label="Select document type"
                     sx={{ width: "45%", bgcolor: "#eeeeee" }}
                     size="small"
+                    {...register("documentType", {
+                      required: "Document type is required.",
+                    })}
                   >
+                    <MenuItem value="" disabled> Select document type</MenuItem>
                     <MenuItem value="1">Ghana Card</MenuItem>
                     <MenuItem value="2">
                       Business Registration Certificate
@@ -560,6 +641,11 @@ export default function BecomeVendor() {
                       mb: 1,
                     }}
                   >
+                    {errors.file ? (
+                      <Typography sx={{ fontSize: "12px", color: "red" }}>
+                        {errors.file.message}
+                      </Typography>
+                    ) : null}
                     Upload document*
                   </Typography>
                   <Button
