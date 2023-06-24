@@ -25,8 +25,8 @@ export default function Home() {
         <Cover></Cover>
         <LandingPage></LandingPage>
         <ServiceCard></ServiceCard> */}
-        <BecomeCustomer></BecomeCustomer>
-        {/* <BecomeVendor></BecomeVendor> */}
+        {/* <BecomeCustomer></BecomeCustomer> */}
+        <BecomeVendor></BecomeVendor>
       </Stack>
     </CssBaseline>
   );

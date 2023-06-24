@@ -364,7 +364,13 @@ export default function BecomeVendor() {
             <Typography sx={{ fontSize: "20px", mt: 3, fontWeight: "bold" }}>
               Business Information
             </Typography>
-            <Box sx={{ display: "flex", flexDirection: "row", mt: 3 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                mt: 3,
+              }}
+            >
               <Box
                 sx={{ display: "flex", flexDirection: "column", width: "100%" }}
               >
