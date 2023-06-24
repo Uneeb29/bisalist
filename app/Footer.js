@@ -13,7 +13,7 @@ export default function Footer() {
         display: "flex",
         flexDirection: "column",
         width: "100%",
-        mb: 4,
+        pb : 4,
       }}
       elevation={4}
     >
