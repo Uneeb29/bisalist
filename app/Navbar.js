@@ -56,7 +56,7 @@ export default function Navbar() {
           Search
         </Typography>
       </Box>
-      <Stack direction={"row"} spacing={3}>
+      <Stack direction={"row"} spacing={10}>
         <Link underline="none" sx={{ cursor: "pointer" }}>
           <Typography
             sx={{
@@ -71,7 +71,7 @@ export default function Navbar() {
             Home
           </Typography>
         </Link>
-        <Link underline="none" sx={{ cursor: "pointer" }}>
+        {/* <Link underline="none" sx={{ cursor: "pointer" }}>
           <Typography
             sx={{
               color: "white",
@@ -84,7 +84,7 @@ export default function Navbar() {
           >
             Listings
           </Typography>
-        </Link>
+        </Link> */}
         <Link
           underline="none"
           sx={{
@@ -118,7 +118,7 @@ export default function Navbar() {
             About us
           </Typography>
         </Link>
-        <Link underline="none" sx={{ cursor: "pointer" }}>
+        {/* <Link underline="none" sx={{ cursor: "pointer" }}>
           <Typography
             sx={{
               color: "white",
@@ -131,7 +131,7 @@ export default function Navbar() {
           >
             Login
           </Typography>
-        </Link>
+        </Link> */}
         <Link underline="none" sx={{ cursor: "pointer" }}>
           <Typography
             sx={{
@@ -156,6 +156,7 @@ export default function Navbar() {
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
+          mr: 2,
         }}
       >
         <PermIdentityIcon sx={{ color: "#4db4f9" }} />
@@ -165,10 +166,11 @@ export default function Navbar() {
           Sign in
         </Typography>
       </Box>
-      <Badge badgeContent={1} color="primary">
+
+      {/* <Badge badgeContent={1} color="primary">
         <FavoriteBorderIcon sx={{ color: "white" }} />
-      </Badge>
-      <Box
+      </Badge> */}
+      {/* <Box
         sx={{
           p: 0.75,
           bgcolor: "#526394",
@@ -200,7 +202,7 @@ export default function Navbar() {
             <QueueOutlinedIcon sx={{ color: "white" }} />
           </Box>
         </Button>
-      </Box>
+      </Box> */}
     </Stack>
   );
 }
