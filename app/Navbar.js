@@ -3,16 +3,21 @@ import {
   Box,
   Divider,
   Typography,
-  Link,
   Badge,
   Button,
+  Link,
+  Modal,
 } from "@mui/material";
+import { React, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import QueueOutlinedIcon from "@mui/icons-material/QueueOutlined";
 
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <Stack
       direction="row"
@@ -150,7 +155,7 @@ export default function Navbar() {
       <Divider
         sx={{ bgcolor: "#4db4f9", height: "20px", width: "1px", mr: 1 }}
       ></Divider>
-      <Box
+      <Button
         sx={{
           display: "flex",
           flexDirection: "row",
@@ -161,11 +166,88 @@ export default function Navbar() {
       >
         <PermIdentityIcon sx={{ color: "#4db4f9" }} />
         <Typography
-          sx={{ color: "white", fontSize: "13px", fontWeight: "bold" }}
+          sx={{
+            color: "white",
+            fontSize: "13px",
+            fontWeight: "bold",
+            textTransform: "capitalize",
+          }}
         >
           Sign in
         </Typography>
-      </Box>
+      </Button>
+      <Button
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mr: 2,
+        }}
+        onClick={handleOpen}
+      >
+        <PermIdentityIcon sx={{ color: "#4db4f9" }} />
+        <Typography
+          sx={{
+            color: "white",
+            fontSize: "13px",
+            fontWeight: "bold",
+            textTransform: "capitalize",
+          }}
+        >
+          Sign up
+        </Typography>
+      </Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 500,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Link
+            href="/becomecustomer"
+            sx={{
+              bgcolor: "#4db4f9",
+              color: "white",
+              borderRadius: "10px",
+              p: 1,
+              width: "40%",
+            }}
+            underline="none"
+          >
+            <Typography>Become a Customer</Typography>
+          </Link>
+          <Link
+            href="/becomevendor"
+            sx={{
+              bgcolor: "#4db4f9",
+              color: "white",
+              borderRadius: "10px",
+              p: 1,
+              width: "40%",
+            }}
+            underline="none"
+          >
+            <Typography>Become a Vendor</Typography>
+          </Link>
+        </Box>
+      </Modal>
 
       {/* <Badge badgeContent={1} color="primary">
         <FavoriteBorderIcon sx={{ color: "white" }} />
