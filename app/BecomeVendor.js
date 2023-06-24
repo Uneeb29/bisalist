@@ -349,6 +349,7 @@ export default function BecomeVendor() {
                 <TextField
                   placeholder="Password"
                   size="small"
+                  type="password"
                   sx={{
                     bgcolor: "#eeeeee",
                     p: 1,

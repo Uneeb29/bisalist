@@ -116,10 +116,15 @@ export default function BecomeCustomer() {
         <form onSubmit={handleSubmit(sendData)}>
           <FormControl>
             <Box sx={{ display: "flex", flexDirection: "column", mb: 3 }}>
-              <Typography sx={{ fontWeight: "bold", fontSize: "14px", mb: 1 }}>
-                Name
-              </Typography>
-              <p style={{ color: "red" }}>{errors.name?.message}</p>
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
+                <Typography
+                  sx={{ fontWeight: "bold", fontSize: "14px", mb: 1 }}
+                >
+                  Name
+                </Typography>
+                <p style={{ color: "red" }}>{errors.name?.message}</p>
+              </Box>
+
               <TextField
                 {...register("name", { required: "Name is required." })}
                 size="small"
@@ -177,6 +182,7 @@ export default function BecomeCustomer() {
                 })}
                 placeholder="Password"
                 size="small"
+                type="password"
                 sx={{ bgcolor: "#eeeeee", p: 1, borderRadius: "5px" }}
                 variant="standard"
                 InputProps={{ disableUnderline: true }}
@@ -198,6 +204,7 @@ export default function BecomeCustomer() {
                 })}
                 placeholder="Confirm Password"
                 size="small"
+                type="password"
                 sx={{ bgcolor: "#eeeeee", p: 1, borderRadius: "5px" }}
                 variant="standard"
                 // onChange={handleConfirmationChange}
