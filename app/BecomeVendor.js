@@ -49,18 +49,20 @@ export default function BecomeVendor() {
           >
             <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
           </Paper>
-          <Paper
+          <Button
             sx={{
               borderRadius: "50%",
               height: "fit-content",
-              p: 0.5,
               cursor: "pointer",
               "&:hover": { backgroundColor: "#f5f5f5" },
+              boxShadow: "2px 2px 2px 2px #eeeeee",
+              minWidth: "fit-content",
             }}
-            elevation={3}
+            component="label"
           >
-            <CreateIcon sx={{ fontSize: "20px" }}></CreateIcon>
-          </Paper>
+            <CreateIcon sx={{ fontSize: "20px", color: "black" }}></CreateIcon>
+            <input type="file" hidden />
+          </Button>
         </Box>
         <FormControl sx={{ width: "100%", mt: 4, ml: 3 }}>
           <Box sx={{ display: "flex", flexDirection: "column" }}>

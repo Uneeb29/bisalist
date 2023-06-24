@@ -16,19 +16,19 @@ export default function Home() {
     <CssBaseline>
       <Stack direction={"column"}>
         <Navbar></Navbar>
-        <Cover></Cover>
+        {/* <Cover></Cover>
         <LandingPage></LandingPage>
         <ServiceCard></ServiceCard>
         <PopularPlaces></PopularPlaces>
         <Packages></Packages>
         <Testimonials></Testimonials>
-        <Footer></Footer>
+        <Footer></Footer> */}
         {/* <Navbar></Navbar>
         <Cover></Cover>
         <LandingPage></LandingPage>
         <ServiceCard></ServiceCard> */}
         {/* <BecomeCustomer></BecomeCustomer> */}
-        {/* <BecomeVendor></BecomeVendor> */}
+        <BecomeVendor></BecomeVendor>
       </Stack>
     </CssBaseline>
   );
