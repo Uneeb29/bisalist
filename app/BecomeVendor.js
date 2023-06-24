@@ -75,6 +75,26 @@ export default function BecomeVendor() {
       validateFile(data.file)
     ) {
       console.log(data);
+    } else {
+      // set error if any of the checks fail
+      if (!validateEmail(data.email)) {
+        setError("email", {
+          type: "manual",
+          message: "Invalid email address",
+        });
+      }
+      if (!validatePhone(data.phone)) {
+        setError("phone", {
+          type: "manual",
+          message: "Invalid phone number",
+        });
+      }
+      if (!validateFile(data.file)) {
+        setError("file", {
+          type: "manual",
+          message: "File size must be less than 5MB",
+        });
+      }
     }
   }
 
