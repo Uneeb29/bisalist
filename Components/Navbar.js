@@ -36,9 +36,9 @@ export default function Navbar() {
       height="5rem"
       width="100%"
     >
-      <Box sx={{ ml: 4 }} height={"100%"}>
-        <img src="logo.png" style={{ height: "100%" }}></img>
-      </Box>
+      <Link sx={{ ml: 4, cursor:"pointer" }} height={"100%"} href="/">
+        <img src="logo1.png" style={{ height: "50%", marginTop:"10%" }}></img>
+      </Link>
       <Box
         sx={{
           borderRadius: "20px",
@@ -208,12 +208,12 @@ export default function Navbar() {
         <Box
           sx={{
             position: "absolute",
-            top: "50%",
-            left: "50%",
+            top: "15%",
+            left: "86%",
             transform: "translate(-50%, -50%)",
             width: 500,
             bgcolor: "background.paper",
-            border: "2px solid #000",
+            borderRadius: "8px",
             boxShadow: 24,
             p: 4,
             display: "flex",
@@ -226,9 +226,11 @@ export default function Navbar() {
             sx={{
               bgcolor: "#4db4f9",
               color: "white",
-              borderRadius: "10px",
+              borderRadius: "8px",
               p: 1,
               width: "40%",
+              display: "flex",
+              justifyContent: "center",
             }}
             underline="none"
           >
@@ -239,9 +241,11 @@ export default function Navbar() {
             sx={{
               bgcolor: "#4db4f9",
               color: "white",
-              borderRadius: "10px",
+              borderRadius: "8px",
               p: 1,
               width: "40%",
+              display: "flex",
+              justifyContent: "center",
             }}
             underline="none"
           >

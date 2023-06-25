@@ -142,7 +142,7 @@ export default function PopularPlaces() {
                     p: 0.5,
                     borderRadius: "20px",
                     bgcolor: "grey",
-                    width: "30%",
+                    width: "25%",
                   }}
                 >
                   <Box
