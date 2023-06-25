@@ -1,3 +1,4 @@
+"use client";
 import {
   Container,
   FormControl,
@@ -108,6 +109,8 @@ export default function BecomeCustomer() {
           mt: 10,
           borderRadius: "8px",
           mb: 4,
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <Typography sx={{ mt: 4, fontWeight: "bold", fontSize: "20px", mb: 4 }}>

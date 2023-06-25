@@ -1,5 +1,6 @@
 import {
   Box,
+  Container,
   Card,
   CardContent,
   Divider,
@@ -36,7 +37,7 @@ export default function ServiceCard() {
   ];
 
   return (
-    <Stack direction={"row"} sx={{ overflowX: "scroll" }}>
+    <Container sx={{  display:"flex", flexDirection:"row" }}>
       {cards.map((card, index) => (
         <Card
           key={index}
@@ -44,10 +45,8 @@ export default function ServiceCard() {
             backgroundImage: `url("${card.backgroundImage}")`,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
-            width: "30%",
-            ml: 2,
+            width: "35%",
             mr: 3.5,
-            mb: 2,
             borderRadius: "10px",
             cursor: "pointer",
           }}
@@ -68,8 +67,11 @@ export default function ServiceCard() {
                     borderRadius: "50%",
                     display: "flex",
                     alignItems: "center",
-                    p: 0.7,
                     cursor: "pointer",
+                    height: "30px",
+                    width: "30px",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
                   <FavoriteBorderIcon
@@ -87,7 +89,7 @@ export default function ServiceCard() {
                     p: 0.5,
                     borderRadius: "20px",
                     bgcolor: "grey",
-                    width: "30%",
+                    width: "32%",
                   }}
                 >
                   <Box
@@ -159,6 +161,6 @@ export default function ServiceCard() {
           </CardContent>
         </Card>
       ))}
-    </Stack>
+    </Container>
   );
 }

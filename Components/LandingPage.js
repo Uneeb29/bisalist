@@ -1,5 +1,5 @@
 import { Stack, Typography, Box, Divider } from "@mui/material";
-import ServiceCard from "./ServiceCard";
+import ServiceCard from "../Components/ServiceCard";
 
 export default function LandingPage() {
   return (
