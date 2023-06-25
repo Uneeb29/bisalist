@@ -282,14 +282,14 @@ export default function BecomeVendor() {
                 Building No./Name & Street Name
                 {errors.email ? (
                       <Typography sx={{ fontSize: "12px", color: "red", ml:2 }}>
-                        {errors.email.message}
+                        {errors.streetName.message}
                       </Typography>
                     ) : null}
                   
                 </Typography>
                 <TextField
                 {...register("streetName", {
-                      required: "Street Name is required.",
+                      required: "This field is required.",
                     })}
                   placeholder="Apartment/Studio or Floor"
                   size="small"
