@@ -80,7 +80,8 @@ export default function BecomeVendor() {
       validatePhone(data.telephoneNumber) &&
       validateFileType(data.file) &&
       validateFileSize(data.file) &&
-      data.startingCost > 0
+      data.startingCost > 0 &&
+      data.password !== data.confirmPassword
     ) {
       console.log(data);
     } else {
@@ -113,6 +114,12 @@ export default function BecomeVendor() {
         setError("startingCost", {
           type: "manual",
           message: "Starting cost must be greater than 0",
+        });
+      }
+      if (data.password !== data.confirmPassword) {
+        setError("confirmPassword", {
+          type: "manual",
+          message: "Passwords do not match",
         });
       }
     }
@@ -712,8 +719,20 @@ export default function BecomeVendor() {
                   }}
                 >
                   Confirm Password
+                  {errors.confirmPassword ? (
+                    <Typography sx={{ fontSize: "12px", color: "red", ml: 2 }}>
+                      {errors.confirmPassword.message}
+                    </Typography>
+                  ) : null}
                 </Typography>
                 <TextField
+                  {...register("confirmPassword", {
+                    required: "Confirm Password is required.",
+                    minLength: {
+                      value: 8,
+                      message: "Password must be at least 8 characters",
+                    },
+                  })}
                   placeholder="Password"
                   size="small"
                   type="password"
