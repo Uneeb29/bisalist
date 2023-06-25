@@ -174,9 +174,8 @@ export default function BecomeVendor() {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  width: "93%",
+                  width: "45%",
                   mr: 4,
-                  mt: 3,
                 }}
               >
               <Typography
@@ -243,9 +242,8 @@ export default function BecomeVendor() {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  width: "93%",
+                  width: "45%",
                   mr: 4,
-                  mt: 3,
                 }}
               >
                 <Typography
@@ -296,9 +294,10 @@ export default function BecomeVendor() {
                   placeholder="Apartment/Studio or Floor"
                   size="small"
                   sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "45%",
+                    bgcolor: "#eeeeee",
+                    p: 1,
+                    borderRadius: "5px",
+                    width: "100%",
                   }}
                   variant="standard"
                   InputProps={{ disableUnderline: true }}
@@ -510,8 +509,9 @@ export default function BecomeVendor() {
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "row",
-                  mt: 3,
+                  flexDirection: "column",
+                  width: "45%",
+                  mr: 4,
                 }}
               >
                 <Typography
@@ -532,8 +532,9 @@ export default function BecomeVendor() {
                   placeholder="john@doe.com"
                   size="small"
                   sx={{
-                    display: "flex",
-                    flexDirection: "column",
+                    bgcolor: "#eeeeee",
+                    p: 1,
+                    borderRadius: "5px",
                     width: "100%",
                   }}
                   variant="standard"
@@ -671,10 +672,10 @@ export default function BecomeVendor() {
                     sx={{
                       fontSize: "14px",
                       fontWeight: "bold",
-                      mb: 1,
+                      color: "black",
                     }}
                   >
-                    Type of document*
+                    Upload File
                   </Typography>
                   <input
                   accept="application/pdf" // only takes pdf files
