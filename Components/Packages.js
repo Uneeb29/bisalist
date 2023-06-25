@@ -172,6 +172,11 @@ export default function Packages() {
                 borderRadius: "25px",
                 fontSize: "20px",
                 color: plan.backgroundColor,
+                boxShadow: "15px 15px 15px 0px rgba(0,0,0,0.5)",
+                "&:hover": {
+                  color: plan.buttonColor,
+                  bgcolor: plan.backgroundColor,
+                },
               }}
             >
               Click Here

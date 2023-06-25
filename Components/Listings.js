@@ -1,5 +1,4 @@
-import { Stack, Typography, Box, Divider } from "@mui/material";
-import ServiceCard from "./ServiceCard";
+import { Stack, Typography, Box, Divider, Paper } from "@mui/material";
 
 export default function LandingPage() {
   return (
@@ -42,16 +41,15 @@ export default function LandingPage() {
       </Box>
       <Divider
         sx={{
-          mt: 2,
-          width: "5rem",
+          mt: 3,
+          width: "4rem",
           bgcolor: "#4db4f9",
           alignSelf: "center",
           borderTopWidth: "2px",
           borderRadius: "2px",
-          mb: 10,
+          mb: 14,
         }}
       />
-      {/* <ServiceCard /> */}
     </Stack>
   );
 }
