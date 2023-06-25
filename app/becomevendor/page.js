@@ -167,369 +167,388 @@ export default function BecomeVendor() {
           </Button>
         </Box>
         <form onSubmit={handleSubmit(sendData)}>
-        <FormControl sx={{ width: "100%", mt: 4, ml: 3 }}>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "45%",
-                  mr: 4,
-                }}
-              >
-              <Typography
-                  sx={{ fontSize: "14px", fontWeight: "bold", mb: 1, display:"flex", flexDirection:"row", alignItems:"center" }}
+          <FormControl sx={{ width: "100%", mt: 4, ml: 3 }}>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "45%",
+                    mr: 4,
+                  }}
                 >
-                Company Name*
-                {errors.companyName ? (
-                      <Typography sx={{ fontSize: "12px", color: "red", ml:2 }}>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    Company Name*
+                    {errors.companyName ? (
+                      <Typography
+                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
+                      >
                         {errors.companyName.message}
                       </Typography>
                     ) : null}
-                  
-                </Typography>
-                
-                <TextField
-                {...register("companyName", {
+                  </Typography>
+
+                  <TextField
+                    {...register("companyName", {
                       required: "Company Name is required.",
                     })}
-                  placeholder="Company Name"
-                  size="small"
+                    placeholder="Company Name"
+                    size="small"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "5px",
+                      width: "100%",
+                    }}
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                  ></TextField>
+                </Box>
+                <Box
                   sx={{
-                    bgcolor: "#eeeeee",
-                    p: 1,
-                    borderRadius: "5px",
-                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "45%",
                   }}
-                  variant="standard"
-                  InputProps={{ disableUnderline: true }}
-                ></TextField>
-              </Box>
-              <Box
-                sx={{ display: "flex", flexDirection: "column", width: "45%" }}
-              >
-                <Typography
-                  sx={{ fontSize: "14px", fontWeight: "bold", mb: 1, display:"flex", flexDirection:"row", alignItems:"center" }}
                 >
-                 Firstname
-                {errors.firstname ? (
-                      <Typography sx={{ fontSize: "12px", color: "red", ml:2 }}>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    Firstname
+                    {errors.firstname ? (
+                      <Typography
+                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
+                      >
                         {errors.firstname.message}
                       </Typography>
                     ) : null}
-                 
-                </Typography>
-                <TextField
-                {...register("firstname", {
+                  </Typography>
+                  <TextField
+                    {...register("firstname", {
                       required: "Firstname is required.",
                     })}
-                  placeholder="Firstname"
-                  size="small"
-                  sx={{
-                    bgcolor: "#eeeeee",
-                    p: 1,
-                    borderRadius: "5px",
-                    width: "100%",
-                  }}
-                  variant="standard"
-                  InputProps={{ disableUnderline: true }}
-                ></TextField>
+                    placeholder="Firstname"
+                    size="small"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "5px",
+                      width: "100%",
+                    }}
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                  ></TextField>
+                </Box>
               </Box>
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", mt: 3 }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "45%",
-                  mr: 4,
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: "14px", fontWeight: "bold", mb: 1, display:"flex", flexDirection:"row", alignItems:"center" }}
+              <Box sx={{ display: "flex", flexDirection: "row", mt: 3 }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "45%",
+                    mr: 4,
+                  }}
                 >
-                Lastname
-                {errors.lastname ? (
-                      <Typography sx={{ fontSize: "12px", color: "red", ml:2 }}>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    Lastname
+                    {errors.lastname ? (
+                      <Typography
+                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
+                      >
                         {errors.lastname.message}
                       </Typography>
                     ) : null}
-                  
-                </Typography>
-                <TextField
-                {...register("lastname", {
+                  </Typography>
+                  <TextField
+                    {...register("lastname", {
                       required: "Lastname is required.",
                     })}
-                  placeholder="Lastname"
-                  size="small"
+                    placeholder="Lastname"
+                    size="small"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "5px",
+                      width: "100%",
+                    }}
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                  ></TextField>
+                </Box>
+                <Box
                   sx={{
-                    bgcolor: "#eeeeee",
-                    p: 1,
-                    borderRadius: "5px",
-                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "45%",
                   }}
-                  variant="standard"
-                  InputProps={{ disableUnderline: true }}
-                ></TextField>
-              </Box>
-              <Box
-                sx={{ display: "flex", flexDirection: "column", width: "45%" }}
-              >
-                <Typography
-                  sx={{ fontSize: "14px", fontWeight: "bold", mb: 1, display:"flex", flexDirection:"row", alignItems:"center" }}
                 >
-                Building No./Name & Street Name
-                {errors.email ? (
-                      <Typography sx={{ fontSize: "12px", color: "red", ml:2 }}>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    Building No./Name & Street Name
+                    {errors.streetName ? (
+                      <Typography
+                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
+                      >
                         {errors.streetName.message}
                       </Typography>
                     ) : null}
-                  
-                </Typography>
-                <TextField
-                {...register("streetName", {
+                  </Typography>
+                  <TextField
+                    {...register("streetName", {
                       required: "This field is required.",
                     })}
-                  placeholder="Apartment/Studio or Floor"
-                  size="small"
-                  sx={{
-                    bgcolor: "#eeeeee",
-                    p: 1,
-                    borderRadius: "5px",
-                    width: "100%",
-                  }}
-                  variant="standard"
-                  InputProps={{ disableUnderline: true }}
-                ></TextField>
+                    placeholder="Apartment/Studio or Floor"
+                    size="small"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "5px",
+                      width: "100%",
+                    }}
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                  ></TextField>
+                </Box>
               </Box>
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", mt: 3 }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "45%",
-                  mr: 4,
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: "14px", fontWeight: "bold", mb: 1, display:"flex", flexDirection:"row", alignItems:"center" }}
+              <Box sx={{ display: "flex", flexDirection: "row", mt: 3 }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "45%",
+                    mr: 4,
+                  }}
                 >
-                Locality/Town & City
-                {errors.city ? (
-                      <Typography sx={{ fontSize: "12px", color: "red", ml:2 }}>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    Locality/Town & City
+                    {errors.city ? (
+                      <Typography
+                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
+                      >
                         {errors.city.message}
                       </Typography>
                     ) : null}
-                  
-                </Typography>
-                <TextField
-                {...register("city", { required: "City is required." })}
-                  placeholder="Enter a Location"
-                  size="small"
+                  </Typography>
+                  <TextField
+                    {...register("city", { required: "City is required." })}
+                    placeholder="Enter a Location"
+                    size="small"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "5px",
+                      width: "100%",
+                    }}
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                  ></TextField>
+                </Box>
+                <Box
                   sx={{
-                    bgcolor: "#eeeeee",
-                    p: 1,
-                    borderRadius: "5px",
-                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "45%",
                   }}
-                  variant="standard"
-                  InputProps={{ disableUnderline: true }}
-                ></TextField>
-              </Box>
-              <Box
-                sx={{ display: "flex", flexDirection: "column", width: "45%" }}
-              >
-                <Typography
-                  sx={{ fontSize: "14px", fontWeight: "bold", mb: 1, display:"flex", flexDirection:"row", alignItems:"center" }}
                 >
-                Ghana Post Address
-                {errors.postAddress ? (
-                      <Typography sx={{ fontSize: "12px", color: "red", ml:2 }}>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    Ghana Post Address
+                    {errors.postAddress ? (
+                      <Typography
+                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
+                      >
                         {errors.postAddress.message}
                       </Typography>
                     ) : null}
-                  
-                </Typography>
-                <TextField
-                {...register("postAddress", {
+                  </Typography>
+                  <TextField
+                    {...register("postAddress", {
                       required: "Post Address is required.",
                     })}
-                  placeholder="Apartment/Studio or Floor"
-                  size="small"
-                  sx={{
-                    bgcolor: "#eeeeee",
-                    p: 1,
-                    borderRadius: "5px",
-                    width: "100%",
-                  }}
-                  variant="standard"
-                  InputProps={{ disableUnderline: true }}
-                ></TextField>
+                    placeholder="Apartment/Studio or Floor"
+                    size="small"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "5px",
+                      width: "100%",
+                    }}
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                  ></TextField>
+                </Box>
               </Box>
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", mt: 3 }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "45%",
-                  mr: 4,
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: "14px", fontWeight: "bold", mb: 1, display:"flex", flexDirection:"row", alignItems:"center" }}
+              <Box sx={{ display: "flex", flexDirection: "row", mt: 3 }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "45%",
+                    mr: 4,
+                  }}
                 >
-                Telephone Number (Business Number/Person's Number)
-                {errors.telephoneNumber ? (
-                      <Typography sx={{ fontSize: "12px", color: "red", ml:2 }}>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    Telephone Number (Business Number/Person's Number)
+                    {errors.telephoneNumber ? (
+                      <Typography
+                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
+                      >
                         {errors.telephoneNumber.message}
                       </Typography>
                     ) : null}
-                  
-                </Typography>
-                <TextField
-                {...register("telephoneNumber", {
+                  </Typography>
+                  <TextField
+                    {...register("telephoneNumber", {
                       required: "Telephone Number is required.",
                     })}
-                  placeholder="(123) 456-7890"
-                  size="small"
+                    placeholder="(123) 456-7890"
+                    size="small"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "5px",
+                      width: "100%",
+                    }}
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                  ></TextField>
+                </Box>
+                <Box
                   sx={{
-                    bgcolor: "#eeeeee",
-                    p: 1,
-                    borderRadius: "5px",
-                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "45%",
                   }}
-                  variant="standard"
-                  InputProps={{ disableUnderline: true }}
-                ></TextField>
-              </Box>
-              <Box
-                sx={{ display: "flex", flexDirection: "column", width: "45%" }}
-              >
-                <Typography
-                  sx={{ fontSize: "14px", fontWeight: "bold", mb: 1, display:"flex", flexDirection:"row", alignItems:"center" }}
                 >
-                Service you provide
-                {errors.service ? (
-                      <Typography sx={{ fontSize: "12px", color: "red", ml:2 }}>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    Service you provide
+                    {errors.service ? (
+                      <Typography
+                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
+                      >
                         {errors.service.message}
                       </Typography>
                     ) : null}
-                  
-                </Typography>
-                <TextField
-                {...register("service", {
+                  </Typography>
+                  <TextField
+                    {...register("service", {
                       required: "This field is required.",
                     })}
-                  placeholder="Service you provide"
-                  size="small"
-                  sx={{
-                    bgcolor: "#eeeeee",
-                    p: 1,
-                    borderRadius: "5px",
-                    width: "100%",
-                  }}
-                  variant="standard"
-                  InputProps={{ disableUnderline: true }}
-                ></TextField>
+                    placeholder="Service you provide"
+                    size="small"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "5px",
+                      width: "100%",
+                    }}
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                  ></TextField>
+                </Box>
               </Box>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "93%",
-                mr: 4,
-                mt: 3,
-              }}
-            >
-              <Typography sx={{ fontSize: "14px", fontWeight: "bold", mb: 1, display:"flex", flexDirection:"row", alignItems:"center" }}>
-              Tell us a bit about yourself
-              {errors.description ? (
-                    <Typography sx={{ fontSize: "12px", color: "red", ml:2 }}>
-                      {errors.description.message}
-                    </Typography>
-                  ) : null}
-                
-              </Typography>
-              <TextField
-              {...register("description", {
-                    required: "Description is required.",
-                  })}
-                placeholder="Short description about yourself"
-                multiline
-                rows={4}
-                size="small"
-                sx={{
-                  bgcolor: "#eeeeee",
-                  p: 1,
-                  borderRadius: "5px",
-                  width: "100%",
-                }}
-                variant="standard"
-                InputProps={{ disableUnderline: true }}
-              ></TextField>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "93%",
-                mr: 4,
-                mt: 3,
-              }}
-            >
-              <Typography sx={{ fontSize: "14px", fontWeight: "bold", mb: 1, display:"flex", flexDirection:"row", alignItems:"center" }}>
-              Starting cost
-              {errors.startingCost ? (
-                    <Typography sx={{ fontSize: "12px", color: "red", ml:2 }}>
-                      {errors.startingCost.message}
-                    </Typography>
-                  ) : null}
-                
-              </Typography>
-              <TextField
-              {...register("startingCost", {
-                    required: "Starting Cost is required.",
-                  })}
-                size="small"
-                sx={{
-                  bgcolor: "#eeeeee",
-                  p: 1,
-                  borderRadius: "5px",
-                  width: "100%",
-                }}
-                variant="standard"
-                InputProps={{ disableUnderline: true }}
-              ></TextField>
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", mt: 3 }}>
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  width: "45%",
+                  width: "93%",
                   mr: 4,
+                  mt: 3,
                 }}
               >
                 <Typography
-                  sx={{ fontSize: "14px", fontWeight: "bold", mb: 1, display:"flex", flexDirection:"row", alignItems:"center" }}
+                  sx={{
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    mb: 1,
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
                 >
-                Email Address
-                {errors.email ? (
-                      <Typography sx={{ fontSize: "12px", color: "red", ml:2 }}>
-                        {errors.email.message}
-                      </Typography>
-                    ) : null}
-                  
+                  Tell us a bit about yourself
+                  {errors.description ? (
+                    <Typography sx={{ fontSize: "12px", color: "red", ml: 2 }}>
+                      {errors.description.message}
+                    </Typography>
+                  ) : null}
                 </Typography>
                 <TextField
-                {...register("email", {
-                      required: "Email is required.",
-                    })}
-                  placeholder="john@doe.com"
+                  {...register("description", {
+                    required: "Description is required.",
+                  })}
+                  placeholder="Short description about yourself"
+                  multiline
+                  rows={4}
                   size="small"
                   sx={{
                     bgcolor: "#eeeeee",
@@ -542,49 +561,157 @@ export default function BecomeVendor() {
                 ></TextField>
               </Box>
               <Box
-                sx={{ display: "flex", flexDirection: "column", width: "45%" }}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "93%",
+                  mr: 4,
+                  mt: 3,
+                }}
               >
                 <Typography
-                  sx={{ fontSize: "14px", fontWeight: "bold", mb: 1, display:"flex", flexDirection:"row", alignItems:"center" }}
+                  sx={{
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    mb: 1,
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
                 >
-                Password(Minimum 8 characters)
-                {errors.password ? (
-                      <Typography sx={{ fontSize: "12px", color: "red", ml:2 }}>
+                  Starting cost
+                  {errors.startingCost ? (
+                    <Typography sx={{ fontSize: "12px", color: "red", ml: 2 }}>
+                      {errors.startingCost.message}
+                    </Typography>
+                  ) : null}
+                </Typography>
+                <TextField
+                  {...register("startingCost", {
+                    required: "Starting Cost is required.",
+                  })}
+                  size="small"
+                  sx={{
+                    bgcolor: "#eeeeee",
+                    p: 1,
+                    borderRadius: "5px",
+                    width: "100%",
+                  }}
+                  variant="standard"
+                  InputProps={{ disableUnderline: true }}
+                ></TextField>
+              </Box>
+              <Box sx={{ display: "flex", flexDirection: "row", mt: 3 }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "45%",
+                    mr: 4,
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    Email Address
+                    {errors.email ? (
+                      <Typography
+                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
+                      >
+                        {errors.email.message}
+                      </Typography>
+                    ) : null}
+                  </Typography>
+                  <TextField
+                    {...register("email", {
+                      required: "Email is required.",
+                    })}
+                    placeholder="john@doe.com"
+                    size="small"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "5px",
+                      width: "100%",
+                    }}
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                  ></TextField>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "45%",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    Password(Minimum 8 characters)
+                    {errors.password ? (
+                      <Typography
+                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
+                      >
                         {errors.password.message}
                       </Typography>
                     ) : null}
-                  
-                </Typography>
-                <TextField
-                {...register("password", {
+                  </Typography>
+                  <TextField
+                    {...register("password", {
                       required: "Password is required.",
                       minLength: {
                         value: 8,
                         message: "Password must be at least 8 characters",
                       },
                     })}
-                  placeholder="Password"
-                  size="small"
-                  type="password"
-                  sx={{
-                    bgcolor: "#eeeeee",
-                    p: 1,
-                    borderRadius: "5px",
-                    width: "100%",
-                  }}
-                  variant="standard"
-                  InputProps={{ disableUnderline: true }}
-                ></TextField>
+                    placeholder="Password"
+                    size="small"
+                    type="password"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "5px",
+                      width: "100%",
+                    }}
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                  ></TextField>
+                </Box>
               </Box>
-            </Box>
-            <Box
-                sx={{ display: "flex", flexDirection: "column", width: "45%", mt:3 }}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "45%",
+                  mt: 3,
+                }}
               >
                 <Typography
-                  sx={{ fontSize: "14px", fontWeight: "bold", mb: 1, display:"flex", flexDirection:"row", alignItems:"center" }}
+                  sx={{
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    mb: 1,
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
                 >
-                Confirm Password
-                  
+                  Confirm Password
                 </Typography>
                 <TextField
                   placeholder="Password"
@@ -600,119 +727,129 @@ export default function BecomeVendor() {
                   InputProps={{ disableUnderline: true }}
                 ></TextField>
               </Box>
-            <Typography sx={{ fontSize: "20px", mt: 3, fontWeight: "bold" }}>
-              Business Information
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                mt: 3,
-              }}
-            >
+              <Typography sx={{ fontSize: "20px", mt: 3, fontWeight: "bold" }}>
+                Business Information
+              </Typography>
               <Box
-                sx={{ display: "flex", flexDirection: "column", width: "100%" }}
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  mt: 3,
+                }}
               >
-                <Typography
+                <Box
                   sx={{
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                    mb: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
                   }}
                 >
-                  Type of document*
-                </Typography>
-                <Select
-                {...register("documentType", {
-                      required: "Document type is required.",
-                    })}
-                  label="Select document type"
-                  sx={{ width: "45%", bgcolor: "#eeeeee" }}
-                  size="small"
-                >
-                  <MenuItem value="1">Ghana Card</MenuItem>
-                  <MenuItem value="2">
-                    Business Registration Certificate
-                  </MenuItem>
-                </Select>
-              </Box>
-              <Box
-                sx={{ display: "flex", flexDirection: "column", width: "100%" }}
-              >
-                <Typography
-                  sx={{
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                    mb: 1,
-                    display:"flex",
-                    flexDirection:"row"
-                  }}
-                >
-                Upload document*
-                {errors.file ? (
-                      <Typography sx={{ fontSize: "12px", color: "red", ml:2 }}>
-                        {errors.file.message}
-                      </Typography>
-                    ) : null}
-                  
-                </Typography>
-                <Button
-                  variant="contained"
-                  component="label"
-                  sx={{
-                    width: "30%",
-                    bgcolor: "#eeeeee",
-                    "&:hover": { bgcolor: "grey" },
-                  }}
-                  display="flex"
-                  flexDirection="row"
-                >
-                  <CloudUploadIcon sx={{ mr: 1, color: "black" }} />
                   <Typography
                     sx={{
                       fontSize: "14px",
                       fontWeight: "bold",
-                      color: "black",
+                      mb: 1,
                     }}
                   >
-                    Upload File
+                    Type of document*
                   </Typography>
-                  <input
-                  accept="application/pdf" // only takes pdf files
+                  <Select
+                    {...register("documentType", {
+                      required: "Document type is required.",
+                    })}
+                    label="Select document type"
+                    sx={{ width: "45%", bgcolor: "#eeeeee" }}
+                    size="small"
+                  >
+                    <MenuItem value="1">Ghana Card</MenuItem>
+                    <MenuItem value="2">
+                      Business Registration Certificate
+                    </MenuItem>
+                  </Select>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                    }}
+                  >
+                    Upload document*
+                    {errors.file ? (
+                      <Typography
+                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
+                      >
+                        {errors.file.message}
+                      </Typography>
+                    ) : null}
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    component="label"
+                    sx={{
+                      width: "30%",
+                      bgcolor: "#eeeeee",
+                      "&:hover": { bgcolor: "grey" },
+                    }}
+                    display="flex"
+                    flexDirection="row"
+                  >
+                    <CloudUploadIcon sx={{ mr: 1, color: "black" }} />
+                    <Typography
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        color: "black",
+                      }}
+                    >
+                      Upload File
+                    </Typography>
+                    <input
+                      accept="application/pdf" // only takes pdf files
                       {...register("file", {
                         required: "File is required.",
                       })}
-                   type="file" hidden />
-                </Button>
+                      type="file"
+                      hidden
+                    />
+                  </Button>
+                </Box>
               </Box>
             </Box>
-            
-          </Box>
-          <Button
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              bgcolor: "#334576",
-              mt: 3,
-              width: "15%",
-              p: 1,
-              alignSelf: "flex-end",
-              mr: 10,
-            }}
-            type="submit"
+            <Button
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                bgcolor: "#334576",
+                mt: 3,
+                width: "15%",
+                p: 1,
+                alignSelf: "flex-end",
+                mr: 10,
+              }}
+              type="submit"
               // button is disabled if form has not been changed
               // or if there are errors
               disabled={!isDirty || !isValid}
-          >
-            <Typography
-              sx={{ color: "white", fontSize: "14px", fontWeight: "bold" }}
             >
-              Submit Now
-            </Typography>
-            <SendIcon sx={{ ml: 1, color: "white", fontSize: "16px" }} />
-          </Button>
-        </FormControl>
+              <Typography
+                sx={{ color: "white", fontSize: "14px", fontWeight: "bold" }}
+              >
+                Submit Now
+              </Typography>
+              <SendIcon sx={{ ml: 1, color: "white", fontSize: "16px" }} />
+            </Button>
+          </FormControl>
         </form>
       </Paper>
     </Container>
