@@ -1,35 +1,27 @@
 "use client";
-import Navbar from "./Navbar";
-import Cover from "./Cover";
+import Navbar from "../Components/Navbar";
+import Cover from "../Components/Cover";
 import { CssBaseline, Stack } from "@mui/material";
-import ServiceCard from "./ServiceCard";
-import BecomeCustomer from "./becomecustomer";
-import Footer from "./Footer";
-import LandingPage from "./Listings";
-import PopularPlaces from "./PopularPlaces";
-import Packages from "./Packages";
-import BecomeVendor from "./becomevendor";
-import Testimonials from "./testimonials";
+import ServiceCard from "../Components/ServiceCard";
+import BecomeCustomer from "./becomecustomer/page";
+import Footer from "../Components/Footer";
+import LandingPage from "../Components/Listings";
+import PopularPlaces from "../Components/PopularPlaces";
+import Packages from "../Components/Packages";
+import BecomeVendor from "./becomevendor/page";
+import Testimonials from "../Components/testimonials";
 
 export default function Home() {
   return (
     <CssBaseline>
       <Stack direction={"column"}>
-        <Navbar></Navbar>
-        {/* <Cover></Cover>
+        <Cover></Cover>
         <LandingPage></LandingPage>
         <ServiceCard></ServiceCard>
         <PopularPlaces></PopularPlaces>
         <Packages></Packages>
         <Testimonials></Testimonials>
-        <Footer></Footer> */}
-        {/* <Navbar></Navbar>
-        <Cover></Cover>
-        <LandingPage></LandingPage>
-        <ServiceCard></ServiceCard> */}
-        {/* <BecomeCustomer></BecomeCustomer> */}
-        <BecomeVendor></BecomeVendor>
-      </Stack>
+        </Stack>
     </CssBaseline>
   );
 }

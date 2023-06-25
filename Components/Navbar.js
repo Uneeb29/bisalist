@@ -1,3 +1,4 @@
+"use client";
 import {
   Stack,
   Box,
@@ -62,7 +63,7 @@ export default function Navbar() {
         </Typography>
       </Box>
       <Stack direction={"row"} spacing={10}>
-        <Link underline="none" sx={{ cursor: "pointer" }}>
+        <Link underline="none" sx={{ cursor: "pointer" }} href="/">
           <Typography
             sx={{
               color: "white",
@@ -221,7 +222,7 @@ export default function Navbar() {
           }}
         >
           <Link
-            href="/becomecustomer"
+            href="becomecustomer"
             sx={{
               bgcolor: "#4db4f9",
               color: "white",
@@ -234,7 +235,7 @@ export default function Navbar() {
             <Typography>Become a Customer</Typography>
           </Link>
           <Link
-            href="/becomevendor"
+            href="\becomevendor"
             sx={{
               bgcolor: "#4db4f9",
               color: "white",
