@@ -81,7 +81,7 @@ export default function BecomeVendor() {
       validateFileType(data.file) &&
       validateFileSize(data.file) &&
       data.startingCost > 0 &&
-      data.password !== data.confirmPassword
+      data.password === data.confirmPassword
     ) {
       console.log(data);
     } else {
