@@ -28,7 +28,7 @@ export default function BecomeCustomer() {
       // phone: "1234567890",
       // password: "kanyeLeast",
       // c_password: "kanyeLeast",
-      // spec_email: true,
+      // offers: true,
       // agreement: true
       // boxes arent getting checked so removing these
     },
@@ -278,7 +278,7 @@ export default function BecomeCustomer() {
                 alignItems: "center",
               }}
             >
-              <Checkbox {...register("spec_email")}></Checkbox>
+              <Checkbox {...register("offers")}></Checkbox>
               <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
                 Special Email Offers and Discount
               </Typography>
