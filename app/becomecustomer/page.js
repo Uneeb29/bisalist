@@ -306,7 +306,7 @@ export default function BecomeCustomer() {
                 sx={{
                   fontWeight: "bold",
                   fontSize: "14px",
-                  bgcolor: "#245cbc",
+                  bgcolor: disabled ? "#eeeeee" : "#245cbc", // change bg color when disabled
                   color: "white",
                   width: "100%",
                   p: 1.5,
