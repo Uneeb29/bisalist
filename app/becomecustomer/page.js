@@ -302,15 +302,17 @@ export default function BecomeCustomer() {
               </Typography>
             </Box>
             <Box sx={{ width: "100%", mb: 4 }}>
-              <Button
-                sx={{
+              sx={{
                   fontWeight: "bold",
                   fontSize: "14px",
-                  bgcolor: "#245cbc",
+                  bgcolor: !isValid || !isDirty ? "#cccccc" : "#245cbc",
+                  cursor: !isValid || !isDirty ? "not-allowed" : "pointer",
                   color: "white",
                   width: "100%",
                   p: 1.5,
-                  "&:hover": { bgcolor: "#245cbc" },
+                  "&:hover": {
+                    bgcolor: !isValid || !isDirty ? "#cccccc" : "#245cbc",
+                  },
                 }}
                 type="submit"
                 disabled={!isValid || !isDirty}
