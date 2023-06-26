@@ -209,8 +209,8 @@ export default function Navbar() {
           sx={{
             position: "absolute",
             top: "15%",
-            left: "86%",
-            transform: "translate(-50%, -50%)",
+            right: "0%",
+            //transform: "translate(-50%, -50%)",
             width: 500,
             bgcolor: "background.paper",
             borderRadius: "8px",
