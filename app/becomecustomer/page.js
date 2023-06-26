@@ -12,6 +12,12 @@ import {
 
 import { useForm } from "react-hook-form";
 
+
+// sqlite database structure for the customer table
+// {  id, name, email, phone, password, offers, agreement  }
+
+
+
 export default function BecomeCustomer() {
   // default values added here only for testing purposes and will be removed later
   const {
@@ -28,7 +34,7 @@ export default function BecomeCustomer() {
       // phone: "1234567890",
       // password: "kanyeLeast",
       // c_password: "kanyeLeast",
-      // spec_email: true,
+      // offers: true,
       // agreement: true
       // boxes arent getting checked so removing these
     },
@@ -184,7 +190,7 @@ export default function BecomeCustomer() {
                 <Typography
                   sx={{ fontWeight: "bold", fontSize: "14px", mr: 2 }}
                 >
-                  Email address
+                  Phone Number
                 </Typography>
                 <p style={{ color: "red", fontSize: "12px" }}>
                   {errors.phone?.message}
@@ -278,7 +284,7 @@ export default function BecomeCustomer() {
                 alignItems: "center",
               }}
             >
-              <Checkbox {...register("spec_email")}></Checkbox>
+              <Checkbox {...register("offers")}></Checkbox>
               <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
                 Special Email Offers and Discount
               </Typography>
@@ -306,7 +312,7 @@ export default function BecomeCustomer() {
                 sx={{
                   fontWeight: "bold",
                   fontSize: "14px",
-                  bgcolor: disabled ? "#eeeeee" : "#245cbc", // change bg color when disabled
+                  bgcolor: !isDirty || !isValid ? "#eeeeee" : "#245cbc", // change bg color when disabled
                   color: "white",
                   width: "100%",
                   p: 1.5,

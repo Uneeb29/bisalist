@@ -850,7 +850,7 @@ export default function BecomeVendor() {
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
-                bgcolor: disabled ? "#eeeeee" : "#334576", // change color if disabled
+                bgcolor: !isDirty || !isValid ? "#eeeeee" : "#334576", // change color if disabled
                 mt: 3,
                 width: "15%",
                 p: 1,
