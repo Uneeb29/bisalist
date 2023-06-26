@@ -2,6 +2,7 @@ import {
   Box,
   Divider,
   Stack,
+  Container,
   Typography,
   Card,
   CardActionArea,
@@ -81,10 +82,12 @@ export default function PopularPlaces() {
           Most Popular Places
         </Typography>
       </Box>
-      <Stack
-        direction={"row"}
-        spacing={2}
-        sx={{ display: "flex", justifyContent: "center" }}
+      <Container
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
       >
         {cards.map((card, index) => (
           <Card
@@ -92,11 +95,12 @@ export default function PopularPlaces() {
             sx={{
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
-              width: "25%",
+              width: "30%",
               mb: 4,
               borderRadius: "10px",
               cursor: "pointer",
               height: "400px",
+              mr: 2,
             }}
           >
             <CardActionArea>
@@ -123,8 +127,9 @@ export default function PopularPlaces() {
                     borderRadius: "50%",
                     display: "flex",
                     alignItems: "center",
-                    p: 0.7,
+                    p: 0.6,
                     cursor: "pointer",
+                    height: "fit-content",
                   }}
                 >
                   <FavoriteBorderIcon
@@ -142,7 +147,7 @@ export default function PopularPlaces() {
                     p: 0.5,
                     borderRadius: "20px",
                     bgcolor: "grey",
-                    width: "25%",
+                    width: "30%",
                   }}
                 >
                   <Box
@@ -226,7 +231,7 @@ export default function PopularPlaces() {
             </CardActionArea>
           </Card>
         ))}
-      </Stack>
+      </Container>
       <Box
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
