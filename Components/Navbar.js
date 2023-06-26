@@ -208,7 +208,7 @@ export default function Navbar() {
         <Box
           sx={{
             position: "absolute",
-            top: "15%",
+            top: "18%",
             right: "0%",
             transform: "translate(-50%, -50%)",
             width: 500,
