@@ -302,7 +302,8 @@ export default function BecomeCustomer() {
               </Typography>
             </Box>
             <Box sx={{ width: "100%", mb: 4 }}>
-              sx={{
+              <Button
+                sx={{
                   fontWeight: "bold",
                   fontSize: "14px",
                   bgcolor: !isValid || !isDirty ? "#cccccc" : "#245cbc",
