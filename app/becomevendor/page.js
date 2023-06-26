@@ -850,12 +850,16 @@ export default function BecomeVendor() {
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
-                bgcolor: "#334576",
+                bgcolor: !isDirty || !isValid ? "#cccccc" : "#334576",
+                cursor: !isDirty || !isValid ? "not-allowed" : "pointer",
                 mt: 3,
                 width: "15%",
                 p: 1,
                 alignSelf: "flex-end",
                 mr: 10,
+                "&:hover": {
+                  bgcolor: !isDirty || !isValid ? "#cccccc" : "#334576",
+                },
               }}
               type="submit"
               // button is disabled if form has not been changed
