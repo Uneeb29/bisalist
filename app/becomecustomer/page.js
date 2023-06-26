@@ -184,7 +184,7 @@ export default function BecomeCustomer() {
                 <Typography
                   sx={{ fontWeight: "bold", fontSize: "14px", mr: 2 }}
                 >
-                  Email address
+                  Phone Number
                 </Typography>
                 <p style={{ color: "red", fontSize: "12px" }}>
                   {errors.phone?.message}
