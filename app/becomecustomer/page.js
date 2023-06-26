@@ -12,11 +12,8 @@ import {
 
 import { useForm } from "react-hook-form";
 
-
 // sqlite database structure for the customer table
-// {  id, name, email, phone, password, offers, agreement  }
-
-
+// {  id (int) , name (string) , email (alphanumeric) , phone (int), password (alphanumeric and special), offers(bool), agreement (bool) }
 
 export default function BecomeCustomer() {
   // default values added here only for testing purposes and will be removed later
@@ -29,11 +26,11 @@ export default function BecomeCustomer() {
     formState: { errors, isDirty, isValid },
   } = useForm({
     defaultValues: {
-      // name: "Ilean Dover",
-      // email: "test123@gmail.com",
-      // phone: "1234567890",
-      // password: "kanyeLeast",
-      // c_password: "kanyeLeast",
+      name: "Test Account",
+      email: "test123@test.com",
+      phone: "03332720921",
+      password: "kanyeLeast",
+      c_password: "kanyeLeast",
       // offers: true,
       // agreement: true
       // boxes arent getting checked so removing these
@@ -54,14 +51,38 @@ export default function BecomeCustomer() {
     return phone_re.test(phone);
   }
 
-  function sendData(data) {
+  // a function to send the data to the api endpoint
+  function send(data) {
+    //     let payload = {
+    //	"name" : data.name,
+    //	"email" : data.email,
+    //	"phone" : data.phone
+    // }
+    let result = fetch("/api/customer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    return result;
+  }
+
+  async function sendData(data) {
     // console log the data if all the validations are passed
     if (
       validateEmail(data.email) &&
       validatePhone(data.phone) &&
       data.password === data.c_password
     ) {
-      console.log(data);
+      // console.log(data);
+
+      // send data to the api endpoint
+      let res = await send(data);
+      let response = await res.json();
+      console.log(response);
+      //      document.getElementById("form").reset();
     } else {
       // check if email format is valid
       if (!validateEmail(data.email)) {
