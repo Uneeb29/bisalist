@@ -11,9 +11,9 @@ export async function GET(request) {
 
 
 export async function POST(request) {
-    const { companyName, firstname, lastname, streetName, city, postAddress, telephoneNumber, service, description, startingCost, email, password, documentType } = await request.json();
 
     try {
+        const { companyName, firstname, lastname, streetName, city, postAddress, telephoneNumber, service, description, startingCost, email, password, documentType } = await request.json();
         const post = await prisma.vendor.create({
             data: {
                 companyName,
@@ -45,7 +45,7 @@ export async function POST(request) {
 
         return NextResponse.json({
             status: 500,
-            body: err.meta.target
+            body: err
         })
     }
 
