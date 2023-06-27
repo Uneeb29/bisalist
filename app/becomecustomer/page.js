@@ -12,9 +12,6 @@ import {
 
 import { useForm } from "react-hook-form";
 
-// sqlite database structure for the customer table
-// {  id (int) , name (string) , email (alphanumeric) , phone (int), password (alphanumeric and special), offers(bool), agreement (bool) }
-
 export default function BecomeCustomer() {
   // default values added here only for testing purposes and will be removed later
   const {
@@ -51,24 +48,6 @@ export default function BecomeCustomer() {
     return phone_re.test(phone);
   }
 
-  // a function to send the data to the api endpoint
-  function send(data) {
-    //     let payload = {
-    //	"name" : data.name,
-    //	"email" : data.email,
-    //	"phone" : data.phone
-    // }
-    let result = fetch("/api/customer", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    return result;
-  }
-
   async function sendData(data) {
     // console log the data if all the validations are passed
     if (
@@ -76,13 +55,18 @@ export default function BecomeCustomer() {
       validatePhone(data.phone) &&
       data.password === data.c_password
     ) {
-      // console.log(data);
 
-      // send data to the api endpoint
-      let res = await send(data);
-      let response = await res.json();
+      let result = await fetch("/api/customer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      let response = await result.json();
       console.log(response);
-      //      document.getElementById("form").reset();
+
     } else {
       // check if email format is valid
       if (!validateEmail(data.email)) {
