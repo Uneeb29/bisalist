@@ -52,3 +52,15 @@ export async function POST(request) {
 	}
 
 }
+
+// Example POST request body to test on Thunder Client
+
+// {
+// 	"name": "Test Account",
+// 	"email": "test133@test.com",
+// 	"phone": "03332720922",
+// 	"password": "kanyeLeast",
+// 	"offers": true,
+// 	"agreement": true
+// }
+

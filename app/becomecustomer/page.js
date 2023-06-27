@@ -56,16 +56,26 @@ export default function BecomeCustomer() {
       data.password === data.c_password
     ) {
 
-      let result = await fetch("/api/customer", {
+
+      let dataToSend = {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        password: data.password,
+        offers: data.offers,
+        agreement: data.agreement
+      };
+
+      const result = await fetch("/api/customer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(dataToSend),
       });
 
-      let response = await result.json();
-      console.log(response);
+      const response = await result.json();
+      console.log("Response: ", response);
 
     } else {
       // check if email format is valid

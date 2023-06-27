@@ -17,6 +17,9 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SendIcon from "@mui/icons-material/Send";
 import { useForm } from "react-hook-form";
 
+// Reminders:
+// create a check on the starting cost (It should be a number greater than 0)
+
 export default function BecomeVendor() {
   const {
     register,
@@ -74,7 +77,7 @@ export default function BecomeVendor() {
     return true;
   }
 
-  function sendData(data) {
+  async function sendData(data) {
     // log data in console if all checks are passed
     if (
       validateEmail(data.email) &&
@@ -85,6 +88,36 @@ export default function BecomeVendor() {
       data.password === data.confirmPassword
     ) {
       console.log(data);
+
+      // send data to the server
+      const dataToSend = {
+        companyName: data.companyName,
+        firstname: data.firstname,
+        lastname: data.lastname,
+        streetName: data.streetName,
+        city: data.city,
+        postAddress: data.postAddress,
+        telephoneNumber: data.telephoneNumber,
+        service: data.service,
+        description: data.description,
+        startingCost: data.startingCost,
+        email: data.email,
+        password: data.password,
+        documentType: data.documentType,
+      };
+
+
+      const result = await fetch("/api/vendor", {
+        method: "POST",
+        body: JSON.stringify(dataToSend),
+      });
+
+      const response = await result.json();
+
+      console.log("Response: ", response);
+
+
+
     } else {
       // set error if any of the checks fail
       if (!validateEmail(data.email)) {
@@ -597,6 +630,9 @@ export default function BecomeVendor() {
                 <TextField
                   {...register("startingCost", {
                     required: "Starting Cost is required.",
+                    // It should be a number
+                    valueAsNumber: true,
+
                   })}
                   size="small"
                   sx={{
