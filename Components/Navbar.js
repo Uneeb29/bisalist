@@ -156,6 +156,7 @@ export default function Navbar() {
       <Divider
         sx={{ bgcolor: "#4db4f9", height: "20px", width: "1px", mr: 1 }}
       ></Divider>
+      <Link underline="none" href="/login">
       <Button
         sx={{
           display: "flex",
@@ -177,6 +178,7 @@ export default function Navbar() {
           Sign in
         </Typography>
       </Button>
+      </Link>
       <Button
         sx={{
           display: "flex",

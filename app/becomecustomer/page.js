@@ -23,11 +23,11 @@ export default function BecomeCustomer() {
     formState: { errors, isDirty, isValid },
   } = useForm({
     defaultValues: {
-      name: "Test Account",
-      email: "test123@test.com",
-      phone: "03332720921",
-      password: "kanyeLeast",
-      c_password: "kanyeLeast",
+      // name: "Ilean Dover",
+      // email: "test123@gmail.com",
+      // phone: "1234567890",
+      // password: "kanyeLeast",
+      // c_password: "kanyeLeast",
       // offers: true,
       // agreement: true
       // boxes arent getting checked so removing these
@@ -327,11 +327,14 @@ export default function BecomeCustomer() {
                 sx={{
                   fontWeight: "bold",
                   fontSize: "14px",
-                  bgcolor: !isDirty || !isValid ? "#eeeeee" : "#245cbc", // change bg color when disabled
+                  bgcolor: !isValid || !isDirty ? "#cccccc" : "#245cbc",
+                  cursor: !isValid || !isDirty ? "not-allowed" : "pointer",
                   color: "white",
                   width: "100%",
                   p: 1.5,
-                  "&:hover": { bgcolor: "#245cbc" },
+                  "&:hover": {
+                    bgcolor: !isValid || !isDirty ? "#cccccc" : "#245cbc",
+                  },
                 }}
                 type="submit"
                 disabled={!isValid || !isDirty}
