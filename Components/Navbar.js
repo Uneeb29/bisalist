@@ -210,7 +210,7 @@ export default function Navbar() {
             position: "absolute",
             top: "15%",
             right: "0%",
-            transform: "translate(-50%, -50%)",
+            //transform: "translate(-50%, -50%)",
             width: 500,
             bgcolor: "background.paper",
             borderRadius: "8px",
