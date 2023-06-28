@@ -48,14 +48,35 @@ export default function BecomeCustomer() {
     return phone_re.test(phone);
   }
 
-  function sendData(data) {
+  async function sendData(data) {
     // console log the data if all the validations are passed
     if (
       validateEmail(data.email) &&
       validatePhone(data.phone) &&
       data.password === data.c_password
     ) {
-      console.log(data);
+
+
+      let dataToSend = {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        password: data.password,
+        offers: data.offers,
+        agreement: data.agreement
+      };
+
+      const result = await fetch("/api/customer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToSend),
+      });
+
+      const response = await result.json();
+      console.log("Response: ", response);
+
     } else {
       // check if email format is valid
       if (!validateEmail(data.email)) {
