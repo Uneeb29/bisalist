@@ -29,19 +29,19 @@ export default function BecomeVendor() {
   } = useForm({
     // for testing purpose only
     defaultValues: {
-       companyName: "Gorillaz Inc.",
-       firstname: "Test",
-       lastname: "Subject",
-       streetName: "Gorillaz Street, 123",
-       city: "New York",
-       postAddress: "Test Post Address",
-       telephoneNumber: "03123456780",
-       service: "Creating Music",
-       description: "We create music for you. We are the best in the world.",
-       startingCost: 300,
-       email: "gor123@test.com",
-       password: "KanyeLeast",
-       documentType: "Ghana Card",
+      companyName: "Gorillaz Inc.",
+      firstname: "Test",
+      lastname: "Subject",
+      streetName: "Gorillaz Street, 123",
+      city: "New York",
+      postAddress: "Test Post Address",
+      telephoneNumber: "03123456780",
+      service: "Creating Music",
+      description: "We create music for you. We are the best in the world.",
+      startingCost: 300,
+      email: "gor123@test.com",
+      password: "KanyeLeast",
+      documentType: "Ghana Card",
       // file: "",
     },
   });
@@ -886,12 +886,16 @@ export default function BecomeVendor() {
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
-                bgcolor: !isDirty || !isValid ? "#eeeeee" : "#334576", // change color if disabled
+                bgcolor: !isDirty || !isValid ? "#cccccc" : "#334576",
+                cursor: !isDirty || !isValid ? "not-allowed" : "pointer",
                 mt: 3,
                 width: "15%",
                 p: 1,
                 alignSelf: "flex-end",
                 mr: 10,
+                "&:hover": {
+                  bgcolor: !isDirty || !isValid ? "#cccccc" : "#334576",
+                },
               }}
               type="submit"
               // button is disabled if form has not been changed

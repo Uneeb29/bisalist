@@ -107,7 +107,7 @@ export default function ServiceCard() {
                       sx={{ color: "white", height: "15px", width: "20px" }}
                     ></LockOpenRoundedIcon>
                     <Typography sx={{ color: "white", fontSize: "12px" }}>
-                      Now Open
+                      Book Now
                     </Typography>
                   </Box>
                 </Box>
