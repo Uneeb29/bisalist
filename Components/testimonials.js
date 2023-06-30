@@ -41,7 +41,7 @@ export default function Testimonials() {
           position: "relative",
         }}
       >
-        <Typography
+        {/* <Typography
           variant="h1"
           sx={{
             fontSize: "60px",
@@ -56,7 +56,7 @@ export default function Testimonials() {
           }}
         >
           Client Reviews
-        </Typography>
+        </Typography> */}
         <Typography
           variant="h2"
           sx={{

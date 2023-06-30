@@ -11,7 +11,7 @@ export default function LandingPage() {
           position: "relative",
         }}
       >
-        <Typography
+        {/* <Typography
           variant="h1"
           sx={{
             fontSize: "60px",
@@ -26,7 +26,7 @@ export default function LandingPage() {
           }}
         >
           Fix it services
-        </Typography>
+        </Typography> */}
         <Typography
           variant="h2"
           sx={{
