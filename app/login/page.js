@@ -23,10 +23,10 @@ export default function Login() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      vendor: false,
-      customer: false,
-      email: "test@test.com",
-      password: "testtest",
+      // vendor: false,
+      // customer: false,
+      // email: "test@test.com",
+      // password: "testtest",
     },
   });
 
@@ -37,7 +37,7 @@ export default function Login() {
       email: data.email,
       password: data.password,
       role: data.vendor ? "vendor" : "customer",
-      callbackUrl: "/",
+      callbackUrl: "/", // Where to redirect after log in
     });
   };
 
