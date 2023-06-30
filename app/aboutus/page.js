@@ -11,8 +11,12 @@ import {
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import SearchIcon from "@mui/icons-material/Search";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+import { useEffect } from "react";
 
 export default function Aboutus() {
+  useEffect(() => {
+    document.body.style.margin = "0"; // Add this line to remove body margin
+  }, []);
   const containers = [
     {
       bgpic1: "logo.png",
@@ -58,6 +62,7 @@ export default function Aboutus() {
         sx={{
           backgroundImage: 'url("aboutus.jpg")',
           backgroundSize: "cover",
+
           height: "75vh",
           width: "100%",
           display: "flex",
@@ -228,7 +233,11 @@ export default function Aboutus() {
                 }}
               />
               <Box
-                sx={{ height: "100%", display: "flex", alignItems: "center" }}
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  alignItems: index > 0 ? "center" : "none",
+                }}
               >
                 <Typography sx={{ fontSize: "14px", ml: 4 }}>
                   {container.text2}
@@ -259,7 +268,6 @@ export default function Aboutus() {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
-          mb: 20,
         }}
       >
         {qualities.map((quality, index) => (

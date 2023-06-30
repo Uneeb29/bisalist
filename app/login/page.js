@@ -49,7 +49,6 @@ export default function Login() {
         display: "flex",
         justifyContent: "center",
         width: "100vw",
-        pb: 5,
       }}
     >
       <Paper

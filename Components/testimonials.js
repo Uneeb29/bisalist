@@ -32,7 +32,7 @@ export default function Testimonials() {
     },
   ];
   return (
-    <Container sx={{ display: "flex", flexDirection: "column", mt: 12, mb: 6 }}>
+    <Container sx={{ display: "flex", flexDirection: "column", mt: 12 }}>
       <Box
         sx={{
           textAlign: "center",

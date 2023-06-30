@@ -106,7 +106,6 @@ export default function BecomeVendor() {
         documentType: data.documentType,
       };
 
-
       const result = await fetch("/api/vendor", {
         method: "POST",
         body: JSON.stringify(dataToSend),
@@ -115,9 +114,6 @@ export default function BecomeVendor() {
       const response = await result.json();
 
       console.log("Response: ", response);
-
-
-
     } else {
       // set error if any of the checks fail
       if (!validateEmail(data.email)) {
@@ -163,7 +159,7 @@ export default function BecomeVendor() {
     <Container sx={{ mt: 14 }}>
       <Paper
         elevation={3}
-        sx={{ display: "flex", flexDirection: "column", mb: 3, pb: 2 }}
+        sx={{ display: "flex", flexDirection: "column", pb: 2 }}
       >
         <Typography
           sx={{ fontSize: "20px", fontWeight: "bold", mt: 6, ml: 3, mb: 4 }}
@@ -632,7 +628,6 @@ export default function BecomeVendor() {
                     required: "Starting Cost is required.",
                     // It should be a number
                     valueAsNumber: true,
-
                   })}
                   size="small"
                   sx={{

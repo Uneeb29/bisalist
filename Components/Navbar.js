@@ -96,6 +96,7 @@ export default function Navbar() {
           sx={{
             cursor: "pointer",
           }}
+          href="/contactus"
         >
           <Typography
             sx={{

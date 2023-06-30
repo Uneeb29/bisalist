@@ -14,7 +14,8 @@ export default function Footer() {
         flexDirection: "column",
         width: "100%",
         pb: 4,
-        bgcolor:"#eeeeee"
+        bgcolor: "#eeeeee",
+        mt: 8,
       }}
       elevation={4}
     >
