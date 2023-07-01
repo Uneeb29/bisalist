@@ -9,14 +9,11 @@ export async function POST(request) {
 
   try {
     // create a new customer in the database
-    const user = await prisma.customer.create({
+    const user = await prisma.user.create({
       data: {
         name: body.name,
         email: body.email,
-        phone: body.phone,
         password: await bcrypt.hash(body.password, 10),
-        offers: body.offers,
-        agreement: body.agreement,
       },
     });
 
@@ -24,7 +21,7 @@ export async function POST(request) {
 
     return new Response(JSON.stringify(userWithoutPassword));
   } catch (err) {
-    console.log("Error creating customer: ", err.meta.target);
+    console.log("Error creating customer: ", err);
 
     return new Response(JSON.stringify(err));
   }
@@ -35,8 +32,6 @@ export async function POST(request) {
 // {
 // 	"name": "Test Account",
 // 	"email": "test133@test.com",
-// 	"phone": "03332720922",
-// 	"password": "kanyeLeast",
-// 	"offers": true,
-// 	"agreement": true
+// 	"password": "12345678",
+
 // }

@@ -6,13 +6,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
-  // Configure one or more authentication providers
+
   providers: [
-    // GithubProvider({
-    //     clientId: process.env.GITHUB_ID,
-    //     clientSecret: process.env.GITHUB_SECRET,
-    // }),
-    // ...add more providers here
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -22,14 +17,29 @@ export const authOptions = {
       },
       async authorize(credentials, req) {
         const res = await import("../../login/route");
+        // const res = await fetch("http://localhost:3000/api/login", {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify(credentials),
+        // });
 
-        const response = await (await res.POST({ body: credentials })).json();
+        // const user = await res.json();
 
-        if (response.status === 200) {
-          return response.body;
+        const payload = await (await res.POST(credentials)).json();
+        const user = {
+          name: payload.name,
+          email: payload.email,
+        };
+
+        if (user) {
+          console.log("NextAuth Got this reponse: returning user", user);
+          return user;
+        } else {
+          console.log("NextAuth Got this reponse: returning null", user);
+          return null;
         }
-
-        return null;
       },
     }),
   ],

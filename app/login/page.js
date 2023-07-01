@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import {
   Container,
@@ -11,7 +11,7 @@ import {
   Button,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -19,29 +19,25 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
       // vendor: false,
       // customer: false,
-      // email: "test@test.com",
-      // password: "testtest",
+      email: "test@test.com",
+      password: "12345678",
     },
   });
 
-  const sendData = (data) => {
-    console.log("login data", data);
-
-    signIn("credentials", {
+  async function sendData(data) {
+    const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
       role: data.vendor ? "vendor" : "customer",
-      callbackUrl: "/", // Where to redirect after log in
+      redirect: true,
+      callbackUrl: "/check", // Where to redirect after log in
     });
-  };
-
-  console.log("errors", errors);
+  }
 
   return (
     <Container

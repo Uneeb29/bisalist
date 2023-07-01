@@ -1,55 +1,34 @@
-import { prisma } from '../../../server/db/client.js';
-import { NextResponse } from 'next/server.js';
-
-// remove in production
-export async function GET(request) {
-    return NextResponse.json({
-        status: 200,
-        body: "Testing vendor route"
-    });
-}
-
+import { prisma } from "../../../server/db/client.js";
+import * as bcrypt from "bcrypt";
 
 export async function POST(request) {
+  try {
+    const body = await request.json();
+    const user = await prisma.vendor.create({
+      data: {
+        companyName: body.companyName,
+        firstname: body.firstname,
+        lastname: body.lastname,
+        streetName: body.streetName,
+        city: body.city,
+        postAddress: body.postAddress,
+        telephoneNumber: body.telephoneNumber,
+        service: body.service,
+        description: body.description,
+        startingCost: body.startingCost,
+        email: body.email,
+        password: await bcrypt.hash(body.password, 10),
+        documentType: body.documentType,
+      },
+    });
 
-    try {
-        const { companyName, firstname, lastname, streetName, city, postAddress, telephoneNumber, service, description, startingCost, email, password, documentType } = await request.json();
-        const post = await prisma.vendor.create({
-            data: {
-                companyName,
-                firstname,
-                lastname,
-                streetName,
-                city,
-                postAddress,
-                telephoneNumber,
-                service,
-                description,
-                startingCost,
-                email,
-                password,
-                documentType
-            }
-        })
+    const { password, ...userWithoutPassword } = user;
 
-        console.log("Vendor created successfully!");
-
-        return NextResponse.json({
-            status: 200,
-            body: "Vendor created successfully!"
-        })
-
-    }
-    catch (err) {
-        console.log("Error creating vendor: ", err.meta.target);
-
-        return NextResponse.json({
-            status: 500,
-            body: err
-        })
-    }
-
-
+    return new Response(JSON.stringify(userWithoutPassword));
+  } catch (err) {
+    // console.log("Error creating vendor: ", err);
+    return new Response(JSON.stringify(null));
+  }
 }
 
 // Example POST request body to test on Thunder Client
@@ -63,8 +42,8 @@ export async function POST(request) {
 //       "telephoneNumber": "03123456780",
 //       "service": "Creating Music",
 //       "description": "We create music for you. We are the best in the world.",
-//       "startingCost": "300",
+//       "startingCost": 300,
 //       "email": " gor123@test.com ",
 //       "password": "KanyeLeast",
-//       "documentType": "Ghana Card",      
+//       "documentType": "Ghana Card",
 // }

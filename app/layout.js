@@ -12,14 +12,13 @@ import Providers from "../Components/Providers";
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Providers>
-        <Navbar></Navbar>
-        <body>
-
+      <body>
+        <Providers>
+          <Navbar />
           {children}
-        </body>
-        <Footer></Footer>
-      </Providers>
+          <Footer />
+        </Providers>
+      </body>
     </html>
   );
 }
