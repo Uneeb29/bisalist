@@ -1,5 +1,5 @@
 // single instance of the Prisma Client
-import { prisma } from "../../../server/db/client.js";
+import { prisma } from "../../../lib/prisma-client";
 import * as bcrypt from "bcrypt";
 
 // only serve POST requests

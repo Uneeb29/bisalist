@@ -1,5 +1,5 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 
 function Check() {
   const { data: session, status } = useSession();
@@ -15,9 +15,13 @@ function Check() {
     );
   } else {
     return (
-      <div>
-        <h1>Check</h1>
-        <p>User Not Authenticated</p>
+      <div style={{ height: "200px", width: "100px" }}>
+        <button
+          style={{ height: "inherit", width: "inherit" }}
+          onClick={() => signIn()}
+        >
+          Sign In
+        </button>
       </div>
     );
   }
