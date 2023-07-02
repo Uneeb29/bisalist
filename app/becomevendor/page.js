@@ -16,6 +16,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SendIcon from "@mui/icons-material/Send";
 import { useForm } from "react-hook-form";
+import { basePath } from "../../next.config";
 
 // Reminders:
 // create a check on the starting cost (It should be a number greater than 0)
@@ -29,20 +30,20 @@ export default function BecomeVendor() {
   } = useForm({
     // for testing purpose only
     defaultValues: {
-      companyName: "Gorillaz Inc.",
-      firstname: "Test",
-      lastname: "Subject",
-      streetName: "Gorillaz Street, 123",
-      city: "New York",
-      postAddress: "Test Post Address",
-      telephoneNumber: "03123456780",
-      service: "Creating Music",
-      description: "We create music for you. We are the best in the world.",
-      startingCost: 300,
-      email: "gor123@test.com",
-      password: "KanyeLeast",
-      confirmPassword : "KanyeLeast",
-      documentType: "Ghana Card",
+      // companyName: "Gorillaz Inc.",
+      // firstname: "Test",
+      // lastname: "Subject",
+      // streetName: "Gorillaz Street, 123",
+      // city: "New York",
+      // postAddress: "Test Post Address",
+      // telephoneNumber: "03123456780",
+      // service: "Creating Music",
+      // description: "We create music for you. We are the best in the world.",
+      // startingCost: 300,
+      // email: "gor123@test.com",
+      // password: "KanyeLeast",
+      // confirmPassword: "KanyeLeast",
+      // documentType: "Ghana Card",
       // file: "",
     },
   });
@@ -91,36 +92,45 @@ export default function BecomeVendor() {
     ) {
       console.log(data);
 
-      const formData = new FormData();
-      formData.append("file", data.avi[0]);
+      const fileReader = new FileReader();
+      // convert image to base64 string and store it in a variable
+      // this variable will be sent to the server
 
-      // send data to the server
-      const dataToSend = {
-        companyName: data.companyName,
-        firstname: data.firstname,
-        lastname: data.lastname,
-        streetName: data.streetName,
-        city: data.city,
-        postAddress: data.postAddress,
-        telephoneNumber: data.telephoneNumber,
-        service: data.service,
-        description: data.description,
-        startingCost: data.startingCost,
-        email: data.email,
-        password: data.password,
-        documentType: data.documentType,
-        // store avi(picture)
-        avi: formData,
+      fileReader.onload = async function () {
+        const base64img = fileReader.result;
+        // send data to the server
+        const dataToSend = {
+          companyName: data.companyName,
+          firstname: data.firstname,
+          lastname: data.lastname,
+          streetName: data.streetName,
+          city: data.city,
+          postAddress: data.postAddress,
+          telephoneNumber: data.telephoneNumber,
+          service: data.service,
+          description: data.description,
+          startingCost: data.startingCost,
+          email: data.email,
+          password: data.password,
+          documentType: data.documentType,
+          avi: base64img,
+        };
+
+        // console.log("image sent:",base64img);
+
+        const result = await fetch("/api/vendor", {
+          method: "POST",
+          body: JSON.stringify(dataToSend),
+        });
+
+        console.log(result.status);
+
+        const response = await result.json();
+
+        console.log("Data Response: ", response);
       };
 
-      const result = await fetch("/api/vendor", {
-        method: "POST",
-        body: JSON.stringify(dataToSend),
-      });
-
-      const response = await result.json();
-
-      console.log("Data Response: ", response);
+      fileReader.readAsDataURL(data.avi[0]);
     } else {
       // set error if any of the checks fail
       if (!validateEmail(data.email)) {
