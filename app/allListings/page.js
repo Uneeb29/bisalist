@@ -1,93 +1,126 @@
+"use client";
+
 import {
-  Box,
-  Divider,
   Stack,
+  Box,
   Container,
   Typography,
-  Card,
-  CardActionArea,
   CardContent,
+  Card,
   CardMedia,
+  CardActionArea,
+  CardActions,
   Button,
+  Paper,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
-import { Translate } from "@mui/icons-material";
+import { useState } from "react";
+export default function AllListings() {
+  const services = [
+    "All",
+    "Electrician",
+    "Plumber",
+    "Masonry",
+    "Carpenter",
+    "Painter",
+  ];
 
-export default function PopularPlaces() {
-  const cards = [
+  const listOfServices = [
     {
-      title: "Plumber",
-      backgroundImage: "Plumber.jpg",
-
+      title: "Event Planning1",
+      category: "Events",
+      backgroundImage: "eventManagement.jpg",
       comments: 7,
       rating: 4.4,
       location: "St 178, Greater Accra, GA South",
     },
     {
-      title: "Masonry",
+      title: "Event Planning2",
+      category: "Events",
+      backgroundImage: "eventManagement.jpg",
+      comments: 3,
+      rating: 3.9,
+      location: "St 178, Greater Accra, GA South",
+    },
+    {
+      title: "Masonry1",
+      category: "Masonry",
       backgroundImage: "masonry.jpg",
       comments: 4,
       rating: 4.3,
       location: "St 178, Greater Accra, GA South",
     },
     {
-      title: "Event Planning",
-      backgroundImage: "eventManagement.jpg",
-      comments: 7,
+      title: "Masonry2",
+      category: "Masonry",
+      backgroundImage: "masonry.jpg",
+      comments: 2,
+      rating: "4.0",
+      location: "St 178, Greater Accra, GA South",
+    },
+    {
+      title: "Plumber1",
+      category: "Plumber",
+      backgroundImage: "Plumber.jpg",
+      comments: 10,
       rating: 4.4,
       location: "St 178, Greater Accra, GA South",
     },
+    {
+      title: "Plumber2",
+      category: "Plumber",
+      backgroundImage: "Plumber.jpg",
+      comments: 7,
+      rating: 4.9,
+      location: "St 178, Greater Accra, GA South",
+    },
   ];
+
+  const [selectedService, setSelectedService] = useState("All");
+
   return (
-    <Stack direction="column" sx={{ mt: 7 }}>
-      <Box
+    <Stack direction={"row"} sx={{ mt: 14 }}>
+      <Paper
         sx={{
-          textAlign: "center",
-          display: "grid",
-          placeItems: "center",
-          position: "relative",
-          mb: 10,
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+          p: 2,
+          bgcolor: "#334576",
         }}
+        elevation={2}
       >
-        {/* <Typography
-          variant="h1"
-          sx={{
-            fontSize: "60px",
-            fontWeight: "bold",
-            textTransform: "capitalize",
-            color: "rgba(0, 0, 0, 0.1)",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            zIndex: "-1",
-          }}
-        >
-          Best Listings
-        </Typography> */}
-        <Typography
-          variant="h2"
-          sx={{
-            color: "#607d8b",
-            fontSize: "30px",
-            fontWeight: "bold",
-            textTransform: "capitalize",
-          }}
-        >
-          Most Popular Places
-        </Typography>
-      </Box>
+        {services.map((service, index) => (
+          <Button
+            sx={{
+              mt: index != 0 ? 5 : 0,
+              backgroundColor:
+                selectedService === service ? "#4db4f9" : "transparent",
+            }}
+            onClick={() => setSelectedService(service)}
+          >
+            <Typography
+              sx={{
+                color: selectedService === service ? "#334576" : "white",
+                textTransform: "capitalize",
+                "&:hover": { color: "#4db4f9" },
+              }}
+            >
+              {service}
+            </Typography>
+          </Button>
+        ))}
+      </Paper>
       <Container
         sx={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "center",
+          flexWrap: "wrap",
         }}
       >
-        {cards.map((card, index) => (
+        {listOfServices.map((service, index) => (
           <Card
             key={index}
             sx={{
@@ -98,14 +131,18 @@ export default function PopularPlaces() {
               borderRadius: "10px",
               cursor: "pointer",
               height: "400px",
-              mr: 2,
+              mr: 3,
+              display:
+                service.category === selectedService || selectedService == "All"
+                  ? "block"
+                  : "none",
             }}
           >
             <CardActionArea>
               <CardMedia
                 component="img"
                 height="250"
-                image={card.backgroundImage}
+                image={service.backgroundImage}
               ></CardMedia>
 
               <Box
@@ -195,16 +232,16 @@ export default function PopularPlaces() {
                       fontWeight: "bold",
                     }}
                   >
-                    {card.rating}
+                    {service.rating}
                   </Typography>
                 </Box>
                 <Typography sx={{ color: "white", fontSize: "14px" }}>
-                  {card.comments} comments
+                  {service.comments} comments
                 </Typography>
               </Box>
               <CardContent sx={{}}>
                 <Typography gutterBottom variant="h5" component="div">
-                  {card.title}
+                  {service.title}
                 </Typography>
                 <Box
                   sx={{
@@ -218,7 +255,7 @@ export default function PopularPlaces() {
                     sx={{ color: "#4db4f9", fontSize: "15px", mr: 1 }}
                   ></LocationOnOutlinedIcon>
                   <Typography sx={{ fontSize: "12px" }}>
-                    {card.location}
+                    {service.location}
                   </Typography>
                 </Box>
                 <Typography variant="body2" color="text.secondary">
@@ -230,67 +267,6 @@ export default function PopularPlaces() {
           </Card>
         ))}
       </Container>
-      <Box
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-      >
-        <Button
-          sx={{
-            color: "white",
-            bgcolor: "#334576",
-            borderRadius: "25px",
-            p: 2,
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            "&:hover": { bgcolor: "#334576" },
-            mb: 22,
-          }}
-        >
-          <Typography
-            sx={{
-              mr: 1,
-              textTransform: "capitalize",
-              fontSize: "13px",
-              fontWeight: "bold",
-            }}
-          >
-            Check Out All Listings
-          </Typography>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <ArrowForwardOutlinedIcon
-              sx={{ color: "#4db4f9" }}
-            ></ArrowForwardOutlinedIcon>
-          </Box>
-        </Button>
-      </Box>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          mb: 6,
-        }}
-      >
-        <Typography
-          sx={{ color: "#4db4f9", fontSize: "35px", fontWeight: "bold", mb: 3 }}
-        >
-          Looking for a professional touch?
-        </Typography>
-        <Divider
-          sx={{
-            mb: 3,
-            bgcolor: "gray",
-            width: "25%",
-          }}
-          variant="middle"
-        />
-        <Typography>
-          Choose from our amazing packages designed to meet your needs.
-        </Typography>
-      </Box>
-      {/* <ServiceCard /> */}
     </Stack>
   );
 }
