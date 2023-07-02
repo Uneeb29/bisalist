@@ -29,19 +29,19 @@ export default function BecomeVendor() {
   } = useForm({
     // for testing purpose only
     defaultValues: {
-      companyName: "Gorillaz Inc.",
-      firstname: "Test",
-      lastname: "Subject",
-      streetName: "Gorillaz Street, 123",
-      city: "New York",
-      postAddress: "Test Post Address",
-      telephoneNumber: "03123456780",
-      service: "Creating Music",
-      description: "We create music for you. We are the best in the world.",
-      startingCost: 300,
-      email: "gor123@test.com",
-      password: "KanyeLeast",
-      documentType: "Ghana Card",
+      // companyName: "Gorillaz Inc.",
+      // firstname: "Test",
+      // lastname: "Subject",
+      // streetName: "Gorillaz Street, 123",
+      // city: "New York",
+      // postAddress: "Test Post Address",
+      // telephoneNumber: "03123456780",
+      // service: "Creating Music",
+      // description: "We create music for you. We are the best in the world.",
+      // startingCost: 300,
+      // email: "gor123@test.com",
+      // password: "KanyeLeast",
+      // documentType: "Ghana Card",
       // file: "",
     },
   });
@@ -106,7 +106,6 @@ export default function BecomeVendor() {
         documentType: data.documentType,
       };
 
-
       const result = await fetch("/api/vendor", {
         method: "POST",
         body: JSON.stringify(dataToSend),
@@ -115,9 +114,6 @@ export default function BecomeVendor() {
       const response = await result.json();
 
       console.log("Response: ", response);
-
-
-
     } else {
       // set error if any of the checks fail
       if (!validateEmail(data.email)) {
@@ -632,7 +628,6 @@ export default function BecomeVendor() {
                     required: "Starting Cost is required.",
                     // It should be a number
                     valueAsNumber: true,
-
                   })}
                   size="small"
                   sx={{

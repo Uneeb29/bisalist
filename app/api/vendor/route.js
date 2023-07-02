@@ -26,7 +26,7 @@ export async function POST(request) {
 
     return new Response(JSON.stringify(userWithoutPassword));
   } catch (err) {
-    // console.log("Error creating vendor: ", err);
+    console.log("Error creating vendor: ", err);
     return new Response(JSON.stringify(null));
   }
 }

@@ -2,6 +2,8 @@
 import { prisma } from "../../../lib/prisma-client";
 import * as bcrypt from "bcrypt";
 
+// used for test purposes
+
 // only serve POST requests
 export async function POST(request) {
   // get the customer data from the request body
@@ -28,10 +30,8 @@ export async function POST(request) {
 }
 
 // Example POST request body to test on Thunder Client
-
 // {
 // 	"name": "Test Account",
 // 	"email": "test133@test.com",
 // 	"password": "12345678",
-
 // }

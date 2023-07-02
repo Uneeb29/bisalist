@@ -24,8 +24,8 @@ export default function Login() {
     defaultValues: {
       // vendor: false,
       // customer: false,
-      email: "test@test.com",
-      password: "12345678",
+      // email: "test@test.com",
+      // password: "12345678",
     },
   });
 

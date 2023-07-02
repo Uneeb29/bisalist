@@ -55,15 +55,13 @@ export default function BecomeCustomer() {
       validatePhone(data.phone) &&
       data.password === data.c_password
     ) {
-
-
       let dataToSend = {
         name: data.name,
         email: data.email,
         phone: data.phone,
         password: data.password,
         offers: data.offers,
-        agreement: data.agreement
+        agreement: data.agreement,
       };
 
       const result = await fetch("/api/customer", {
@@ -76,7 +74,6 @@ export default function BecomeCustomer() {
 
       const response = await result.json();
       console.log("Response: ", response);
-
     } else {
       // check if email format is valid
       if (!validateEmail(data.email)) {

@@ -4,6 +4,7 @@ import { useSession, signIn } from "next-auth/react";
 function Check() {
   const { data: session, status } = useSession();
   console.log("session", session);
+  console.log("status", status);
 
   if (status === "authenticated") {
     return (
@@ -15,7 +16,7 @@ function Check() {
     );
   } else {
     return (
-      <div style={{ height: "200px", width: "100px" }}>
+      <div style={{ height: "150px", width: "100px" }}>
         <button
           style={{ height: "inherit", width: "inherit" }}
           onClick={() => signIn()}
