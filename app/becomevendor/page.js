@@ -29,19 +29,20 @@ export default function BecomeVendor() {
   } = useForm({
     // for testing purpose only
     defaultValues: {
-      // companyName: "Gorillaz Inc.",
-      // firstname: "Test",
-      // lastname: "Subject",
-      // streetName: "Gorillaz Street, 123",
-      // city: "New York",
-      // postAddress: "Test Post Address",
-      // telephoneNumber: "03123456780",
-      // service: "Creating Music",
-      // description: "We create music for you. We are the best in the world.",
-      // startingCost: 300,
-      // email: "gor123@test.com",
-      // password: "KanyeLeast",
-      // documentType: "Ghana Card",
+      companyName: "Gorillaz Inc.",
+      firstname: "Test",
+      lastname: "Subject",
+      streetName: "Gorillaz Street, 123",
+      city: "New York",
+      postAddress: "Test Post Address",
+      telephoneNumber: "03123456780",
+      service: "Creating Music",
+      description: "We create music for you. We are the best in the world.",
+      startingCost: 300,
+      email: "gor123@test.com",
+      password: "KanyeLeast",
+      confirmPassword : "KanyeLeast",
+      documentType: "Ghana Card",
       // file: "",
     },
   });
@@ -82,12 +83,16 @@ export default function BecomeVendor() {
     if (
       validateEmail(data.email) &&
       validatePhone(data.telephoneNumber) &&
-      validateFileType(data.file) &&
-      validateFileSize(data.file) &&
+      // removing file validation for now
+      // validateFileType(data.file) &&
+      // validateFileSize(data.file) &&
       data.startingCost > 0 &&
       data.password === data.confirmPassword
     ) {
       console.log(data);
+
+      const formData = new FormData();
+      formData.append("file", data.avi[0]);
 
       // send data to the server
       const dataToSend = {
@@ -104,6 +109,8 @@ export default function BecomeVendor() {
         email: data.email,
         password: data.password,
         documentType: data.documentType,
+        // store avi(picture)
+        avi: formData,
       };
 
       const result = await fetch("/api/vendor", {
@@ -113,7 +120,7 @@ export default function BecomeVendor() {
 
       const response = await result.json();
 
-      console.log("Response: ", response);
+      console.log("Data Response: ", response);
     } else {
       // set error if any of the checks fail
       if (!validateEmail(data.email)) {
@@ -166,44 +173,47 @@ export default function BecomeVendor() {
         >
           Register
         </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            width: "100%",
-            height: "200px",
-          }}
-        >
-          <Paper
-            elevation={3}
+
+        <form onSubmit={handleSubmit(sendData)}>
+          <Box
             sx={{
               display: "flex",
-              alignItems: "center",
+              flexDirection: "row",
               justifyContent: "center",
-              width: "200px",
+              width: "100%",
               height: "200px",
-              borderRadius: "50%",
             }}
           >
-            <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
-          </Paper>
-          <Button
-            sx={{
-              borderRadius: "50%",
-              height: "fit-content",
-              cursor: "pointer",
-              "&:hover": { backgroundColor: "#f5f5f5" },
-              boxShadow: "2px 2px 2px 2px #eeeeee",
-              minWidth: "fit-content",
-            }}
-            component="label"
-          >
-            <CreateIcon sx={{ fontSize: "20px", color: "black" }}></CreateIcon>
-            <input type="file" hidden />
-          </Button>
-        </Box>
-        <form onSubmit={handleSubmit(sendData)}>
+            <Paper
+              elevation={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "200px",
+                height: "200px",
+                borderRadius: "50%",
+              }}
+            >
+              <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
+            </Paper>
+            <Button
+              sx={{
+                borderRadius: "50%",
+                height: "fit-content",
+                cursor: "pointer",
+                "&:hover": { backgroundColor: "#f5f5f5" },
+                boxShadow: "2px 2px 2px 2px #eeeeee",
+                minWidth: "fit-content",
+              }}
+              component="label"
+            >
+              <CreateIcon
+                sx={{ fontSize: "20px", color: "black" }}
+              ></CreateIcon>
+              <input {...register("avi")} type="file" hidden />
+            </Button>
+          </Box>
           <FormControl sx={{ width: "100%", mt: 4, ml: 3 }}>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -867,7 +877,7 @@ export default function BecomeVendor() {
                     <input
                       accept="application/pdf" // only takes pdf files
                       {...register("file", {
-                        required: "File is required.",
+                        // required: "File is required.",
                       })}
                       type="file"
                       hidden
