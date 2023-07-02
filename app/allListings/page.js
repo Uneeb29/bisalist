@@ -16,7 +16,7 @@ import {
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 export default function AllListings() {
   const services = [
     "All",
