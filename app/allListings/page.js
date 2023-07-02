@@ -27,58 +27,24 @@ export default function AllListings() {
     "Painter",
   ];
 
-  const listOfServices = [
-    {
-      title: "Event Planning1",
-      category: "Events",
-      backgroundImage: "eventManagement.jpg",
-      comments: 7,
-      rating: 4.4,
-      location: "St 178, Greater Accra, GA South",
-    },
-    {
-      title: "Event Planning2",
-      category: "Events",
-      backgroundImage: "eventManagement.jpg",
-      comments: 3,
-      rating: 3.9,
-      location: "St 178, Greater Accra, GA South",
-    },
-    {
-      title: "Masonry1",
-      category: "Masonry",
-      backgroundImage: "masonry.jpg",
-      comments: 4,
-      rating: 4.3,
-      location: "St 178, Greater Accra, GA South",
-    },
-    {
-      title: "Masonry2",
-      category: "Masonry",
-      backgroundImage: "masonry.jpg",
-      comments: 2,
-      rating: "4.0",
-      location: "St 178, Greater Accra, GA South",
-    },
-    {
-      title: "Plumber1",
-      category: "Plumber",
-      backgroundImage: "Plumber.jpg",
-      comments: 10,
-      rating: 4.4,
-      location: "St 178, Greater Accra, GA South",
-    },
-    {
-      title: "Plumber2",
-      category: "Plumber",
-      backgroundImage: "Plumber.jpg",
-      comments: 7,
-      rating: 4.9,
-      location: "St 178, Greater Accra, GA South",
-    },
-  ];
+  // category is the category of the service (a string)
+  async function fetchListings(category) {
+    try {
+      const res = await fetch(`/api/listings?category=${category}`);
+      const data = await res.json();
+      console.log(data);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const [selectedService, setSelectedService] = useState("All");
+  const [listOfServices, setListOfServices] = useState([]);
+
+  useEffect(() => {
+    fetchListings(selectedService).then((data) => setListOfServices(data));
+  }, [selectedService]);
 
   return (
     <Stack direction={"row"} sx={{ mt: 14 }}>
@@ -92,7 +58,7 @@ export default function AllListings() {
         }}
         elevation={2}
       >
-        {services.map((service, index) => (
+        {services?.map((service, index) => (
           <Button
             sx={{
               mt: index != 0 ? 5 : 0,
@@ -120,7 +86,7 @@ export default function AllListings() {
           flexWrap: "wrap",
         }}
       >
-        {listOfServices.map((service, index) => (
+        {listOfServices?.map((service, index) => (
           <Card
             key={index}
             sx={{

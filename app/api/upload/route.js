@@ -1,39 +1,30 @@
-import { v2 as cloudinary } from "cloudinary";
-import formidable from "formidable";
-
-cloudinary.config({
-  // import from .env.local file
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET,
-});
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 export async function POST(request) {
   try {
-    const file = await new Promise((resolve, reject) => {
-      const form = formidable();
-      form.parse(request, (err, fields, files) => {
-        if (err) return reject(err);
-      });
-      form.on("file", (formName, file) => {
-        resolve(file);
-      });
+    // getting the image fro the request
+    const image = await request.json();
+
+    console.log("Uploading Image");
+
+    const url = `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`;
+    const body = new FormData();
+    body.append("file", image);
+    body.append("upload_preset", process.env.CLOUDINARY_UPLOAD_PRESET);
+    const res = await fetch(url, {
+      method: "POST",
+      body,
     });
+    const data = await res.json();
 
-    const data = await cloudinary.uploader.unsigned_upload(
-      file.filepath,
-      process.env.CLOUDINARY_UPLOAD_PRESET
+    console.log("Image Uploaded");
+
+    return new Response(
+      JSON.stringify({
+        url: data.secure_url,
+      }),
+      { status: 200 }
     );
-
-    return new Response(JSON.stringify({ fileUrl: data.secure_url }));
-  } catch (error) {
-    console.error(error);
-    return new Response(JSON.stringify({ error: error.message }));
+  } catch (err) {
+    console.log(err);
+    return new Response(JSON.stringify("Error Uploading"), { status: 500 });
   }
 }

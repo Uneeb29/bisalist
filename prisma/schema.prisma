@@ -35,8 +35,10 @@ model Vendor {
   email           String @unique
   password        String
   documentType    String
-  // cant store file in database
-  // file             String
+  
+  // listings        Listing[]
+
+
 }
 
 model Account {
@@ -83,4 +85,24 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+// title: "Event Planning1",
+//      category: "Events",
+      //backgroundImage: "eventManagement.jpg",
+      //comments: 7,
+      //rating: 4.4,
+      //location: "St 178, Greater Accra, GA South",
+
+model Listing {
+  id              Int     @id @default(autoincrement())
+  title           String
+  category        String
+  backgroundImage String
+  comments        Int
+  rating          Float
+  location        String
+  // vendorId        Int
+
+  // vendor          Vendor  @relation(fields: [vendorId], references: [id], onDelete: Cascade)
 }
