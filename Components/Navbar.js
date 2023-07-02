@@ -170,29 +170,16 @@ export default function Navbar() {
           }}
         >
           <PermIdentityIcon sx={{ color: "#4db4f9" }} />
-          {status === "authenticated" ? (
-            <Typography
-              sx={{
-                color: "white",
-                fontSize: "13px",
-                fontWeight: "bold",
-                textTransform: "capitalize",
-              }}
-            >
-              {session.user.name}
-            </Typography>
-          ) : (
-            <Typography
-              sx={{
-                color: "white",
-                fontSize: "13px",
-                fontWeight: "bold",
-                textTransform: "capitalize",
-              }}
-            >
-              Sign in
-            </Typography>
-          )}
+          <Typography
+            sx={{
+              color: "white",
+              fontSize: "13px",
+              fontWeight: "bold",
+              textTransform: "capitalize",
+            }}
+          >
+            Sign in
+          </Typography>
         </Button>
       </Link>
       <Button

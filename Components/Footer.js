@@ -17,6 +17,7 @@ export default function Footer() {
         width: "100%",
         pb: 4,
         bgcolor: "#eeeeee",
+        mt: 8,
       }}
       elevation={4}
     >

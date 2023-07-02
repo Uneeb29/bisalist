@@ -54,7 +54,7 @@ export default function PopularPlaces() {
           mb: 10,
         }}
       >
-        <Typography
+        {/* <Typography
           variant="h1"
           sx={{
             fontSize: "60px",
@@ -69,7 +69,7 @@ export default function PopularPlaces() {
           }}
         >
           Best Listings
-        </Typography>
+        </Typography> */}
         <Typography
           variant="h2"
           sx={{

@@ -8,6 +8,7 @@ import {
   TextField,
   Checkbox,
   Button,
+  Paper,
 } from "@mui/material";
 
 import { useForm } from "react-hook-form";
@@ -108,17 +109,16 @@ export default function BecomeCustomer() {
   }
 
   return (
-    <Stack
+    <Container
       sx={{
         width: "100vw",
-        bgcolor: "#eeeeee",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         mt: 4,
       }}
     >
-      <Container
+      <Paper
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -126,10 +126,11 @@ export default function BecomeCustomer() {
           width: "45%",
           mt: 10,
           borderRadius: "8px",
-          mb: 4,
           justifyContent: "center",
           alignItems: "center",
+          p: 3,
         }}
+        elevation={3}
       >
         <Typography sx={{ mt: 4, fontWeight: "bold", fontSize: "20px", mb: 4 }}>
           Register
@@ -159,6 +160,7 @@ export default function BecomeCustomer() {
                 size="small"
                 sx={{ bgcolor: "#eeeeee", p: 1, borderRadius: "5px" }}
                 variant="standard"
+                placeholder="Name"
                 InputProps={{ disableUnderline: true }}
               ></TextField>
             </Box>
@@ -231,7 +233,7 @@ export default function BecomeCustomer() {
                 <Typography
                   sx={{ fontWeight: "bold", fontSize: "14px", mr: 2 }}
                 >
-                  Password
+                  Password (Minimum 8 characters)
                 </Typography>
                 <p style={{ color: "red", fontSize: "12px" }}>
                   {errors.password?.message}
@@ -345,7 +347,7 @@ export default function BecomeCustomer() {
             </Box>
           </FormControl>
         </form>
-      </Container>
-    </Stack>
+      </Paper>
+    </Container>
   );
 }

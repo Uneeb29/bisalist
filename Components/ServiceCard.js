@@ -18,26 +18,26 @@ export default function ServiceCard() {
       category: "Electrician",
       backgroundImage: "electrician.jpg",
       createdBy: "By, admin",
-      createdByPicture: "electrician.jpg",
+      createdByPicture: "picture.jpg",
     },
     {
       title: "Masonry",
       category: "Masonry",
       backgroundImage: "masonry.jpg",
       createdBy: "By, admin",
-      createdByPicture: "masonry.jpg",
+      createdByPicture: "picture.jpg",
     },
     {
       title: "Event Planning",
       category: "Events",
       backgroundImage: "eventManagement.jpg",
       createdBy: "By, admin",
-      createdByPicture: "eventManagement.jpg",
+      createdByPicture: "picture.jpg",
     },
   ];
 
   return (
-    <Container sx={{  display:"flex", flexDirection:"row" }}>
+    <Container sx={{ display: "flex", flexDirection: "row" }}>
       {cards.map((card, index) => (
         <Card
           key={index}

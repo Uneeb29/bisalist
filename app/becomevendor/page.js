@@ -159,7 +159,7 @@ export default function BecomeVendor() {
     <Container sx={{ mt: 14 }}>
       <Paper
         elevation={3}
-        sx={{ display: "flex", flexDirection: "column", mb: 3, pb: 2 }}
+        sx={{ display: "flex", flexDirection: "column", pb: 2 }}
       >
         <Typography
           sx={{ fontSize: "20px", fontWeight: "bold", mt: 6, ml: 3, mb: 4 }}
