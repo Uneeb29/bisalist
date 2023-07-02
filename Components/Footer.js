@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Container, Typography, Paper } from "@mui/material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
@@ -14,7 +16,7 @@ export default function Footer() {
         flexDirection: "column",
         width: "100%",
         pb: 4,
-        bgcolor:"#eeeeee"
+        bgcolor: "#eeeeee",
       }}
       elevation={4}
     >
