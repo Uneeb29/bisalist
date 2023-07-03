@@ -1,4 +1,6 @@
-export default async function POST(request) {
+import { prisma } from "../../../lib/prisma-client";
+
+export async function POST(request) {
   try {
     const body = await request.json();
 
@@ -61,10 +63,33 @@ export default async function POST(request) {
 
 export async function GET(request) {
   try {
-    const categories = await prisma.category.findMany();
-    return new Response(JSON.stringify(categories), {
-      status: 200,
-    });
+    const { searchParams } = new URL(request.url);
+    const action = searchParams.get("action");
+    if (action === "name") {
+      const categories = await prisma.category.findMany({
+        select: {
+          name: true,
+        },
+      });
+
+      return new Response(JSON.stringify(categories), {
+        status: 200,
+      });
+    }
+
+    if (action === "all") {
+      const categories = await prisma.category.findMany({
+        include: {
+          id: true,
+          name: true,
+          image: true,
+        },
+      });
+
+      return new Response(JSON.stringify(categories), {
+        status: 200,
+      });
+    }
   } catch (error) {
     console.log(error);
     return new Response(JSON.stringify("Error getting Categories"), {

@@ -103,20 +103,53 @@ export default function BecomeVendor() {
       // removing file validation for now
       // validateFileType(data.file) &&
       // validateFileSize(data.file) &&
-      validateCategory(data.category) &&
+      // validateCategory(data.category) &&
       data.startingCost > 0 &&
       data.password === data.confirmPassword
     ) {
       console.log("Data: ", data);
 
-      const fileReader = new FileReader();
-      // convert image to base64 string and store it in a variable
-      // this variable will be sent to the server
+      if (data.avi.length !== 0 ) {
+        const fileReader = new FileReader();
+        // convert image to base64 string and store it in a variable
+        // this variable will be sent to the server
 
-      fileReader.onload = async function () {
-        const base64img = fileReader.result;
+        fileReader.onload = async function () {
+          const base64img = fileReader.result;
 
-        // send data to the server
+          // send data to the server
+          const dataToSend = {
+            companyName: data.companyName,
+            firstname: data.firstname,
+            lastname: data.lastname,
+            streetName: data.streetName,
+            city: data.city,
+            postAddress: data.postAddress,
+            telephoneNumber: data.telephoneNumber,
+            service: data.service,
+            description: data.description,
+            startingCost: data.startingCost,
+            email: data.email,
+            password: data.password,
+            documentType: data.documentType,
+            category: data.category,
+            avi: base64img,
+          };
+
+          const result = await fetch("/api/vendor", {
+            method: "POST",
+            body: JSON.stringify(dataToSend),
+          });
+
+          console.log("Response Status: ", result.status);
+
+          const response = await result.json();
+
+          console.log("Data Response: ", response);
+        };
+
+        fileReader.readAsDataURL(data.avi[0]);
+      } else {
         const dataToSend = {
           companyName: data.companyName,
           firstname: data.firstname,
@@ -132,7 +165,6 @@ export default function BecomeVendor() {
           password: data.password,
           documentType: data.documentType,
           category: data.category,
-          avi: base64img,
         };
 
         const result = await fetch("/api/vendor", {
@@ -145,9 +177,7 @@ export default function BecomeVendor() {
         const response = await result.json();
 
         console.log("Data Response: ", response);
-      };
-
-      fileReader.readAsDataURL(data.avi[0]);
+      }
     } else {
       // set error if any of the checks fail
       if (!validateEmail(data.email)) {
@@ -186,12 +216,12 @@ export default function BecomeVendor() {
           message: "Passwords do not match",
         });
       }
-      if (!validateCategory(data.category)) {
-        setError("category", {
-          type: "manual",
-          message: "Invalid category",
-        });
-      }
+      // if (!validateCategory(data.category)) {
+      //   setError("category", {
+      //     type: "manual",
+      //     message: "Invalid category",
+      //   });
+      // }
     }
   }
 

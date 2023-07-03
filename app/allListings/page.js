@@ -17,20 +17,12 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import { useState, useEffect } from "react";
+// import { set } from "react-hook-form";
 export default function AllListings() {
-  const services = [
-    "All",
-    "Electrician",
-    "Plumber",
-    "Masonry",
-    "Carpenter",
-    "Painter",
-  ];
-
-  // category is the category of the service (a string)
-  async function fetchListings(category) {
+  // a function to fetch all the categories from the backend
+  async function fetchCategories() {
     try {
-      const res = await fetch(`/api/listings?category=${category}`);
+      const res = await fetch("/api/category?action=name");
       const data = await res.json();
       console.log(data);
       return data;
@@ -39,12 +31,36 @@ export default function AllListings() {
     }
   }
 
-  const [selectedService, setSelectedService] = useState("All");
-  const [listOfServices, setListOfServices] = useState([]);
+  // category is the category of the service (a string)
+  async function fetchListings(category) {
+    try {
+      const res = await fetch(`/api/services?category=${category}`);
+      const data = await res.json();
+      console.log(data);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const [categories, setCategories] = useState(["All"]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [services, setServices] = useState([]);
 
   useEffect(() => {
-    fetchListings(selectedService).then((data) => setListOfServices(data));
-  }, [selectedService]);
+    fetchCategories().then((data) =>
+      setCategories((prev) => {
+        return [...prev, ...data];
+      })
+    );
+
+    fetchListings("All").then((data) => setServices(data));
+  }, []);
+
+  useEffect(() => {
+    fetchListings(selectedCategory).then((data) => setServices(data));
+  }, [selectedCategory]);
+
+  console.log(categories);
 
   return (
     <Stack direction={"row"} sx={{ mt: 14 }}>
@@ -58,23 +74,44 @@ export default function AllListings() {
         }}
         elevation={2}
       >
-        {services?.map((service, index) => (
+        <Button
+          sx={{
+            mt: 0,
+            backgroundColor:
+              selectedCategory === "All" ? "#4db4f9" : "transparent",
+          }}
+          onClick={() => setSelectedCategory("All")}
+        >
+          <Typography
+            sx={{
+              color: selectedCategory === "All" ? "#334576" : "white",
+              textTransform: "capitalize",
+              "&:hover": { color: "#4db4f9" },
+            }}
+          >
+            All Listings
+          </Typography>
+        </Button>
+        {categories?.map((category, index) => (
           <Button
+            key={index}
             sx={{
               mt: index != 0 ? 5 : 0,
               backgroundColor:
-                selectedService === service ? "#4db4f9" : "transparent",
+                selectedCategory === category.name ? "#4db4f9" : "transparent",
             }}
-            onClick={() => setSelectedService(service)}
+            onClick={() => {
+              setSelectedCategory(category.name);
+            }}
           >
             <Typography
               sx={{
-                color: selectedService === service ? "#334576" : "white",
+                color: selectedCategory === category.name ? "#334576" : "white",
                 textTransform: "capitalize",
                 "&:hover": { color: "#4db4f9" },
               }}
             >
-              {service}
+              {category.name}
             </Typography>
           </Button>
         ))}
@@ -86,9 +123,9 @@ export default function AllListings() {
           flexWrap: "wrap",
         }}
       >
-        {listOfServices?.map((service, index) => (
+        {services?.map((service, index) => (
           <Card
-            key={index}
+            key={service.title}
             sx={{
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
@@ -99,7 +136,8 @@ export default function AllListings() {
               height: "400px",
               mr: 3,
               display:
-                service.category === selectedService || selectedService == "All"
+                service.category.name === selectedCategory ||
+                selectedCategory == "All"
                   ? "block"
                   : "none",
             }}
@@ -108,7 +146,7 @@ export default function AllListings() {
               <CardMedia
                 component="img"
                 height="250"
-                image={service.backgroundImage}
+                image={service.category.image}
               ></CardMedia>
 
               <Box

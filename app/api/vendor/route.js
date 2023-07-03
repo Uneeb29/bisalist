@@ -2,6 +2,8 @@ import { prisma } from "../../../lib/prisma-client";
 import * as bcrypt from "bcrypt";
 const cloudinary = require("cloudinary").v2;
 
+// category will be a dropdown menu
+
 export async function POST(request) {
   try {
     const body = await request.json();
@@ -18,10 +20,24 @@ export async function POST(request) {
         status: 400,
       });
     } else {
+      // temporary fix for category if category does not exist return error
+      const categoryExists = await prisma.category.findUnique({
+        where: {
+          name: body.category,
+        },
+      });
+
+      if (!categoryExists) {
+        return new Response(JSON.stringify("Category does not exist"), {
+          status: 400,
+        });
+      }
+
       // create vendor
+
       const user = await prisma.vendor.create({
         data: {
-          companyName: body.companyName,
+          // companyName: body.companyName,
           firstname: body.firstname,
           lastname: body.lastname,
           streetName: body.streetName,
@@ -56,6 +72,7 @@ export async function POST(request) {
         data: {
           title: body.service,
           startingCost: body.startingCost,
+          companyName: body.companyName,
           location: `${body.streetName}, ${body.city}`,
           rating: 0,
           noOfComments: 0,
