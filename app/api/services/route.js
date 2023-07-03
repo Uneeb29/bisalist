@@ -1,5 +1,7 @@
 import { prisma } from "../../../lib/prisma-client";
 
+// export const dynamic = "force-dynamic";
+
 // services are added by vendors when they signup
 
 export async function GET(request) {
