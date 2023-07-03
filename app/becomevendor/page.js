@@ -15,6 +15,7 @@ import Person2Icon from "@mui/icons-material/Person2";
 import CreateIcon from "@mui/icons-material/Create";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SendIcon from "@mui/icons-material/Send";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { useForm } from "react-hook-form";
 
 // Reminders:
@@ -178,12 +179,31 @@ export default function BecomeVendor() {
           <Paper
             elevation={3}
             sx={{
+              width: "70%",
+              height: "250px",
+              position: "absolute",
+              zIndex: 0,
+              borderRadius: "16px",
+            }}
+          >
+            <Button component="label">
+              <AddAPhotoIcon
+                sx={{ fontSize: "50px", cursor: "pointer", color: "#eeeeee" }}
+              ></AddAPhotoIcon>
+              <input type="file" hidden />
+            </Button>
+          </Paper>
+          <Paper
+            elevation={3}
+            sx={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               width: "200px",
               height: "200px",
               borderRadius: "50%",
+              zIndex: 1,
+              mt: 2,
             }}
           >
             <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
@@ -196,6 +216,8 @@ export default function BecomeVendor() {
               "&:hover": { backgroundColor: "#f5f5f5" },
               boxShadow: "2px 2px 2px 2px #eeeeee",
               minWidth: "fit-content",
+              zIndex: 2,
+              mt: 2,
             }}
             component="label"
           >
@@ -204,7 +226,7 @@ export default function BecomeVendor() {
           </Button>
         </Box>
         <form onSubmit={handleSubmit(sendData)}>
-          <FormControl sx={{ width: "100%", mt: 4, ml: 3 }}>
+          <FormControl sx={{ width: "100%", mt: 10, ml: 3 }}>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Box sx={{ display: "flex", flexDirection: "row" }}>
                 <Box
@@ -537,9 +559,9 @@ export default function BecomeVendor() {
                     ) : null}
                   </Typography>
                   <TextField
-                    {...register("service", {
-                      required: "This field is required.",
-                    })}
+                    // {...register("service", {
+                    //   required: "This field is required.",
+                    // })}
                     placeholder="Service you provide"
                     size="small"
                     sx={{
