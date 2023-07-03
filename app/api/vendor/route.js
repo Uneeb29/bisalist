@@ -2,13 +2,6 @@ import { prisma } from "../../../lib/prisma-client";
 import * as bcrypt from "bcrypt";
 const cloudinary = require("cloudinary").v2;
 
-// cloudinary.configurations (given as env variables)
-// cloudinary.config({
-//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//   api_key: process.env.CLOUDINARY_API_KEY,
-//   api_secret: process.env.CLOUDINARY_API_SECRET,
-// });
-
 export async function POST(request) {
   try {
     const body = await request.json();
@@ -25,16 +18,6 @@ export async function POST(request) {
         status: 400,
       });
     } else {
-      // remove spaces from the base64 string but it should still be valid base64
-      // const image = body.avi.replace(/\s/g, "");
-      const image = body.avi;
-
-      // const cloudinaryResponse = await cloudinary.uploader.upload(image, {
-      //   upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
-      // });
-
-      // const cloudinaryPayload = await cloudinaryResponse.json();
-
       // create vendor
       const user = await prisma.vendor.create({
         data: {
@@ -45,24 +28,62 @@ export async function POST(request) {
           city: body.city,
           postAddress: body.postAddress,
           telephoneNumber: body.telephoneNumber,
-          service: body.service,
+          // service: body.service,
           description: body.description,
-          startingCost: body.startingCost,
+          // startingCost: body.startingCost,
           email: body.email,
           password: await bcrypt.hash(body.password, 10),
-          documentType: body.documentType,
-          avi: image,
+          fileType: body.documentType,
         },
       });
 
-      const { password, avi, ...userLite } = user;
+      // if image is provided add to vendor info
+      if (body.avi) {
+        const image = body.avi;
 
-      return new Response(JSON.stringify(userLite), {
+        await prisma.vendor.update({
+          where: {
+            id: user.id,
+          },
+          data: {
+            avi: image,
+          },
+        });
+      }
+
+      // add service to the service model
+      const service = await prisma.service.create({
+        data: {
+          title: body.service,
+          startingCost: body.startingCost,
+          location: `${body.streetName}, ${body.city}`,
+          rating: 0,
+          noOfComments: 0,
+
+          vendor: {
+            connect: {
+              id: user.id,
+            },
+          },
+
+          //category name is given so connect to category
+          category: {
+            connect: {
+              name: body.category,
+            },
+          },
+        },
+      });
+
+      return new Response(JSON.stringify("Vendor Created"), {
         status: 201,
       });
     }
   } catch (err) {
     console.log("Error creating vendor: ", err);
+    return new Response(JSON.stringify("Error creating vendor"), {
+      status: 500,
+    });
   }
 }
 
@@ -82,3 +103,15 @@ export async function POST(request) {
 //       "password": "KanyeLeast",
 //       "documentType": "Ghana Card",
 // }
+
+// cloudinary.config({
+//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//   api_key: process.env.CLOUDINARY_API_KEY,
+//   api_secret: process.env.CLOUDINARY_API_SECRET,
+// });
+
+// const cloudinaryResponse = await cloudinary.uploader.upload(image, {
+//   upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
+// });
+
+// const cloudinaryPayload = await cloudinaryResponse.json();

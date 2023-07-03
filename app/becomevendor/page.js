@@ -30,20 +30,21 @@ export default function BecomeVendor() {
   } = useForm({
     // for testing purpose only
     defaultValues: {
-      // companyName: "Gorillaz Inc.",
-      // firstname: "Test",
-      // lastname: "Subject",
-      // streetName: "Gorillaz Street, 123",
-      // city: "New York",
-      // postAddress: "Test Post Address",
-      // telephoneNumber: "03123456780",
-      // service: "Creating Music",
-      // description: "We create music for you. We are the best in the world.",
-      // startingCost: 300,
-      // email: "gor123@test.com",
-      // password: "KanyeLeast",
-      // confirmPassword: "KanyeLeast",
-      // documentType: "Ghana Card",
+      companyName: "Gorillaz Inc.",
+      firstname: "Test",
+      lastname: "Subject",
+      streetName: "Gorillaz Street, 123",
+      city: "New York",
+      postAddress: "Test Post Address",
+      telephoneNumber: "03123456780",
+      service: "Creating Music",
+      category: "Musician",
+      description: "We create music for you. We are the best in the world.",
+      startingCost: 300,
+      email: "gor123@test.com",
+      password: "12345678",
+      confirmPassword: "12345678",
+      documentType: "Ghana Card",
       // file: "",
     },
   });
@@ -79,6 +80,21 @@ export default function BecomeVendor() {
     return true;
   }
 
+  function validateCategory(category) {
+    // category should either be Electrician, Plumber, Carpenter, Masonry , Musician or Other
+    if (
+      category === "Electrician" ||
+      category === "Plumber" ||
+      category === "Carpenter" ||
+      category === "Masonry" ||
+      category === "Musician" ||
+      category === "Other"
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   async function sendData(data) {
     // log data in console if all checks are passed
     if (
@@ -87,10 +103,11 @@ export default function BecomeVendor() {
       // removing file validation for now
       // validateFileType(data.file) &&
       // validateFileSize(data.file) &&
+      validateCategory(data.category) &&
       data.startingCost > 0 &&
       data.password === data.confirmPassword
     ) {
-      console.log(data);
+      console.log("Data: ", data);
 
       const fileReader = new FileReader();
       // convert image to base64 string and store it in a variable
@@ -98,6 +115,7 @@ export default function BecomeVendor() {
 
       fileReader.onload = async function () {
         const base64img = fileReader.result;
+
         // send data to the server
         const dataToSend = {
           companyName: data.companyName,
@@ -113,17 +131,16 @@ export default function BecomeVendor() {
           email: data.email,
           password: data.password,
           documentType: data.documentType,
+          category: data.category,
           avi: base64img,
         };
-
-        // console.log("image sent:",base64img);
 
         const result = await fetch("/api/vendor", {
           method: "POST",
           body: JSON.stringify(dataToSend),
         });
 
-        console.log(result.status);
+        console.log("Response Status: ", result.status);
 
         const response = await result.json();
 
@@ -167,6 +184,12 @@ export default function BecomeVendor() {
         setError("confirmPassword", {
           type: "manual",
           message: "Passwords do not match",
+        });
+      }
+      if (!validateCategory(data.category)) {
+        setError("category", {
+          type: "manual",
+          message: "Invalid category",
         });
       }
     }
@@ -752,51 +775,98 @@ export default function BecomeVendor() {
                   ></TextField>
                 </Box>
               </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "45%",
-                  mt: 3,
-                }}
-              >
-                <Typography
+
+              <Box sx={{ display: "flex", flexDirection: "row", mt: 3 }}>
+                <Box
                   sx={{
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                    mb: 1,
                     display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
+                    flexDirection: "column",
+                    width: "45%",
+                    mr: 4,
                   }}
                 >
-                  Confirm Password
-                  {errors.confirmPassword ? (
-                    <Typography sx={{ fontSize: "12px", color: "red", ml: 2 }}>
-                      {errors.confirmPassword.message}
-                    </Typography>
-                  ) : null}
-                </Typography>
-                <TextField
-                  {...register("confirmPassword", {
-                    required: "Confirm Password is required.",
-                    minLength: {
-                      value: 8,
-                      message: "Password must be at least 8 characters",
-                    },
-                  })}
-                  placeholder="Password"
-                  size="small"
-                  type="password"
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    Confirm Password
+                    {errors.confirmPassword ? (
+                      <Typography
+                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
+                      >
+                        {errors.confirmPassword.message}
+                      </Typography>
+                    ) : null}
+                  </Typography>
+                  <TextField
+                    {...register("confirmPassword", {
+                      required: "Confirm Password is required.",
+                      minLength: {
+                        value: 8,
+                        message: "Password must be at least 8 characters",
+                      },
+                    })}
+                    placeholder="Password"
+                    size="small"
+                    type="password"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "5px",
+                      width: "100%",
+                    }}
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                  ></TextField>
+                </Box>
+                <Box
                   sx={{
-                    bgcolor: "#eeeeee",
-                    p: 1,
-                    borderRadius: "5px",
-                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "45%",
                   }}
-                  variant="standard"
-                  InputProps={{ disableUnderline: true }}
-                ></TextField>
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    Category (Electrician, Plumber, Masonry, Musician, etc.)
+                    {errors.category ? (
+                      <Typography
+                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
+                      >
+                        {errors.category.message}
+                      </Typography>
+                    ) : null}
+                  </Typography>
+                  <TextField
+                    {...register("category", {
+                      required: "Category is required.",
+                    })}
+                    placeholder="Category"
+                    size="small"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "5px",
+                      width: "100%",
+                    }}
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                  ></TextField>
+                </Box>
               </Box>
               <Typography sx={{ fontSize: "20px", mt: 3, fontWeight: "bold" }}>
                 Business Information

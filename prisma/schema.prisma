@@ -10,36 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Customer {
-  id        Int     @id @default(autoincrement())
-  name      String
-  email     String  @unique
-  phone     String  @unique
-  password  String
-  offers    Boolean @default(false)
-  agreement Boolean
-}
-
-model Vendor {
-  id              Int    @id @default(autoincrement())
-  companyName     String
-  firstname       String
-  lastname        String
-  streetName      String
-  city            String
-  postAddress     String
-  telephoneNumber String @unique
-  service         String
-  description     String
-  startingCost    Int
-  email           String @unique
-  password        String
-  documentType    String
-  avi            String
-  // listings        Listing[]
-
-
-}
 
 model Account {
   id                String  @id @default(cuid())
@@ -87,22 +57,60 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-// title: "Event Planning1",
-//      category: "Events",
-      //backgroundImage: "eventManagement.jpg",
-      //comments: 7,
-      //rating: 4.4,
-      //location: "St 178, Greater Accra, GA South",
+// model for the customer
+model Customer {
+  id        Int     @id @default(autoincrement())
+  name      String
+  email     String  @unique
+  phone     String  @unique
+  password  String
+  offers    Boolean @default(false)
+  agreement Boolean
+}
 
-model Listing {
+// model for the vendor
+model Vendor {
+  id              Int    @id @default(autoincrement())
+  firstname       String
+  lastname        String
+  streetName      String
+  city            String
+  postAddress     String
+  telephoneNumber String @unique
+  description     String
+  email           String @unique
+  password        String
+  avi            String // these images are for the user profile
+  cover          String
+  fileType       String
+  // foreign key (creates a relationship between the vendor and the listing)
+  services        Service[]
+}
+
+// model for the services offered by the vendor
+model Service {
   id              Int     @id @default(autoincrement())
-  title           String
-  category        String
-  backgroundImage String
-  comments        Int
+  title           String  // service title
+  companyName     String  // company name 
+  noOfComments    Int
   rating          Float
-  location        String
-  // vendorId        Int
+  location        String // vendor street + city
+  startingCost    Int
+  vendorId        Int
+  categoryId      Int
 
-  // vendor          Vendor  @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  // foreign key (creates a relationship between the listing and the vendor)
+  vendor          Vendor  @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  // foreign key (creates a relationship between the listing and the category)
+  category        Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+}
+
+// a model to store only categories and their images
+// will only be updated by the admin
+model Category {
+  id        Int     @id @default(autoincrement())
+  name      String  @unique
+  image     String  //will be base64 encoded image 
+  services  Service[]
 }
