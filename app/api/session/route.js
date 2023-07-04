@@ -1,0 +1,14 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../../lib/auth";
+import { NextResponse } from "next/server";
+
+// test endpoint to check if user is authenticated
+
+export async function GET(request) {
+  const session = await getServerSession(authOptions);
+
+  return NextResponse.json({
+    authenticated: !!session,
+    session,
+  });
+}

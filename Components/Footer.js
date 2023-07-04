@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Container, Typography, Paper } from "@mui/material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";

@@ -14,8 +14,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import QueueOutlinedIcon from "@mui/icons-material/QueueOutlined";
+import { useSession } from "next-auth/react";
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

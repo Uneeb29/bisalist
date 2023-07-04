@@ -16,69 +16,51 @@ import {
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+// import { set } from "react-hook-form";
 export default function AllListings() {
-  const services = [
-    "All",
-    "Electrician",
-    "Plumber",
-    "Masonry",
-    "Carpenter",
-    "Painter",
-  ];
+  // a function to fetch all the categories from the backend
+  async function fetchCategories() {
+    try {
+      const res = await fetch("/api/category?action=name");
+      const data = await res.json();
+      console.log(data);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-  const listOfServices = [
-    {
-      title: "Event Planning1",
-      category: "Events",
-      backgroundImage: "eventManagement.jpg",
-      comments: 7,
-      rating: 4.4,
-      location: "St 178, Greater Accra, GA South",
-    },
-    {
-      title: "Event Planning2",
-      category: "Events",
-      backgroundImage: "eventManagement.jpg",
-      comments: 3,
-      rating: 3.9,
-      location: "St 178, Greater Accra, GA South",
-    },
-    {
-      title: "Masonry1",
-      category: "Masonry",
-      backgroundImage: "masonry.jpg",
-      comments: 4,
-      rating: 4.3,
-      location: "St 178, Greater Accra, GA South",
-    },
-    {
-      title: "Masonry2",
-      category: "Masonry",
-      backgroundImage: "masonry.jpg",
-      comments: 2,
-      rating: "4.0",
-      location: "St 178, Greater Accra, GA South",
-    },
-    {
-      title: "Plumber1",
-      category: "Plumber",
-      backgroundImage: "Plumber.jpg",
-      comments: 10,
-      rating: 4.4,
-      location: "St 178, Greater Accra, GA South",
-    },
-    {
-      title: "Plumber2",
-      category: "Plumber",
-      backgroundImage: "Plumber.jpg",
-      comments: 7,
-      rating: 4.9,
-      location: "St 178, Greater Accra, GA South",
-    },
-  ];
+  // category is the category of the service (a string)
+  async function fetchListings(category) {
+    try {
+      const res = await fetch(`/api/services?category=${category}`);
+      const data = await res.json();
+      console.log(data);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const [categories, setCategories] = useState(["All"]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [services, setServices] = useState([]);
 
-  const [selectedService, setSelectedService] = useState("All");
+  useEffect(() => {
+    fetchCategories().then((data) =>
+      setCategories((prev) => {
+        return [...prev, ...data];
+      })
+    );
+
+    fetchListings("All").then((data) => setServices(data));
+  }, []);
+
+  useEffect(() => {
+    fetchListings(selectedCategory).then((data) => setServices(data));
+  }, [selectedCategory]);
+
+  console.log(categories);
 
   const filteredServices = listOfServices.filter(
     (service) =>
@@ -97,23 +79,44 @@ export default function AllListings() {
         }}
         elevation={2}
       >
-        {services.map((service, index) => (
+        <Button
+          sx={{
+            mt: 0,
+            backgroundColor:
+              selectedCategory === "All" ? "#4db4f9" : "transparent",
+          }}
+          onClick={() => setSelectedCategory("All")}
+        >
+          <Typography
+            sx={{
+              color: selectedCategory === "All" ? "#334576" : "white",
+              textTransform: "capitalize",
+              "&:hover": { color: "#4db4f9" },
+            }}
+          >
+            All Listings
+          </Typography>
+        </Button>
+        {categories?.map((category, index) => (
           <Button
+            key={index}
             sx={{
               mt: index != 0 ? 5 : 0,
               backgroundColor:
-                selectedService === service ? "#4db4f9" : "transparent",
+                selectedCategory === category.name ? "#4db4f9" : "transparent",
             }}
-            onClick={() => setSelectedService(service)}
+            onClick={() => {
+              setSelectedCategory(category.name);
+            }}
           >
             <Typography
               sx={{
-                color: selectedService === service ? "#334576" : "white",
+                color: selectedCategory === category.name ? "#334576" : "white",
                 textTransform: "capitalize",
                 "&:hover": { color: "#4db4f9" },
               }}
             >
-              {service}
+              {category.name}
             </Typography>
           </Button>
         ))}
@@ -125,38 +128,34 @@ export default function AllListings() {
           flexWrap: "wrap",
         }}
       >
-        {filteredServices.length === 0 ? (
-          <Box sx={{ width: "100%", textAlign: "center", mt: 4 }}>
-            <Typography variant="h6">
-              It looks like there are no such services available currently.
-            </Typography>
-          </Box>
-        ) : (
-          filteredServices.map((service, index) => (
-            <Card
-              key={index}
-              sx={{
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                width: "30%",
-                mb: 4,
-                borderRadius: "10px",
-                cursor: "pointer",
-                height: "400px",
-                mr: 3,
-                display:
-                  service.category === selectedService ||
-                  selectedService == "All"
-                    ? "block"
-                    : "none",
-              }}
-            >
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  height="250"
-                  image={service.backgroundImage}
-                ></CardMedia>
+
+
+        {services?.map((service, index) => (
+          <Card
+            key={service.title}
+            sx={{
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              width: "30%",
+              mb: 4,
+              borderRadius: "10px",
+              cursor: "pointer",
+              height: "400px",
+              mr: 3,
+              display:
+                service.category.name === selectedCategory ||
+                selectedCategory == "All"
+                  ? "block"
+                  : "none",
+            }}
+          >
+            <CardActionArea>
+              <CardMedia
+                component="img"
+                height="250"
+                image={service.category.image}
+              ></CardMedia>
+
 
                 <Box
                   sx={{
