@@ -15,6 +15,7 @@ import Person2Icon from "@mui/icons-material/Person2";
 import CreateIcon from "@mui/icons-material/Create";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SendIcon from "@mui/icons-material/Send";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { useForm } from "react-hook-form";
 import { basePath } from "../../next.config";
 
@@ -240,11 +241,29 @@ export default function BecomeVendor() {
         <form onSubmit={handleSubmit(sendData)}>
           <Box
             sx={{
+              width: "70%",
+              height: "250px",
+              position: "absolute",
+              zIndex: 0,
+              borderRadius: "16px",
+            }}
+          >
+            <Button component="label">
+              <AddAPhotoIcon
+                sx={{ fontSize: "50px", cursor: "pointer", color: "#eeeeee" }}
+              ></AddAPhotoIcon>
+              <input type="file" hidden />
+            </Button>
+          </Paper>
+          <Paper
+            elevation={3}
+            sx={{
               display: "flex",
               flexDirection: "row",
               justifyContent: "center",
               width: "100%",
               height: "200px",
+
             }}
           >
             <Paper
@@ -278,6 +297,7 @@ export default function BecomeVendor() {
             </Button>
           </Box>
           <FormControl sx={{ width: "100%", mt: 4, ml: 3 }}>
+
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Box sx={{ display: "flex", flexDirection: "row" }}>
                 <Box
@@ -610,9 +630,9 @@ export default function BecomeVendor() {
                     ) : null}
                   </Typography>
                   <TextField
-                    {...register("service", {
-                      required: "This field is required.",
-                    })}
+                    // {...register("service", {
+                    //   required: "This field is required.",
+                    // })}
                     placeholder="Service you provide"
                     size="small"
                     sx={{

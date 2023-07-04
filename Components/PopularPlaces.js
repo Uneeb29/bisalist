@@ -9,6 +9,7 @@ import {
   CardContent,
   CardMedia,
   Button,
+  Link,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
@@ -202,30 +203,36 @@ export default function PopularPlaces() {
                   {card.comments} comments
                 </Typography>
               </Box>
-              <CardContent sx={{}}>
-                <Typography gutterBottom variant="h5" component="div">
-                  {card.title}
-                </Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    mb: 3,
-                  }}
-                >
-                  <LocationOnOutlinedIcon
-                    sx={{ color: "#4db4f9", fontSize: "15px", mr: 1 }}
-                  ></LocationOnOutlinedIcon>
-                  <Typography sx={{ fontSize: "12px" }}>
-                    {card.location}
+              <Link
+                sx={{ color: "black" }}
+                underline="none"
+                href="/allListings"
+              >
+                <CardContent sx={{}}>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {card.title}
                   </Typography>
-                </Box>
-                <Typography variant="body2" color="text.secondary">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Quisquam
-                </Typography>
-              </CardContent>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      mb: 3,
+                    }}
+                  >
+                    <LocationOnOutlinedIcon
+                      sx={{ color: "#4db4f9", fontSize: "15px", mr: 1 }}
+                    ></LocationOnOutlinedIcon>
+                    <Typography sx={{ fontSize: "12px" }}>
+                      {card.location}
+                    </Typography>
+                  </Box>
+                  <Typography variant="body2" color="text.secondary">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Quisquam
+                  </Typography>
+                </CardContent>
+              </Link>
             </CardActionArea>
           </Card>
         ))}
