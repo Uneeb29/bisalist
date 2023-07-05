@@ -78,8 +78,9 @@ export async function GET(request) {
     }
 
     if (action === "all") {
+      // get all categories
       const categories = await prisma.category.findMany({
-        include: {
+        select: {
           id: true,
           name: true,
           image: true,
