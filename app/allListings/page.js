@@ -62,11 +62,6 @@ export default function AllListings() {
 
   console.log(categories);
 
-  const filteredServices = listOfServices.filter(
-    (service) =>
-      service.category === selectedService || selectedService === "All"
-  );
-
   return (
     <Stack direction={"row"} sx={{ mt: 14 }}>
       <Paper
@@ -128,8 +123,6 @@ export default function AllListings() {
           flexWrap: "wrap",
         }}
       >
-
-
         {services?.map((service, index) => (
           <Card
             key={service.title}
@@ -156,129 +149,127 @@ export default function AllListings() {
                 image={service.category.image}
               ></CardMedia>
 
-
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 10,
+                  left: 10,
+                  zIndex: 1,
+                  width: "90%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
                 <Box
                   sx={{
-                    position: "absolute",
-                    top: 10,
-                    left: 10,
-                    zIndex: 1,
-                    width: "90%",
+                    bgcolor: "#334576",
+                    borderRadius: "50%",
                     display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      bgcolor: "#334576",
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      p: 0.6,
-                      cursor: "pointer",
-                      height: "fit-content",
-                    }}
-                  >
-                    <FavoriteBorderIcon
-                      sx={{
-                        color: "white",
-                        height: "20px",
-                        "&:hover": {
-                          color: "#4db4f9",
-                        },
-                      }}
-                    ></FavoriteBorderIcon>
-                  </Box>
-                  <Box
-                    sx={{
-                      p: 0.5,
-                      borderRadius: "20px",
-                      bgcolor: "grey",
-                      width: "30%",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        bgcolor: "#1de9b6",
-                        borderRadius: "16px",
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        p: 0.75,
-                      }}
-                    >
-                      <LockOpenRoundedIcon
-                        sx={{ color: "white", height: "15px", width: "20px" }}
-                      ></LockOpenRoundedIcon>
-                      <Typography sx={{ color: "white", fontSize: "10px" }}>
-                        Book Now
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: 190,
-                    left: 10,
-                    zIndex: 1,
-                    width: "90%",
-                    display: "flex",
-                    flexDirection: "row",
                     alignItems: "center",
+                    p: 0.6,
+                    cursor: "pointer",
+                    height: "fit-content",
+                  }}
+                >
+                  <FavoriteBorderIcon
+                    sx={{
+                      color: "white",
+                      height: "20px",
+                      "&:hover": {
+                        color: "#4db4f9",
+                      },
+                    }}
+                  ></FavoriteBorderIcon>
+                </Box>
+                <Box
+                  sx={{
+                    p: 0.5,
+                    borderRadius: "20px",
+                    bgcolor: "grey",
+                    width: "30%",
                   }}
                 >
                   <Box
                     sx={{
-                      p: 1.25,
-                      bgcolor: "#334576",
-                      borderRadius: "5px",
-                      mr: 2,
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        color: "white",
-                        fontSize: "14px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {service.rating}
-                    </Typography>
-                  </Box>
-                  <Typography sx={{ color: "white", fontSize: "14px" }}>
-                    {service.comments} comments
-                  </Typography>
-                </Box>
-                <CardContent sx={{}}>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {service.title}
-                  </Typography>
-                  <Box
-                    sx={{
+                      bgcolor: "#1de9b6",
+                      borderRadius: "16px",
                       display: "flex",
                       flexDirection: "row",
                       alignItems: "center",
-                      mb: 3,
+                      justifyContent: "space-between",
+                      p: 0.75,
                     }}
                   >
-                    <LocationOnOutlinedIcon
-                      sx={{ color: "#4db4f9", fontSize: "15px", mr: 1 }}
-                    ></LocationOnOutlinedIcon>
-                    <Typography sx={{ fontSize: "12px" }}>
-                      {service.location}
+                    <LockOpenRoundedIcon
+                      sx={{ color: "white", height: "15px", width: "20px" }}
+                    ></LockOpenRoundedIcon>
+                    <Typography sx={{ color: "white", fontSize: "10px" }}>
+                      Book Now
                     </Typography>
                   </Box>
-                  <Typography variant="body2" color="text.secondary">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quisquam
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 190,
+                  left: 10,
+                  zIndex: 1,
+                  width: "90%",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Box
+                  sx={{
+                    p: 1.25,
+                    bgcolor: "#334576",
+                    borderRadius: "5px",
+                    mr: 2,
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: "white",
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {service.rating}
                   </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          ))
-        )}
+                </Box>
+                <Typography sx={{ color: "white", fontSize: "14px" }}>
+                  {service.comments} comments
+                </Typography>
+              </Box>
+              <CardContent sx={{}}>
+                <Typography gutterBottom variant="h5" component="div">
+                  {service.title}
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    mb: 3,
+                  }}
+                >
+                  <LocationOnOutlinedIcon
+                    sx={{ color: "#4db4f9", fontSize: "15px", mr: 1 }}
+                  ></LocationOnOutlinedIcon>
+                  <Typography sx={{ fontSize: "12px" }}>
+                    {service.location}
+                  </Typography>
+                </Box>
+                <Typography variant="body2" color="text.secondary">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Quisquam
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        ))}
       </Container>
     </Stack>
   );

@@ -81,20 +81,20 @@ export default function BecomeVendor() {
     return true;
   }
 
-  function validateCategory(category) {
-    // category should either be Electrician, Plumber, Carpenter, Masonry , Musician or Other
-    if (
-      category === "Electrician" ||
-      category === "Plumber" ||
-      category === "Carpenter" ||
-      category === "Masonry" ||
-      category === "Musician" ||
-      category === "Other"
-    ) {
-      return true;
-    }
-    return false;
-  }
+  // function validateCategory(category) {
+  //   // category should either be Electrician, Plumber, Carpenter, Masonry , Musician or Other
+  //   if (
+  //     category === "Electrician" ||
+  //     category === "Plumber" ||
+  //     category === "Carpenter" ||
+  //     category === "Masonry" ||
+  //     category === "Musician" ||
+  //     category === "Other"
+  //   ) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   async function sendData(data) {
     // log data in console if all checks are passed
@@ -110,7 +110,7 @@ export default function BecomeVendor() {
     ) {
       console.log("Data: ", data);
 
-      if (data.avi.length !== 0 ) {
+      if (data.avi.length !== 0) {
         const fileReader = new FileReader();
         // convert image to base64 string and store it in a variable
         // this variable will be sent to the server
@@ -133,7 +133,7 @@ export default function BecomeVendor() {
             email: data.email,
             password: data.password,
             documentType: data.documentType,
-            category: data.category,
+            // category: data.category,
             avi: base64img,
           };
 
@@ -239,65 +239,71 @@ export default function BecomeVendor() {
         </Typography>
 
         <form onSubmit={handleSubmit(sendData)}>
-          <Box
-            sx={{
-              width: "70%",
-              height: "250px",
-              position: "absolute",
-              zIndex: 0,
-              borderRadius: "16px",
-            }}
-          >
-            <Button component="label">
-              <AddAPhotoIcon
-                sx={{ fontSize: "50px", cursor: "pointer", color: "#eeeeee" }}
-              ></AddAPhotoIcon>
-              <input type="file" hidden />
-            </Button>
-          </Paper>
-          <Paper
-            elevation={3}
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              width: "100%",
-              height: "200px",
-
-            }}
-          >
-            <Paper
-              elevation={3}
+          <FormControl sx={{ width: "100%", mt: 10, ml: 3 }}>
+            <Box
               sx={{
                 display: "flex",
-                alignItems: "center",
+                flexDirection: "row",
                 justifyContent: "center",
-                width: "200px",
+                width: "100%",
                 height: "200px",
-                borderRadius: "50%",
               }}
             >
-              <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
-            </Paper>
-            <Button
-              sx={{
-                borderRadius: "50%",
-                height: "fit-content",
-                cursor: "pointer",
-                "&:hover": { backgroundColor: "#f5f5f5" },
-                boxShadow: "2px 2px 2px 2px #eeeeee",
-                minWidth: "fit-content",
-              }}
-              component="label"
-            >
-              <CreateIcon
-                sx={{ fontSize: "20px", color: "black" }}
-              ></CreateIcon>
-              <input {...register("avi")} type="file" hidden />
-            </Button>
-          </Box>
-          <FormControl sx={{ width: "100%", mt: 4, ml: 3 }}>
-
+              <Paper
+                elevation={3}
+                sx={{
+                  width: "70%",
+                  height: "250px",
+                  position: "absolute",
+                  zIndex: 0,
+                  borderRadius: "16px",
+                }}
+              >
+                <Button component="label">
+                  <AddAPhotoIcon
+                    sx={{
+                      fontSize: "50px",
+                      cursor: "pointer",
+                      color: "#eeeeee",
+                    }}
+                  ></AddAPhotoIcon>
+                  <input type="file" hidden />
+                </Button>
+              </Paper>
+              <Paper
+                elevation={3}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "200px",
+                  height: "200px",
+                  borderRadius: "50%",
+                  zIndex: 1,
+                  mt: 2,
+                }}
+              >
+                <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
+              </Paper>
+              <Button
+                sx={{
+                  borderRadius: "50%",
+                  height: "fit-content",
+                  cursor: "pointer",
+                  "&:hover": { backgroundColor: "#f5f5f5" },
+                  boxShadow: "2px 2px 2px 2px #eeeeee",
+                  minWidth: "fit-content",
+                  zIndex: 2,
+                  mt: 2,
+                }}
+                component="label"
+              >
+                <CreateIcon
+                  sx={{ fontSize: "20px", color: "black" }}
+                ></CreateIcon>
+                <input type="file" hidden />
+              </Button>
+            </Box>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Box sx={{ display: "flex", flexDirection: "row" }}>
                 <Box
@@ -327,7 +333,6 @@ export default function BecomeVendor() {
                       </Typography>
                     ) : null}
                   </Typography>
-
                   <TextField
                     {...register("companyName", {
                       required: "Company Name is required.",
@@ -825,98 +830,51 @@ export default function BecomeVendor() {
                   ></TextField>
                 </Box>
               </Box>
-
-              <Box sx={{ display: "flex", flexDirection: "row", mt: 3 }}>
-                <Box
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "45%",
+                  mt: 3,
+                }}
+              >
+                <Typography
                   sx={{
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    mb: 1,
                     display: "flex",
-                    flexDirection: "column",
-                    width: "45%",
-                    mr: 4,
+                    flexDirection: "row",
+                    alignItems: "center",
                   }}
                 >
-                  <Typography
-                    sx={{
-                      fontSize: "14px",
-                      fontWeight: "bold",
-                      mb: 1,
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    Confirm Password
-                    {errors.confirmPassword ? (
-                      <Typography
-                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
-                      >
-                        {errors.confirmPassword.message}
-                      </Typography>
-                    ) : null}
-                  </Typography>
-                  <TextField
-                    {...register("confirmPassword", {
-                      required: "Confirm Password is required.",
-                      minLength: {
-                        value: 8,
-                        message: "Password must be at least 8 characters",
-                      },
-                    })}
-                    placeholder="Password"
-                    size="small"
-                    type="password"
-                    sx={{
-                      bgcolor: "#eeeeee",
-                      p: 1,
-                      borderRadius: "5px",
-                      width: "100%",
-                    }}
-                    variant="standard"
-                    InputProps={{ disableUnderline: true }}
-                  ></TextField>
-                </Box>
-                <Box
+                  Confirm Password
+                  {errors.confirmPassword ? (
+                    <Typography sx={{ fontSize: "12px", color: "red", ml: 2 }}>
+                      {errors.confirmPassword.message}
+                    </Typography>
+                  ) : null}
+                </Typography>
+                <TextField
+                  {...register("confirmPassword", {
+                    required: "Confirm Password is required.",
+                    minLength: {
+                      value: 8,
+                      message: "Password must be at least 8 characters",
+                    },
+                  })}
+                  placeholder="Password"
+                  size="small"
+                  type="password"
                   sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "45%",
+                    bgcolor: "#eeeeee",
+                    p: 1,
+                    borderRadius: "5px",
+                    width: "100%",
                   }}
-                >
-                  <Typography
-                    sx={{
-                      fontSize: "14px",
-                      fontWeight: "bold",
-                      mb: 1,
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    Category (Electrician, Plumber, Masonry, Musician, etc.)
-                    {errors.category ? (
-                      <Typography
-                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
-                      >
-                        {errors.category.message}
-                      </Typography>
-                    ) : null}
-                  </Typography>
-                  <TextField
-                    {...register("category", {
-                      required: "Category is required.",
-                    })}
-                    placeholder="Category"
-                    size="small"
-                    sx={{
-                      bgcolor: "#eeeeee",
-                      p: 1,
-                      borderRadius: "5px",
-                      width: "100%",
-                    }}
-                    variant="standard"
-                    InputProps={{ disableUnderline: true }}
-                  ></TextField>
-                </Box>
+                  variant="standard"
+                  InputProps={{ disableUnderline: true }}
+                ></TextField>
               </Box>
               <Typography sx={{ fontSize: "20px", mt: 3, fontWeight: "bold" }}>
                 Business Information
@@ -1007,7 +965,7 @@ export default function BecomeVendor() {
                     <input
                       accept="application/pdf" // only takes pdf files
                       {...register("file", {
-                        // required: "File is required.",
+                        required: "File is required.",
                       })}
                       type="file"
                       hidden

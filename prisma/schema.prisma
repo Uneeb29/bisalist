@@ -81,7 +81,6 @@ model Vendor {
   email           String @unique
   password        String
   avi            String? // these images are for the user profile
-  cover          String?
   fileType       String
   // foreign key (creates a relationship between the vendor and the listing)
   services        Service[]
@@ -90,12 +89,13 @@ model Vendor {
 // model for the services offered by the vendor
 model Service {
   id              Int     @id @default(autoincrement())
-  title           String  // service title
-  companyName     String  // company name 
+  title           String?  // service title
+  companyName     String?  // company name 
   noOfComments    Int?
   rating          Float?
   location        String // vendor street + city
-  startingCost    Int
+  cover          String?
+  startingCost    Int?
   vendorId        Int
   categoryId      Int
 
