@@ -23,7 +23,7 @@ export async function POST(request) {
       // temporary fix for category if category does not exist return error
       const categoryExists = await prisma.category.findUnique({
         where: {
-          name: body.category,
+          name: body.service,
         },
       });
 
@@ -86,11 +86,24 @@ export async function POST(request) {
           //category name is given so connect to category
           category: {
             connect: {
-              name: body.category,
+              name: body.service,
             },
           },
         },
       });
+
+      if (body.cover) {
+        const cover = body.cover;
+
+        await prisma.service.update({
+          where: {
+            id: service.id,
+          },
+          data: {
+            cover: cover,
+          },
+        });
+      }
 
       return new Response(JSON.stringify("Vendor Created"), {
         status: 201,
