@@ -6,6 +6,7 @@ import {
   Divider,
   Stack,
   Typography,
+  Link,
 } from "@mui/material";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";

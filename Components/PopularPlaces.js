@@ -22,23 +22,16 @@ export default function PopularPlaces() {
     {
       title: "Plumber",
       backgroundImage: "Plumber.jpg",
-
-      comments: 7,
-      rating: 4.4,
       location: "St 178, Greater Accra, GA South",
     },
     {
       title: "Masonry",
       backgroundImage: "masonry.jpg",
-      comments: 4,
-      rating: 4.3,
       location: "St 178, Greater Accra, GA South",
     },
     {
       title: "Event Planning",
       backgroundImage: "eventManagement.jpg",
-      comments: 7,
-      rating: 4.4,
       location: "St 178, Greater Accra, GA South",
     },
   ];
@@ -169,7 +162,7 @@ export default function PopularPlaces() {
                   </Box>
                 </Box>
               </Box>
-              <Box
+              {/* <Box
                 sx={{
                   position: "absolute",
                   top: 190,
@@ -202,7 +195,7 @@ export default function PopularPlaces() {
                 <Typography sx={{ color: "white", fontSize: "14px" }}>
                   {card.comments} comments
                 </Typography>
-              </Box>
+              </Box> */}
               <Link
                 sx={{ color: "black" }}
                 underline="none"
@@ -240,35 +233,37 @@ export default function PopularPlaces() {
       <Box
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
-        <Button
-          sx={{
-            color: "white",
-            bgcolor: "#334576",
-            borderRadius: "25px",
-            p: 2,
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            "&:hover": { bgcolor: "#334576" },
-            mb: 22,
-          }}
-        >
-          <Typography
+        <Link href="/allListings" underline="none">
+          <Button
             sx={{
-              mr: 1,
-              textTransform: "capitalize",
-              fontSize: "13px",
-              fontWeight: "bold",
+              color: "white",
+              bgcolor: "#334576",
+              borderRadius: "25px",
+              p: 2,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              "&:hover": { bgcolor: "#334576" },
+              mb: 22,
             }}
           >
-            Check Out All Listings
-          </Typography>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <ArrowForwardOutlinedIcon
-              sx={{ color: "#4db4f9" }}
-            ></ArrowForwardOutlinedIcon>
-          </Box>
-        </Button>
+            <Typography
+              sx={{
+                mr: 1,
+                textTransform: "capitalize",
+                fontSize: "13px",
+                fontWeight: "bold",
+              }}
+            >
+              Check Out All Listings
+            </Typography>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <ArrowForwardOutlinedIcon
+                sx={{ color: "#4db4f9" }}
+              ></ArrowForwardOutlinedIcon>
+            </Box>
+          </Button>
+        </Link>
       </Box>
       <Box
         sx={{

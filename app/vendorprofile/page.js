@@ -5,30 +5,30 @@ import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
-const IconRow = ({ iconCount }) => {
-  const icons = [];
+// const IconRow = ({ iconCount }) => {
+//   const icons = [];
 
-  for (let i = 0; i < iconCount; i++) {
-    icons.push(<StarOutlinedIcon key={i} />); // Replace `IconName` with the specific Material-UI icon component
-  }
+//   for (let i = 0; i < iconCount; i++) {
+//     icons.push(<StarOutlinedIcon key={i} />); // Replace `IconName` with the specific Material-UI icon component
+//   }
 
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        mr: 2,
-        color: "gold",
-        alignItems: "center",
-      }}
-    >
-      {icons}
-      <Typography sx={{ fontSize: "20px", fontWeight: "bold", ml: 1 }}>
-        {iconCount}
-      </Typography>
-    </Box>
-  );
-};
+//   return (
+//     <Box
+//       sx={{
+//         display: "flex",
+//         flexDirection: "row",
+//         mr: 2,
+//         color: "gold",
+//         alignItems: "center",
+//       }}
+//     >
+//       {icons}
+//       <Typography sx={{ fontSize: "20px", fontWeight: "bold", ml: 1 }}>
+//         {iconCount}
+//       </Typography>
+//     </Box>
+//   );
+// };
 
 export default function VendorProfile() {
   return (
@@ -47,7 +47,7 @@ export default function VendorProfile() {
         <Typography sx={{ fontSize: "26px", fontWeight: "bold", mb: 2 }}>
           We will provide xyz service
         </Typography>
-        <Box
+        {/* <Box
           sx={{
             display: "flex",
             flexDirection: "row",
@@ -59,7 +59,7 @@ export default function VendorProfile() {
           <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
             (150)
           </Typography>
-        </Box>
+        </Box> */}
         <Box
           sx={{ display: "flex", flexDirection: "row", width: "100%", mb: 4 }}
         >
@@ -110,7 +110,7 @@ export default function VendorProfile() {
       >
         <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
           <Typography sx={{ fontSize: "22px" }}>Basic</Typography>
-          <Typography sx={{ fontSize: "22px" }}>$5</Typography>
+          <Typography sx={{ fontSize: "22px" }}>GH₵5</Typography>
         </Box>
         <Typography sx={{ fontSize: "14px", mb: 2 }}>
           Lorem Ipsum is simply dummy text of the printing and typesetting

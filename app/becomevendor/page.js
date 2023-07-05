@@ -110,7 +110,7 @@ export default function BecomeVendor() {
     ) {
       console.log("Data: ", data);
 
-      if (data.avi.length !== 0 ) {
+      if (data.avi.length !== 0) {
         const fileReader = new FileReader();
         // convert image to base64 string and store it in a variable
         // this variable will be sent to the server
@@ -254,7 +254,7 @@ export default function BecomeVendor() {
               ></AddAPhotoIcon>
               <input type="file" hidden />
             </Button>
-          </Paper>
+          </Box>
           <Paper
             elevation={3}
             sx={{
@@ -263,7 +263,6 @@ export default function BecomeVendor() {
               justifyContent: "center",
               width: "100%",
               height: "200px",
-
             }}
           >
             <Paper
@@ -295,9 +294,8 @@ export default function BecomeVendor() {
               ></CreateIcon>
               <input {...register("avi")} type="file" hidden />
             </Button>
-          </Box>
+          </Paper>
           <FormControl sx={{ width: "100%", mt: 4, ml: 3 }}>
-
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Box sx={{ display: "flex", flexDirection: "row" }}>
                 <Box
@@ -629,21 +627,26 @@ export default function BecomeVendor() {
                       </Typography>
                     ) : null}
                   </Typography>
-                  <TextField
-                    // {...register("service", {
-                    //   required: "This field is required.",
-                    // })}
-                    placeholder="Service you provide"
+                  <Select
+                    {...register("documentType", {
+                      required: "Document type is required.",
+                    })}
+                    label="Select document type"
+                    sx={{ width: "45%", bgcolor: "#eeeeee" }}
                     size="small"
-                    sx={{
-                      bgcolor: "#eeeeee",
-                      p: 1,
-                      borderRadius: "5px",
-                      width: "100%",
-                    }}
-                    variant="standard"
-                    InputProps={{ disableUnderline: true }}
-                  ></TextField>
+                  >
+                    <MenuItem value="1">Cleaning Services</MenuItem>
+                    <MenuItem value="2">Carpentry</MenuItem>
+                    <MenuItem value="3">Masonry</MenuItem>
+                    <MenuItem value="4">Plumber</MenuItem>
+                    <MenuItem value="5">Electrician</MenuItem>
+                    <MenuItem value="6">General Contractor</MenuItem>
+                    <MenuItem value="7">Property Management</MenuItem>
+                    <MenuItem value="8">Appliance Services/Repair</MenuItem>
+                    <MenuItem value="9">Home Services/Installation</MenuItem>
+                    <MenuItem value="10">Salons</MenuItem>
+                    <MenuItem value="11">Event Planning</MenuItem>
+                  </Select>
                 </Box>
               </Box>
               <Box
@@ -875,7 +878,7 @@ export default function BecomeVendor() {
                     InputProps={{ disableUnderline: true }}
                   ></TextField>
                 </Box>
-                <Box
+                {/* <Box
                   sx={{
                     display: "flex",
                     flexDirection: "column",
@@ -916,7 +919,7 @@ export default function BecomeVendor() {
                     variant="standard"
                     InputProps={{ disableUnderline: true }}
                   ></TextField>
-                </Box>
+                </Box> */}
               </Box>
               <Typography sx={{ fontSize: "20px", mt: 3, fontWeight: "bold" }}>
                 Business Information
