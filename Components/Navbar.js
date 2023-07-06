@@ -14,8 +14,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import QueueOutlinedIcon from "@mui/icons-material/QueueOutlined";
+import { useSession } from "next-auth/react";
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -36,8 +38,8 @@ export default function Navbar() {
       height="5rem"
       width="100%"
     >
-      <Link sx={{ ml: 4, cursor:"pointer" }} height={"100%"} href="/">
-        <img src="logo1.png" style={{ height: "50%", marginTop:"10%" }}></img>
+      <Link sx={{ ml: 4, cursor: "pointer" }} height={"100%"} href="/">
+        <img src="logo1.png" style={{ height: "50%", marginTop: "10%" }}></img>
       </Link>
       <Box
         sx={{
@@ -96,6 +98,7 @@ export default function Navbar() {
           sx={{
             cursor: "pointer",
           }}
+          href="/contactus"
         >
           <Typography
             sx={{
@@ -110,7 +113,7 @@ export default function Navbar() {
             Contact us
           </Typography>
         </Link>
-        <Link underline="none" sx={{ cursor: "pointer" }}>
+        <Link underline="none" sx={{ cursor: "pointer" }} href="/aboutus">
           <Typography
             sx={{
               color: "white",
@@ -138,7 +141,7 @@ export default function Navbar() {
             Login
           </Typography>
         </Link> */}
-        <Link underline="none" sx={{ cursor: "pointer" }}>
+        {/* <Link underline="none" sx={{ cursor: "pointer" }}>
           <Typography
             sx={{
               color: "white",
@@ -151,33 +154,33 @@ export default function Navbar() {
           >
             Track Jobs
           </Typography>
-        </Link>
+        </Link> */}
       </Stack>
       <Divider
         sx={{ bgcolor: "#4db4f9", height: "20px", width: "1px", mr: 1 }}
       ></Divider>
       <Link underline="none" href="/login">
-      <Button
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mr: 2,
-        }}
-      >
-        <PermIdentityIcon sx={{ color: "#4db4f9" }} />
-        <Typography
+        <Button
           sx={{
-            color: "white",
-            fontSize: "13px",
-            fontWeight: "bold",
-            textTransform: "capitalize",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mr: 2,
           }}
         >
-          Sign in
-        </Typography>
-      </Button>
+          <PermIdentityIcon sx={{ color: "#4db4f9" }} />
+          <Typography
+            sx={{
+              color: "white",
+              fontSize: "13px",
+              fontWeight: "bold",
+              textTransform: "capitalize",
+            }}
+          >
+            Sign in
+          </Typography>
+        </Button>
       </Link>
       <Button
         sx={{

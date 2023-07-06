@@ -15,7 +15,9 @@ import Person2Icon from "@mui/icons-material/Person2";
 import CreateIcon from "@mui/icons-material/Create";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SendIcon from "@mui/icons-material/Send";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { useForm } from "react-hook-form";
+import { basePath } from "../../next.config";
 
 // Reminders:
 // create a check on the starting cost (It should be a number greater than 0)
@@ -37,10 +39,12 @@ export default function BecomeVendor() {
       postAddress: "Test Post Address",
       telephoneNumber: "03123456780",
       service: "Creating Music",
+
       description: "We create music for you. We are the best in the world.",
       startingCost: 300,
       email: "gor123@test.com",
-      password: "KanyeLeast",
+      password: "12345678",
+      confirmPassword: "12345678",
       documentType: "Ghana Card",
       // file: "",
     },
@@ -82,42 +86,164 @@ export default function BecomeVendor() {
     if (
       validateEmail(data.email) &&
       validatePhone(data.telephoneNumber) &&
-      validateFileType(data.file) &&
-      validateFileSize(data.file) &&
+      // removing file validation for now
+      // validateFileType(data.file) &&
+      // validateFileSize(data.file) &&
       data.startingCost > 0 &&
       data.password === data.confirmPassword
     ) {
-      console.log(data);
+      console.log("Data: ", data);
 
-      // send data to the server
-      const dataToSend = {
-        companyName: data.companyName,
-        firstname: data.firstname,
-        lastname: data.lastname,
-        streetName: data.streetName,
-        city: data.city,
-        postAddress: data.postAddress,
-        telephoneNumber: data.telephoneNumber,
-        service: data.service,
-        description: data.description,
-        startingCost: data.startingCost,
-        email: data.email,
-        password: data.password,
-        documentType: data.documentType,
-      };
+      if (data.avi.length !== 0) {
+        const fileReader = new FileReader();
+        // convert image to base64 string and store it in a variable
+        // this variable will be sent to the server
 
+        fileReader.onload = async function () {
+          const base64img = fileReader.result;
 
-      const result = await fetch("/api/vendor", {
-        method: "POST",
-        body: JSON.stringify(dataToSend),
-      });
+          // for the cover image now
+          if (data.cover.length !== 0) {
+            const fileReader2 = new FileReader();
 
-      const response = await result.json();
+            fileReader2.onload = async function () {
+              const base64img2 = fileReader2.result;
 
-      console.log("Response: ", response);
+              // send data to the server
+              const dataToSend = {
+                companyName: data.companyName,
+                firstname: data.firstname,
+                lastname: data.lastname,
+                streetName: data.streetName,
+                city: data.city,
+                postAddress: data.postAddress,
+                telephoneNumber: data.telephoneNumber,
+                service: data.service,
+                description: data.description,
+                startingCost: data.startingCost,
+                email: data.email,
+                password: data.password,
+                documentType: data.documentType,
+                avi: base64img,
+                cover: base64img2,
+              };
 
+              const result = await fetch("/api/vendor", {
+                method: "POST",
+                body: JSON.stringify(dataToSend),
+              });
 
+              console.log("Response Status: ", result.status);
 
+              const response = await result.json();
+
+              console.log("Data Response: ", response);
+            };
+
+            fileReader2.readAsDataURL(data.cover[0]);
+          } else {
+            // send data to the server
+            const dataToSend = {
+              companyName: data.companyName,
+              firstname: data.firstname,
+              lastname: data.lastname,
+              streetName: data.streetName,
+              city: data.city,
+              postAddress: data.postAddress,
+              telephoneNumber: data.telephoneNumber,
+              service: data.service,
+              description: data.description,
+              startingCost: data.startingCost,
+              email: data.email,
+              password: data.password,
+              documentType: data.documentType,
+
+              avi: base64img,
+            };
+
+            const result = await fetch("/api/vendor", {
+              method: "POST",
+              body: JSON.stringify(dataToSend),
+            });
+
+            console.log("Response Status: ", result.status);
+
+            const response = await result.json();
+
+            console.log("Data Response: ", response);
+          }
+        };
+
+        fileReader.readAsDataURL(data.avi[0]);
+      } else {
+        // if avi doesnt exist but cover does
+        if (data.cover.length !== 0) {
+          const fileReader2 = new FileReader();
+
+          fileReader2.onload = async function () {
+            const base64img2 = fileReader2.result;
+
+            // send data to the server
+
+            const dataToSend = {
+              companyName: data.companyName,
+              firstname: data.firstname,
+              lastname: data.lastname,
+              streetName: data.streetName,
+              city: data.city,
+              postAddress: data.postAddress,
+              telephoneNumber: data.telephoneNumber,
+              service: data.service,
+              description: data.description,
+              startingCost: data.startingCost,
+              email: data.email,
+              password: data.password,
+              documentType: data.documentType,
+              cover: base64img2,
+            };
+
+            const result = await fetch("/api/vendor", {
+              method: "POST",
+              body: JSON.stringify(dataToSend),
+            });
+
+            console.log("Response Status: ", result.status);
+
+            const response = await result.json();
+
+            console.log("Data Response: ", response);
+          };
+
+          fileReader2.readAsDataURL(data.cover[0]);
+        } else {
+          const dataToSend = {
+            companyName: data.companyName,
+            firstname: data.firstname,
+            lastname: data.lastname,
+            streetName: data.streetName,
+            city: data.city,
+            postAddress: data.postAddress,
+            telephoneNumber: data.telephoneNumber,
+            service: data.service,
+            description: data.description,
+            startingCost: data.startingCost,
+            email: data.email,
+            password: data.password,
+            documentType: data.documentType,
+          };
+
+          const result = await fetch("/api/vendor", {
+            method: "POST",
+            body: JSON.stringify(dataToSend),
+          });
+
+          console.log("Response Status: ", result.status);
+
+          const response = await result.json();
+
+          console.log("Data Response: ", response);
+        }
+      }
     } else {
       // set error if any of the checks fail
       if (!validateEmail(data.email)) {
@@ -163,51 +289,71 @@ export default function BecomeVendor() {
     <Container sx={{ mt: 14 }}>
       <Paper
         elevation={3}
-        sx={{ display: "flex", flexDirection: "column", mb: 3, pb: 2 }}
+        sx={{ display: "flex", flexDirection: "column", pb: 2 }}
       >
         <Typography
           sx={{ fontSize: "20px", fontWeight: "bold", mt: 6, ml: 3, mb: 4 }}
         >
           Register
         </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            width: "100%",
-            height: "200px",
-          }}
-        >
+
+        <form onSubmit={handleSubmit(sendData)}>
+          <Box
+            sx={{
+              width: "70%",
+              height: "250px",
+              position: "absolute",
+              zIndex: 0,
+              borderRadius: "16px",
+            }}
+          >
+            <Button component="label">
+              <AddAPhotoIcon
+                sx={{ fontSize: "50px", cursor: "pointer", color: "#eeeeee" }}
+              ></AddAPhotoIcon>
+              <input {...register("cover")} type="file" hidden />
+            </Button>
+          </Box>
           <Paper
             elevation={3}
             sx={{
               display: "flex",
-              alignItems: "center",
+              flexDirection: "row",
               justifyContent: "center",
-              width: "200px",
+              width: "100%",
               height: "200px",
-              borderRadius: "50%",
             }}
           >
-            <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
+            <Paper
+              elevation={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "200px",
+                height: "200px",
+                borderRadius: "50%",
+              }}
+            >
+              <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
+            </Paper>
+            <Button
+              sx={{
+                borderRadius: "50%",
+                height: "fit-content",
+                cursor: "pointer",
+                "&:hover": { backgroundColor: "#f5f5f5" },
+                boxShadow: "2px 2px 2px 2px #eeeeee",
+                minWidth: "fit-content",
+              }}
+              component="label"
+            >
+              <CreateIcon
+                sx={{ fontSize: "20px", color: "black" }}
+              ></CreateIcon>
+              <input {...register("avi")} type="file" hidden />
+            </Button>
           </Paper>
-          <Button
-            sx={{
-              borderRadius: "50%",
-              height: "fit-content",
-              cursor: "pointer",
-              "&:hover": { backgroundColor: "#f5f5f5" },
-              boxShadow: "2px 2px 2px 2px #eeeeee",
-              minWidth: "fit-content",
-            }}
-            component="label"
-          >
-            <CreateIcon sx={{ fontSize: "20px", color: "black" }}></CreateIcon>
-            <input type="file" hidden />
-          </Button>
-        </Box>
-        <form onSubmit={handleSubmit(sendData)}>
           <FormControl sx={{ width: "100%", mt: 4, ml: 3 }}>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -540,21 +686,36 @@ export default function BecomeVendor() {
                       </Typography>
                     ) : null}
                   </Typography>
-                  <TextField
+                  <Select
                     {...register("service", {
-                      required: "This field is required.",
+                      required: "Service type is required.",
                     })}
-                    placeholder="Service you provide"
+                    label="Select a service"
+                    sx={{ width: "45%", bgcolor: "#eeeeee" }}
                     size="small"
-                    sx={{
-                      bgcolor: "#eeeeee",
-                      p: 1,
-                      borderRadius: "5px",
-                      width: "100%",
-                    }}
-                    variant="standard"
-                    InputProps={{ disableUnderline: true }}
-                  ></TextField>
+                  >
+                    <MenuItem value="Cleaning Service">
+                      Cleaning Services
+                    </MenuItem>
+                    <MenuItem value="Carpentry">Carpentry</MenuItem>
+                    <MenuItem value="Masonry">Masonry</MenuItem>
+                    <MenuItem value="Plumber">Plumber</MenuItem>
+                    <MenuItem value="Electrician">Electrician</MenuItem>
+                    <MenuItem value="General Contractor">
+                      General Contractor
+                    </MenuItem>
+                    <MenuItem value="Property Management">
+                      Property Management
+                    </MenuItem>
+                    <MenuItem value="Appliance Services/Repair">
+                      Appliance Services/Repair
+                    </MenuItem>
+                    <MenuItem value="Home Services/Installation">
+                      Home Services/Installation
+                    </MenuItem>
+                    <MenuItem value="Salons">Salons</MenuItem>
+                    <MenuItem value="Event Planning">Event Planning</MenuItem>
+                  </Select>
                 </Box>
               </Box>
               <Box
@@ -632,7 +793,6 @@ export default function BecomeVendor() {
                     required: "Starting Cost is required.",
                     // It should be a number
                     valueAsNumber: true,
-
                   })}
                   size="small"
                   sx={{
@@ -737,51 +897,98 @@ export default function BecomeVendor() {
                   ></TextField>
                 </Box>
               </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "45%",
-                  mt: 3,
-                }}
-              >
-                <Typography
+
+              <Box sx={{ display: "flex", flexDirection: "row", mt: 3 }}>
+                <Box
                   sx={{
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                    mb: 1,
                     display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
+                    flexDirection: "column",
+                    width: "45%",
+                    mr: 4,
                   }}
                 >
-                  Confirm Password
-                  {errors.confirmPassword ? (
-                    <Typography sx={{ fontSize: "12px", color: "red", ml: 2 }}>
-                      {errors.confirmPassword.message}
-                    </Typography>
-                  ) : null}
-                </Typography>
-                <TextField
-                  {...register("confirmPassword", {
-                    required: "Confirm Password is required.",
-                    minLength: {
-                      value: 8,
-                      message: "Password must be at least 8 characters",
-                    },
-                  })}
-                  placeholder="Password"
-                  size="small"
-                  type="password"
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    Confirm Password
+                    {errors.confirmPassword ? (
+                      <Typography
+                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
+                      >
+                        {errors.confirmPassword.message}
+                      </Typography>
+                    ) : null}
+                  </Typography>
+                  <TextField
+                    {...register("confirmPassword", {
+                      required: "Confirm Password is required.",
+                      minLength: {
+                        value: 8,
+                        message: "Password must be at least 8 characters",
+                      },
+                    })}
+                    placeholder="Password"
+                    size="small"
+                    type="password"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "5px",
+                      width: "100%",
+                    }}
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                  ></TextField>
+                </Box>
+                {/* <Box
                   sx={{
-                    bgcolor: "#eeeeee",
-                    p: 1,
-                    borderRadius: "5px",
-                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "45%",
                   }}
-                  variant="standard"
-                  InputProps={{ disableUnderline: true }}
-                ></TextField>
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    Category (Electrician, Plumber, Masonry, Musician, etc.)
+                    {errors.category ? (
+                      <Typography
+                        sx={{ fontSize: "12px", color: "red", ml: 2 }}
+                      >
+                        {errors.category.message}
+                      </Typography>
+                    ) : null}
+                  </Typography>
+                  <TextField
+                    {...register("category", {
+                      required: "Category is required.",
+                    })}
+                    placeholder="Category"
+                    size="small"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "5px",
+                      width: "100%",
+                    }}
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                  ></TextField>
+                </Box> */}
               </Box>
               <Typography sx={{ fontSize: "20px", mt: 3, fontWeight: "bold" }}>
                 Business Information
@@ -872,7 +1079,7 @@ export default function BecomeVendor() {
                     <input
                       accept="application/pdf" // only takes pdf files
                       {...register("file", {
-                        required: "File is required.",
+                        // required: "File is required.",
                       })}
                       type="file"
                       hidden

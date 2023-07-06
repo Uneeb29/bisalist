@@ -11,7 +11,7 @@ import {
   Button,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -45,6 +45,7 @@ export default function Login() {
         display: "flex",
         justifyContent: "center",
         width: "100vw",
+        pb: 5,
       }}
     >
       <Paper
