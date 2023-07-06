@@ -92,6 +92,8 @@ export async function POST(request) {
         },
       });
 
+      // if cover is provided add to service info
+
       if (body.cover) {
         const cover = body.cover;
 

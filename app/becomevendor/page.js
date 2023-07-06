@@ -39,7 +39,7 @@ export default function BecomeVendor() {
       postAddress: "Test Post Address",
       telephoneNumber: "03123456780",
       service: "Creating Music",
-      category: "Musician",
+
       description: "We create music for you. We are the best in the world.",
       startingCost: 300,
       email: "gor123@test.com",
@@ -81,21 +81,6 @@ export default function BecomeVendor() {
     return true;
   }
 
-  function validateCategory(category) {
-    // category should either be Electrician, Plumber, Carpenter, Masonry , Musician or Other
-    if (
-      category === "Electrician" ||
-      category === "Plumber" ||
-      category === "Carpenter" ||
-      category === "Masonry" ||
-      category === "Musician" ||
-      category === "Other"
-    ) {
-      return true;
-    }
-    return false;
-  }
-
   async function sendData(data) {
     // log data in console if all checks are passed
     if (
@@ -104,7 +89,6 @@ export default function BecomeVendor() {
       // removing file validation for now
       // validateFileType(data.file) &&
       // validateFileSize(data.file) &&
-      // validateCategory(data.category) &&
       data.startingCost > 0 &&
       data.password === data.confirmPassword
     ) {
@@ -118,7 +102,120 @@ export default function BecomeVendor() {
         fileReader.onload = async function () {
           const base64img = fileReader.result;
 
-          // send data to the server
+          // for the cover image now
+          if (data.cover.length !== 0) {
+            const fileReader2 = new FileReader();
+
+            fileReader2.onload = async function () {
+              const base64img2 = fileReader2.result;
+
+              // send data to the server
+              const dataToSend = {
+                companyName: data.companyName,
+                firstname: data.firstname,
+                lastname: data.lastname,
+                streetName: data.streetName,
+                city: data.city,
+                postAddress: data.postAddress,
+                telephoneNumber: data.telephoneNumber,
+                service: data.service,
+                description: data.description,
+                startingCost: data.startingCost,
+                email: data.email,
+                password: data.password,
+                documentType: data.documentType,
+                avi: base64img,
+                cover: base64img2,
+              };
+
+              const result = await fetch("/api/vendor", {
+                method: "POST",
+                body: JSON.stringify(dataToSend),
+              });
+
+              console.log("Response Status: ", result.status);
+
+              const response = await result.json();
+
+              console.log("Data Response: ", response);
+            };
+
+            fileReader2.readAsDataURL(data.cover[0]);
+          } else {
+            // send data to the server
+            const dataToSend = {
+              companyName: data.companyName,
+              firstname: data.firstname,
+              lastname: data.lastname,
+              streetName: data.streetName,
+              city: data.city,
+              postAddress: data.postAddress,
+              telephoneNumber: data.telephoneNumber,
+              service: data.service,
+              description: data.description,
+              startingCost: data.startingCost,
+              email: data.email,
+              password: data.password,
+              documentType: data.documentType,
+
+              avi: base64img,
+            };
+
+            const result = await fetch("/api/vendor", {
+              method: "POST",
+              body: JSON.stringify(dataToSend),
+            });
+
+            console.log("Response Status: ", result.status);
+
+            const response = await result.json();
+
+            console.log("Data Response: ", response);
+          }
+        };
+
+        fileReader.readAsDataURL(data.avi[0]);
+      } else {
+        // if avi doesnt exist but cover does
+        if (data.cover.length !== 0) {
+          const fileReader2 = new FileReader();
+
+          fileReader2.onload = async function () {
+            const base64img2 = fileReader2.result;
+
+            // send data to the server
+
+            const dataToSend = {
+              companyName: data.companyName,
+              firstname: data.firstname,
+              lastname: data.lastname,
+              streetName: data.streetName,
+              city: data.city,
+              postAddress: data.postAddress,
+              telephoneNumber: data.telephoneNumber,
+              service: data.service,
+              description: data.description,
+              startingCost: data.startingCost,
+              email: data.email,
+              password: data.password,
+              documentType: data.documentType,
+              cover: base64img2,
+            };
+
+            const result = await fetch("/api/vendor", {
+              method: "POST",
+              body: JSON.stringify(dataToSend),
+            });
+
+            console.log("Response Status: ", result.status);
+
+            const response = await result.json();
+
+            console.log("Data Response: ", response);
+          };
+
+          fileReader2.readAsDataURL(data.cover[0]);
+        } else {
           const dataToSend = {
             companyName: data.companyName,
             firstname: data.firstname,
@@ -133,8 +230,6 @@ export default function BecomeVendor() {
             email: data.email,
             password: data.password,
             documentType: data.documentType,
-            category: data.category,
-            avi: base64img,
           };
 
           const result = await fetch("/api/vendor", {
@@ -147,37 +242,7 @@ export default function BecomeVendor() {
           const response = await result.json();
 
           console.log("Data Response: ", response);
-        };
-
-        fileReader.readAsDataURL(data.avi[0]);
-      } else {
-        const dataToSend = {
-          companyName: data.companyName,
-          firstname: data.firstname,
-          lastname: data.lastname,
-          streetName: data.streetName,
-          city: data.city,
-          postAddress: data.postAddress,
-          telephoneNumber: data.telephoneNumber,
-          service: data.service,
-          description: data.description,
-          startingCost: data.startingCost,
-          email: data.email,
-          password: data.password,
-          documentType: data.documentType,
-          category: data.category,
-        };
-
-        const result = await fetch("/api/vendor", {
-          method: "POST",
-          body: JSON.stringify(dataToSend),
-        });
-
-        console.log("Response Status: ", result.status);
-
-        const response = await result.json();
-
-        console.log("Data Response: ", response);
+        }
       }
     } else {
       // set error if any of the checks fail
@@ -217,12 +282,6 @@ export default function BecomeVendor() {
           message: "Passwords do not match",
         });
       }
-      // if (!validateCategory(data.category)) {
-      //   setError("category", {
-      //     type: "manual",
-      //     message: "Invalid category",
-      //   });
-      // }
     }
   }
 
@@ -252,7 +311,7 @@ export default function BecomeVendor() {
               <AddAPhotoIcon
                 sx={{ fontSize: "50px", cursor: "pointer", color: "#eeeeee" }}
               ></AddAPhotoIcon>
-              <input type="file" hidden />
+              <input {...register("cover")} type="file" hidden />
             </Button>
           </Box>
           <Paper
@@ -628,24 +687,34 @@ export default function BecomeVendor() {
                     ) : null}
                   </Typography>
                   <Select
-                    {...register("documentType", {
-                      required: "Document type is required.",
+                    {...register("service", {
+                      required: "Service type is required.",
                     })}
-                    label="Select document type"
+                    label="Select a service"
                     sx={{ width: "45%", bgcolor: "#eeeeee" }}
                     size="small"
                   >
-                    <MenuItem value="1">Cleaning Services</MenuItem>
-                    <MenuItem value="2">Carpentry</MenuItem>
-                    <MenuItem value="3">Masonry</MenuItem>
-                    <MenuItem value="4">Plumber</MenuItem>
-                    <MenuItem value="5">Electrician</MenuItem>
-                    <MenuItem value="6">General Contractor</MenuItem>
-                    <MenuItem value="7">Property Management</MenuItem>
-                    <MenuItem value="8">Appliance Services/Repair</MenuItem>
-                    <MenuItem value="9">Home Services/Installation</MenuItem>
-                    <MenuItem value="10">Salons</MenuItem>
-                    <MenuItem value="11">Event Planning</MenuItem>
+                    <MenuItem value="Cleaning Service">
+                      Cleaning Services
+                    </MenuItem>
+                    <MenuItem value="Carpentry">Carpentry</MenuItem>
+                    <MenuItem value="Masonry">Masonry</MenuItem>
+                    <MenuItem value="Plumber">Plumber</MenuItem>
+                    <MenuItem value="Electrician">Electrician</MenuItem>
+                    <MenuItem value="General Contractor">
+                      General Contractor
+                    </MenuItem>
+                    <MenuItem value="Property Management">
+                      Property Management
+                    </MenuItem>
+                    <MenuItem value="Appliance Services/Repair">
+                      Appliance Services/Repair
+                    </MenuItem>
+                    <MenuItem value="Home Services/Installation">
+                      Home Services/Installation
+                    </MenuItem>
+                    <MenuItem value="Salons">Salons</MenuItem>
+                    <MenuItem value="Event Planning">Event Planning</MenuItem>
                   </Select>
                 </Box>
               </Box>
