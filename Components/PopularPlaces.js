@@ -9,8 +9,8 @@ import {
   CardContent,
   CardMedia,
   Button,
-  Link,
 } from "@mui/material";
+import Link from "next/link";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
@@ -102,7 +102,7 @@ export default function PopularPlaces() {
                 image={card.backgroundImage}
               ></CardMedia>
 
-              <Box
+              {/* <Box
                 sx={{
                   position: "absolute",
                   top: 10,
@@ -162,7 +162,7 @@ export default function PopularPlaces() {
                   </Box>
                 </Box>
               </Box>
-              {/* <Box
+              <Box
                 sx={{
                   position: "absolute",
                   top: 190,
@@ -199,7 +199,7 @@ export default function PopularPlaces() {
               <Link
                 sx={{ color: "black" }}
                 underline="none"
-                href="/allListings"
+                href={{ pathname: `/allList ings?category=${card.title}` }} 
               >
                 <CardContent sx={{}}>
                   <Typography gutterBottom variant="h5" component="div">
