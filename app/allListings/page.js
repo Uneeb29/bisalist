@@ -55,8 +55,8 @@ export default function AllListings() {
 
   useEffect(() => {
     fetchCategories().then((data) =>
-      setCategories((prev) => {
-        return [...prev, ...data];
+      setCategories(() => {
+        return ["All", ...data];
       })
     );
     const category = searchParams.get("category");
