@@ -43,6 +43,15 @@ export default function ServiceCard() {
       {cards.map((card, index) => (
         <Link
           key={index}
+          // style={{
+          //   backgroundImage: `url("${card.backgroundImage}")`,
+          //   backgroundSize: "cover",
+          //   backgroundRepeat: "no-repeat",
+          //   width: "35%",
+          //   mr: 3.5,
+          //   borderRadius: "10px",
+          //   cursor: "pointer",
+          // }}
           href={{
             pathname: "/allListings",
             query: {
