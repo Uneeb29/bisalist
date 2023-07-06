@@ -52,6 +52,7 @@ export default function ServiceCard() {
           //   borderRadius: "10px",
           //   cursor: "pointer",
           // }}
+          style={{ width: "100%", textDecoration: "none" }}
           href={{
             pathname: "/allListings",
             query: {
@@ -65,7 +66,7 @@ export default function ServiceCard() {
               backgroundImage: `url("${card.backgroundImage}")`,
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
-              width: "35%",
+              width: "90%",
               mr: 3.5,
               borderRadius: "10px",
               cursor: "pointer",
