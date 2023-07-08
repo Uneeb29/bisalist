@@ -95,7 +95,6 @@ export default function BecomeVendor() {
       console.log("Data: ", data);
 
       if (data.avi.length !== 0) {
-        // avi = profile picture
         const fileReader = new FileReader();
         // convert image to base64 string and store it in a variable
         // this variable will be sent to the server
@@ -295,7 +294,7 @@ export default function BecomeVendor() {
         <Typography
           sx={{ fontSize: "20px", fontWeight: "bold", mt: 6, ml: 3, mb: 4 }}
         >
-          Register
+          Edit Profile
         </Typography>
 
         <form onSubmit={handleSubmit(sendData)}>
@@ -839,6 +838,7 @@ export default function BecomeVendor() {
                       required: "Email is required.",
                     })}
                     placeholder="john@doe.com"
+                    disabled
                     size="small"
                     sx={{
                       bgcolor: "#eeeeee",
@@ -1113,7 +1113,7 @@ export default function BecomeVendor() {
               <Typography
                 sx={{ color: "white", fontSize: "14px", fontWeight: "bold" }}
               >
-                Submit Now
+                Save Changes
               </Typography>
               <SendIcon sx={{ ml: 1, color: "white", fontSize: "16px" }} />
             </Button>

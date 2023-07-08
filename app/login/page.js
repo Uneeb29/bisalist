@@ -43,6 +43,8 @@ export default function Login() {
     <Container
       sx={{
         display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
         justifyContent: "center",
         width: "100vw",
       }}
@@ -55,15 +57,18 @@ export default function Login() {
           height: "fit-content",
           p: 2,
           mt: 16,
+          mb: 6,
         }}
         elevation={2}
       >
         <form onSubmit={handleSubmit(sendData)}>
           <Container>
-            <Typography sx={{ mt: 2, fontSize: "22px", fontWeight: "bold" }}>
+            <Typography
+              sx={{ mt: 2, fontSize: "22px", fontWeight: "bold", mb: 4 }}
+            >
               Log In
             </Typography>
-            <Box
+            {/* <Box
               sx={{
                 display: "flex",
                 flexDirection: "row",
@@ -98,7 +103,7 @@ export default function Login() {
               <Typography sx={{ fontSize: "16px", fontWeight: "bold", mr: 2 }}>
                 Customer
               </Typography>
-            </Box>
+            </Box> */}
             <Box
               sx={{
                 display: "flex",
@@ -193,6 +198,70 @@ export default function Login() {
           </Container>
         </form>
       </Paper>
+      <Box
+        sx={{
+          //transform: "translate(-50%, -50%)",
+          width: "45%",
+          bgcolor: "background.paper",
+          borderRadius: "8px",
+          boxShadow: 24,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          p: 2,
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: "18px",
+            fontWeight: "bold",
+            mb: 2,
+            alignSelf: "center",
+          }}
+        >
+          Don't have an account?
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+          }}
+        >
+          <Link
+            href="becomecustomer"
+            sx={{
+              bgcolor: "#245cbc",
+              color: "white",
+              borderRadius: "8px",
+              p: 1,
+              width: "40%",
+              display: "flex",
+              justifyContent: "center",
+              "&:hover": { bgcolor: "#334576" },
+            }}
+            underline="none"
+          >
+            <Typography>Become a Customer</Typography>
+          </Link>
+          <Link
+            href="\becomevendor"
+            sx={{
+              bgcolor: "#245cbc",
+              color: "white",
+              borderRadius: "8px",
+              p: 1,
+              width: "40%",
+              display: "flex",
+              justifyContent: "center",
+              "&:hover": { bgcolor: "#334576" },
+            }}
+            underline="none"
+          >
+            <Typography>Become a Vendor</Typography>
+          </Link>
+        </Box>
+      </Box>
     </Container>
   );
 }

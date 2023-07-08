@@ -9,8 +9,8 @@ import {
   CardContent,
   CardMedia,
   Button,
+  Link,
 } from "@mui/material";
-import Link from "next/link";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
@@ -22,16 +22,23 @@ export default function PopularPlaces() {
     {
       title: "Plumber",
       backgroundImage: "Plumber.jpg",
+
+      comments: 7,
+      rating: 4.4,
       location: "St 178, Greater Accra, GA South",
     },
     {
       title: "Masonry",
       backgroundImage: "masonry.jpg",
+      comments: 4,
+      rating: 4.3,
       location: "St 178, Greater Accra, GA South",
     },
     {
       title: "Event Planning",
       backgroundImage: "eventManagement.jpg",
+      comments: 7,
+      rating: 4.4,
       location: "St 178, Greater Accra, GA South",
     },
   ];
@@ -69,6 +76,7 @@ export default function PopularPlaces() {
             fontSize: "30px",
             fontWeight: "bold",
             textTransform: "capitalize",
+            mt: 10,
           }}
         >
           Most Popular Places
@@ -102,7 +110,7 @@ export default function PopularPlaces() {
                 image={card.backgroundImage}
               ></CardMedia>
 
-              {/* <Box
+              <Box
                 sx={{
                   position: "absolute",
                   top: 10,
@@ -113,7 +121,7 @@ export default function PopularPlaces() {
                   justifyContent: "space-between",
                 }}
               >
-                <Box
+                {/* <Box
                   sx={{
                     bgcolor: "#334576",
                     borderRadius: "50%",
@@ -132,8 +140,8 @@ export default function PopularPlaces() {
                         color: "#4db4f9",
                       },
                     }}
-                  ></FavoriteBorderIcon>
-                </Box>
+                  ></FavoriteBorderIcon> 
+                </Box>*/}
                 <Box
                   sx={{
                     p: 0.5,
@@ -174,7 +182,7 @@ export default function PopularPlaces() {
                   alignItems: "center",
                 }}
               >
-                <Box
+                {/* <Box
                   sx={{
                     p: 1.25,
                     bgcolor: "#334576",
@@ -191,15 +199,15 @@ export default function PopularPlaces() {
                   >
                     {card.rating}
                   </Typography>
-                </Box>
-                <Typography sx={{ color: "white", fontSize: "14px" }}>
+                </Box> */}
+                {/* <Typography sx={{ color: "white", fontSize: "14px" }}>
                   {card.comments} comments
-                </Typography>
-              </Box> */}
+                </Typography> */}
+              </Box>
               <Link
                 sx={{ color: "black" }}
                 underline="none"
-                href={{ pathname: `/allList ings?category=${card.title}` }} 
+                href="/allListings"
               >
                 <CardContent sx={{}}>
                   <Typography gutterBottom variant="h5" component="div">
@@ -233,7 +241,7 @@ export default function PopularPlaces() {
       <Box
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
-        <Link href="/allListings" underline="none">
+        <Link underline="none" href="/allListings">
           <Button
             sx={{
               color: "white",
