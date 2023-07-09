@@ -24,7 +24,7 @@ export async function POST(request) {
 
     return new Response(JSON.stringify(userWithoutPassword));
   } catch (err) {
-    // console.log("Error creating customer: ", err);
+    console.log("Error creating customer: ", err);
     return new Response(JSON.stringify(err));
   }
 }

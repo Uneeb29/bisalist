@@ -12,43 +12,43 @@ datasource db {
   shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
 }
 
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
+// model Account {
+//   id                String  @id @default(cuid())
+//   userId            String
+//   type              String
+//   provider          String
+//   providerAccountId String
+//   refresh_token     String? @db.Text
+//   access_token      String? @db.Text
+//   expires_at        Int?
+//   token_type        String?
+//   scope             String?
+//   id_token          String? @db.Text
+//   session_state     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([provider, providerAccountId])
-}
+//   @@unique([provider, providerAccountId])
+// }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
+// model Session {
+//   id           String   @id @default(cuid())
+//   sessionToken String   @unique
+//   userId       String
+//   expires      DateTime
+//   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+// }
 
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  password      String
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-}
+// model User {
+//   id            String    @id @default(cuid())
+//   name          String?
+//   email         String?   @unique
+//   password      String
+//   emailVerified DateTime?
+//   image         String?
+//   accounts      Account[]
+//   sessions      Session[]
+// }
 
 model VerificationToken {
   identifier String
@@ -67,6 +67,7 @@ model Customer {
   password  String
   offers    Boolean? @default(false)
   agreement Boolean
+  blocked   Boolean? @default(false)
 }
 
 // model for the vendor
@@ -83,6 +84,7 @@ model Vendor {
   password        String
   avi             String? // these images are for the user profile
   fileType        String
+  blocked         Boolean?  @default(false)
   // foreign key (creates a relationship between the vendor and the listing)
   services        Service[]
 }
@@ -112,5 +114,17 @@ model Category {
   id       Int       @id @default(autoincrement())
   name     String    @unique
   image    String? //will be base64 encoded image 
+  description String? @default("No description")
   services Service[]
+}
+
+
+// a model to store the otp for the user (when they forget password)
+
+model OtpVerfiy {
+  id        Int      @id @default(autoincrement())
+  otp       String   
+  email     String
+  createdAt DateTime @default(now())
+  expiresAt   DateTime?
 }
