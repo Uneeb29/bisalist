@@ -143,9 +143,21 @@ export default function AllListings() {
         //     </Button>
         //   ))}
         // </Paper>
-        <Paper sx={{ width: "250px" }}>
+        <Drawer
+          sx={{
+            width: 250,
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: 250,
+              boxSizing: "border-box",
+              mt: 14,
+            },
+          }}
+          variant="permanent"
+          anchor="left"
+        >
           <Toolbar sx={{ display: "flex" }}>
-            <Button noWrap onClick={() => setSelectedCategory("All")}>
+            <Button  noWrap onClick={() => setSelectedCategory("All")}>
               All categories
             </Button>
           </Toolbar>
@@ -153,16 +165,14 @@ export default function AllListings() {
           <List>
             {categories?.map((category, index) => (
               <ListItem key={category.name} disablePadding>
-                <ListItemButton
-                  onClick={() => setSelectedCategory(category.name)}
-                >
+                <ListItemButton  onClick={() => setSelectedCategory(category.name)}>
                   <ListItemText primary={category.name} />
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
           <Divider />
-        </Paper>
+        </Drawer>
       )}
       {selectedCategory !== "All" ? (
         <Container
@@ -209,7 +219,7 @@ export default function AllListings() {
                     justifyContent: "space-between",
                   }}
                 >
-                  {/* <Box
+                  <Box
                     sx={{
                       bgcolor: "#334576",
                       borderRadius: "50%",
@@ -229,7 +239,7 @@ export default function AllListings() {
                         },
                       }}
                     ></FavoriteBorderIcon>
-                  </Box> */}
+                  </Box>
                   <Box
                     sx={{
                       p: 0.5,
@@ -364,7 +374,7 @@ export default function AllListings() {
                         justifyContent: "space-between",
                       }}
                     >
-                      {/* <Box
+                      <Box
                         sx={{
                           bgcolor: "#334576",
                           borderRadius: "50%",
@@ -384,7 +394,7 @@ export default function AllListings() {
                             },
                           }}
                         ></FavoriteBorderIcon>
-                      </Box> */}
+                      </Box>
                       <Box
                         sx={{
                           p: 0.5,
@@ -393,7 +403,28 @@ export default function AllListings() {
                           width: "30%",
                         }}
                       >
-                      
+                        <Box
+                          sx={{
+                            bgcolor: "#1de9b6",
+                            borderRadius: "16px",
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            p: 0.75,
+                          }}
+                        >
+                          <LockOpenRoundedIcon
+                            sx={{
+                              color: "white",
+                              height: "15px",
+                              width: "20px",
+                            }}
+                          ></LockOpenRoundedIcon>
+                          {/* <Typography sx={{ color: "white", fontSize: "10px" }}>
+                        Book Now
+                      </Typography> */}
+                        </Box>
                       </Box>
                     </Box>
                     <Box
@@ -411,7 +442,7 @@ export default function AllListings() {
                       <Box
                         sx={{
                           p: 1.25,
-                          //   bgcolor: "#334576",
+                          bgcolor: "#334576",
                           borderRadius: "5px",
                           mr: 2,
                         }}

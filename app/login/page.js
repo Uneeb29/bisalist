@@ -13,9 +13,16 @@ import {
 import { useForm } from "react-hook-form";
 import { signIn, useSession } from "next-auth/react";
 
+
+
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-export default function Login() {
+export default    function Login() {
+
+  const { data: session, status } = useSession();
+  if (session) {
+  console.log("session", session);
+  }
   const {
     register,
     handleSubmit,
@@ -30,14 +37,17 @@ export default function Login() {
   });
 
   async function sendData(data) {
+  
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
       role: data.vendor ? "vendor" : "customer",
       redirect: true,
-      callbackUrl: "/check", // Where to redirect after log in
-    });
+      callbackUrl: "/", // Where to redirect after log in
+    })
+   
   }
+
 
   return (
     <Container
@@ -152,7 +162,7 @@ export default function Login() {
                   alignItems: "center",
                 }}
               >
-                <Checkbox
+                {/* <Checkbox
                   {...label}
                   {...register("remember")}
                   sx={{
@@ -161,8 +171,8 @@ export default function Login() {
                       color: "#334576",
                     },
                   }}
-                />
-                <Typography sx={{ fontSize: "14px" }}>Remember Me</Typography>
+                /> */}
+                {/* <Typography sx={{ fontSize: "14px" }}>Remember Me</Typography> */}
               </Box>
               <Link underline="none">
                 <Typography sx={{ color: "#245cbc", fontSize: "14px" }}>

@@ -76,6 +76,7 @@ export default function PopularPlaces() {
             fontSize: "30px",
             fontWeight: "bold",
             textTransform: "capitalize",
+            mt:10,
           }}
         >
           Most Popular Places
@@ -120,7 +121,7 @@ export default function PopularPlaces() {
                   justifyContent: "space-between",
                 }}
               >
-                <Box
+                {/* <Box
                   sx={{
                     bgcolor: "#334576",
                     borderRadius: "50%",
@@ -139,8 +140,8 @@ export default function PopularPlaces() {
                         color: "#4db4f9",
                       },
                     }}
-                  ></FavoriteBorderIcon>
-                </Box>
+                  ></FavoriteBorderIcon> 
+                </Box>*/}
                 <Box
                   sx={{
                     p: 0.5,
@@ -181,7 +182,7 @@ export default function PopularPlaces() {
                   alignItems: "center",
                 }}
               >
-                <Box
+                {/* <Box
                   sx={{
                     p: 1.25,
                     bgcolor: "#334576",
@@ -198,10 +199,10 @@ export default function PopularPlaces() {
                   >
                     {card.rating}
                   </Typography>
-                </Box>
-                <Typography sx={{ color: "white", fontSize: "14px" }}>
+                </Box> */}
+                {/* <Typography sx={{ color: "white", fontSize: "14px" }}>
                   {card.comments} comments
-                </Typography>
+                </Typography> */}
               </Box>
               <Link
                 sx={{ color: "black" }}
@@ -240,6 +241,7 @@ export default function PopularPlaces() {
       <Box
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
+        <Link underline="none" href="/allListings">
         <Button
           sx={{
             color: "white",
@@ -269,6 +271,7 @@ export default function PopularPlaces() {
             ></ArrowForwardOutlinedIcon>
           </Box>
         </Button>
+        </Link>
       </Box>
       <Box
         sx={{

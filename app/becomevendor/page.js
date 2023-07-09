@@ -94,7 +94,7 @@ export default function BecomeVendor() {
     ) {
       console.log("Data: ", data);
 
-      if (data.avi.length !== 0) {
+      if (data.avi.length !== 0) {  // avi = profile picture
         const fileReader = new FileReader();
         // convert image to base64 string and store it in a variable
         // this variable will be sent to the server

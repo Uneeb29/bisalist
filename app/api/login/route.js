@@ -24,6 +24,6 @@ export async function POST(request) {
       return new Response(JSON.stringify(null));
     }
   } catch (err) {
-    console.log(err);
+    console.log('login1',err);
   }
 }
