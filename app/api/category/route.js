@@ -100,6 +100,45 @@ export async function GET(request) {
   }
 }
 
+// for deleting a category
+export async function DELETE(request) {
+  try {
+    const { name } = new URL(request.url);
+
+    // Check if category already exists
+    const categoryExists = await prisma.category.findUnique({
+      where: {
+        name: name,
+      },
+    });
+
+    if (!categoryExists) {
+      return new Response(JSON.stringify("Category does not exist"), {
+        status: 400,
+      });
+    }
+    // delete category
+    await prisma.category.delete({
+      where: {
+        name: name,
+      },
+    });
+
+    return new Response(JSON.stringify("Category Deleted"), {
+      status: 200,
+
+    });
+  } catch (error) {
+    console.log(error);
+    return new Response(JSON.stringify("Error deleting Category"), {
+      status: 500,
+    });
+  }
+}
+
+
+
+
 // // Example POST request body to test on Thunder Client
 // {
 //   "action": "add",
