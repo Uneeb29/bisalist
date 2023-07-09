@@ -65,6 +65,10 @@ export async function POST(request) {
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
+
+
+
+
     const action = searchParams.get("action");
     if (action === "name") {
       const categories = await prisma.category.findMany({
@@ -103,8 +107,8 @@ export async function GET(request) {
 // for deleting a category
 export async function DELETE(request) {
   try {
-    const { name } = new URL(request.url);
-
+    const { searchParams } = new URL(request.url);
+    const name = searchParams.get("name");
     // Check if category already exists
     const categoryExists = await prisma.category.findUnique({
       where: {
