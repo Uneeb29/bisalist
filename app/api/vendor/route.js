@@ -1,6 +1,6 @@
 import { prisma } from "../../../lib/prisma-client";
 import * as bcrypt from "bcrypt";
-const cloudinary = require("cloudinary").v2;
+
 
 // category will be a dropdown menu
 
@@ -136,14 +136,4 @@ export async function POST(request) {
 //       "documentType": "Ghana Card",
 // }
 
-// cloudinary.config({
-//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//   api_key: process.env.CLOUDINARY_API_KEY,
-//   api_secret: process.env.CLOUDINARY_API_SECRET,
-// });
 
-// const cloudinaryResponse = await cloudinary.uploader.upload(image, {
-//   upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
-// });
-
-// const cloudinaryPayload = await cloudinaryResponse.json();
