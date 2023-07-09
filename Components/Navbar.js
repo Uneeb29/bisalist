@@ -228,30 +228,30 @@ export default function Navbar() {
           </Link>
         )}
         {
-          !session && (
-            <Button
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                mr: 2,
-              }}
-              onClick={handleOpen}
-            >
-              <PermIdentityIcon sx={{ color: "#4db4f9" }} />
-              <Typography
-                sx={{
-                  color: "white",
-                  fontSize: "13px",
-                  fontWeight: "bold",
-                  textTransform: "capitalize",
-                }}
-              >
-                Sign up
-              </Typography>
-            </Button>
-          )
+          // !session && (
+          //   <Button
+          //     sx={{
+          //       display: "flex",
+          //       flexDirection: "row",
+          //       justifyContent: "space-between",
+          //       alignItems: "center",
+          //       mr: 2,
+          //     }}
+          //     onClick={handleOpen}
+          //   >
+          //     <PermIdentityIcon sx={{ color: "#4db4f9" }} />
+          //     <Typography
+          //       sx={{
+          //         color: "white",
+          //         fontSize: "13px",
+          //         fontWeight: "bold",
+          //         textTransform: "capitalize",
+          //       }}
+          //     >
+          //       Sign up
+          //     </Typography>
+          //   </Button>
+          // )
           // </div>
         }
       </Box>

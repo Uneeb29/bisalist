@@ -21,6 +21,8 @@ import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
 import BlockIcon from "@mui/icons-material/Block";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import KeyboardAltOutlinedIcon from "@mui/icons-material/KeyboardAltOutlined";
+import Person2Icon from "@mui/icons-material/Person2";
+import CreateIcon from "@mui/icons-material/Create";
 
 export default function AddCategories() {
   const { register, handleSubmit, errors } = useForm();
@@ -78,7 +80,14 @@ export default function AddCategories() {
         id="search"
         elevation={3}
       >
-        <Typography sx={{ fontSize: "20px", fontWeight: "bold", mb: 2 }}>
+        <Typography
+          sx={{
+            fontSize: "20px",
+            fontWeight: "bold",
+            mb: 2,
+            alignSelf: "center",
+          }}
+        >
           Search Listings
         </Typography>
         <TextField
@@ -255,13 +264,58 @@ export default function AddCategories() {
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box
-            sx={{ display: "flex", flexDirection: "row", width: "100%", mb: 4 }}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              mb: 4,
+            }}
           >
             <Box
               sx={{
                 display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                width: "100%",
+                height: "200px",
+                mb: 4,
+              }}
+            >
+              <Paper
+                elevation={3}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "200px",
+                  height: "200px",
+                  borderRadius: "50%",
+                }}
+              >
+                <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
+              </Paper>
+              <Button
+                sx={{
+                  borderRadius: "50%",
+                  height: "fit-content",
+                  cursor: "pointer",
+                  "&:hover": { backgroundColor: "#f5f5f5" },
+                  boxShadow: "2px 2px 2px 2px #eeeeee",
+                  minWidth: "fit-content",
+                }}
+                component="label"
+              >
+                <CreateIcon
+                  sx={{ fontSize: "20px", color: "black" }}
+                ></CreateIcon>
+                <input {...register("avi")} type="file" hidden />
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
                 flexDirection: "column",
-                mr: 10,
+                mb: 4,
                 width: "45%",
               }}
             >
@@ -281,45 +335,6 @@ export default function AddCategories() {
                 InputProps={{ disableUnderline: true }}
                 {...register("name", { required: true })}
               ></TextField>
-            </Box>
-            <Box
-              sx={{ display: "flex", flexDirection: "column", width: "45%" }}
-            >
-              <Typography sx={{ fontSize: "14px", mb: 1 }}>
-                Category Image
-              </Typography>
-              <Button
-                variant="contained"
-                component="label"
-                sx={{
-                  width: "70%",
-                  bgcolor: "#eeeeee",
-                  "&:hover": { bgcolor: "grey" },
-                  height: "40px",
-                }}
-                display="flex"
-                flexDirection="row"
-                {...register("image", { required: true })}
-              >
-                <CloudUploadIcon sx={{ mr: 1, color: "black" }} />
-                <Typography
-                  sx={{
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                    color: "black",
-                  }}
-                >
-                  Upload File
-                </Typography>
-                {/* <input
-                  accept="application/pdf" // only takes pdf files
-                  {...register("file", {
-                    // required: "File is required.",
-                  })}
-                  type="file"
-                  hidden
-                /> */}
-              </Button>
             </Box>
           </Box>
           <Box
