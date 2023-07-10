@@ -134,6 +134,7 @@ export default function BecomeVendor() {
                   avi: base64img,
                   cover: base64img2,
                   file: doc64,
+                  action: "create",
                 };
 
                 const result = await fetch("/api/vendor", {
@@ -167,6 +168,7 @@ export default function BecomeVendor() {
                 documentType: data.documentType,
                 file: doc64,
                 avi: base64img,
+                action: "create",
               };
 
               const result = await fetch("/api/vendor", {
@@ -208,6 +210,7 @@ export default function BecomeVendor() {
                 password: data.password,
                 documentType: data.documentType,
                 cover: base64img2,
+                action: "create",
                 file: doc64,
               };
 
@@ -239,6 +242,7 @@ export default function BecomeVendor() {
               email: data.email,
               password: data.password,
               documentType: data.documentType,
+              action: "create",
               file: doc64,
             };
 
