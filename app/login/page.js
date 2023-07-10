@@ -9,13 +9,27 @@ import {
   TextField,
   Link,
   Button,
+  Modal,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { signIn, useSession } from "next-auth/react";
+import { use, useState } from "react";
+import { useEffect } from "react";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export default function Login() {
+  const [forgotPassword, setForgotPassword] = useState(false);
+
+  const handleForgotPassword = () => {
+    setForgotPassword(true);
+  };
+
+  useEffect(() => {}, [forgotPassword]);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const {
     register,
     handleSubmit,
@@ -64,10 +78,28 @@ export default function Login() {
         <form onSubmit={handleSubmit(sendData)}>
           <Container>
             <Typography
-              sx={{ mt: 2, fontSize: "22px", fontWeight: "bold", mb: 4 }}
+              sx={{
+                mt: 2,
+                fontSize: "22px",
+                fontWeight: "bold",
+                mb: 4,
+                display: forgotPassword ? "none" : "block",
+              }}
             >
               Log In
             </Typography>
+            <Typography
+              sx={{
+                mt: 2,
+                fontSize: "22px",
+                fontWeight: "bold",
+                mb: 4,
+                display: forgotPassword ? "block" : "none",
+              }}
+            >
+              Forgot Password
+            </Typography>
+
             {/* <Box
               sx={{
                 display: "flex",
@@ -124,7 +156,13 @@ export default function Login() {
                 InputProps={{ disableUnderline: true }}
               ></TextField>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "column", mb: 2 }}>
+            <Box
+              sx={{
+                display: forgotPassword ? "none" : "flex",
+                flexDirection: "column",
+                mb: 2,
+              }}
+            >
               <Typography sx={{ fontWeight: "bold", mb: 0.5 }}>
                 Password
               </Typography>
@@ -169,7 +207,7 @@ export default function Login() {
                 />
                 <Typography sx={{ fontSize: "14px" }}>Remember Me</Typography>
               </Box>
-              <Link underline="none">
+              <Link underline="none" onClick={handleForgotPassword}>
                 <Typography sx={{ color: "#245cbc", fontSize: "14px" }}>
                   Forgot Password?
                 </Typography>
@@ -182,6 +220,7 @@ export default function Login() {
                 mt: 2,
                 p: 1.5,
                 "&:hover": { bgcolor: "#334576" },
+                display: forgotPassword ? "none" : "block",
               }}
               type="submit"
             >
@@ -195,6 +234,98 @@ export default function Login() {
                 Log In
               </Typography>
             </Button>
+            <Button
+              sx={{
+                width: "100%",
+                bgcolor: "#245cbc",
+                mt: 2,
+                p: 1.5,
+                "&:hover": { bgcolor: "#334576" },
+                display: forgotPassword ? "block" : "none",
+              }}
+              type="submit"
+              onClick={handleOpen}
+            >
+              <Typography
+                sx={{
+                  color: "white",
+                  fontSize: "16px",
+                  textTransform: "capitalize",
+                }}
+              >
+                Send OTP
+              </Typography>
+            </Button>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: "30%",
+                  left: "25%",
+                  width: "50%",
+                  height: "20%",
+                  bgcolor: "background.paper",
+                  borderRadius: "8px",
+                  boxShadow: 24,
+                  p: 4,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                {/* <Link
+                  href="becomecustomer"
+                  sx={{
+                    bgcolor: "#4db4f9",
+                    color: "white",
+                    borderRadius: "8px",
+                    p: 1,
+                    width: "40%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                  underline="none"
+                >
+                  <Typography>Become a Customer</Typography>
+                </Link>
+                <Link
+                  href="\becomevendor"
+                  sx={{
+                    bgcolor: "#4db4f9",
+                    color: "white",
+                    borderRadius: "8px",
+                    p: 1,
+                    width: "40%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                  underline="none"
+                >
+                  <Typography>Become a Vendor</Typography>
+                </Link> */}
+                <Typography
+                  sx={{ fontSize: "18px", fontWeight: "bold", mb: 4 }}
+                >
+                  Enter OTP
+                </Typography>
+                <TextField
+                  variant="standard"
+                  InputProps={{ disableUnderline: true }}
+                  placeholder="OTP"
+                  sx={{
+                    bgcolor: "#eeeeee",
+                    p: 1,
+                    borderRadius: "8px",
+                    width: "100%",
+                  }}
+                ></TextField>
+              </Box>
+            </Modal>
           </Container>
         </form>
       </Paper>
