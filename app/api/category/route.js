@@ -5,15 +5,12 @@ export async function POST(request) {
     const body = await request.json();
 
     // Check if category already exists (if category is not null)
-    if (body.category) {
-      const categoryExists = await prisma.category.findUnique({
-        where: {
-          name: body.category,
-        },
-      });
-    }
 
-
+    const categoryExists = await prisma.category.findUnique({
+      where: {
+        ...(body.category && { name: body.category }),
+      },
+    });
 
     // do something based on the action
     switch (body.action) {
@@ -29,7 +26,7 @@ export async function POST(request) {
         await prisma.category.create({
           data: {
             name: body.category,
-            image: body.image,
+            ...(body.image && { image: body.image }),
           },
         });
         return new Response(JSON.stringify("Category Added"), {
@@ -65,7 +62,6 @@ export async function POST(request) {
           return new Response(JSON.stringify("Category does not exist"), {
             status: 400,
           });
-
         }
 
         await prisma.category.delete({
