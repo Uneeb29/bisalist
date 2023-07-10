@@ -84,6 +84,7 @@ model Vendor {
   password        String
   avi             String? // these images are for the user profile
   fileType        String
+  file           String?
   blocked         Boolean?  @default(false)
   // foreign key (creates a relationship between the vendor and the listing)
   services        Service[]

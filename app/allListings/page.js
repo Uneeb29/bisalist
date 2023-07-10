@@ -34,7 +34,16 @@ export default function AllListings() {
   // a function to fetch all the categories from the backend
   async function fetchCategories() {
     try {
-      const res = await fetch("/api/category?action=all");
+      const res = await fetch("/api/category", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "fetchAll"
+        }),
+
+      });
       const data = await res.json();
       console.log(data);
       return data;
@@ -186,7 +195,7 @@ export default function AllListings() {
                 mr: 3,
                 display:
                   service.category.name === selectedCategory ||
-                  selectedCategory == "All"
+                    selectedCategory == "All"
                     ? "block"
                     : "none",
               }}
@@ -393,7 +402,7 @@ export default function AllListings() {
                           width: "30%",
                         }}
                       >
-                      
+
                       </Box>
                     </Box>
                     <Box

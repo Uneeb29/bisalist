@@ -1,10 +1,7 @@
-// import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth/next";
-import { prisma } from "../../../../lib/prisma-client";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
-//   adapter: PrismaAdapter(prisma),
 
   providers: [
     CredentialsProvider({
@@ -18,10 +15,11 @@ export const authOptions = {
         const res = await import("../../login/route");
 
         const payload = await (await res.POST(credentials)).json();
-        
+
         const user = {
           name: payload.name,
           email: payload.email,
+          role: credentials.role,
         };
 
         if (user) {
@@ -42,4 +40,4 @@ export const authOptions = {
 };
 
 const handler = NextAuth(authOptions);
-export {handler as GET, handler as POST}
+export { handler as GET, handler as POST }
