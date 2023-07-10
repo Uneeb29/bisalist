@@ -35,7 +35,7 @@ export default function AllListings() {
   async function fetchCategories() {
     try {
       const res = await fetch("/api/category", {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },

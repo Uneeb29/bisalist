@@ -69,7 +69,11 @@ export default function BecomeVendor() {
 
   function validateFileType(file) {
     // file type should be image jpeg or png or jpg or any other image type
-    if (!file[0].type.includes("image")) {
+    if (
+      file[0].type !== "image/jpeg" &&
+      file[0].type !== "image/png" &&
+      file[0].type !== "image/jpg"
+    ) {
       return false;
     }
     return true;

@@ -184,7 +184,7 @@ export async function POST(request) {
                 title: true,
                 startingCost: true,
                 companyName: true,
-                location: true,
+                location: false,
                 cover: true,
                 rating: false,
                 noOfComments: false,
