@@ -1,7 +1,6 @@
 import { prisma } from "../../../lib/prisma-client";
 import * as bcrypt from "bcrypt";
 
-
 // category will be a dropdown menu
 
 export async function POST(request) {
@@ -110,7 +109,6 @@ export async function POST(request) {
         });
         break;
     }
-
   } catch (err) {
     console.log("Error creating vendor: ", err);
     return new Response(JSON.stringify("Error creating vendor"), {
@@ -135,5 +133,3 @@ export async function POST(request) {
 //       "password": "KanyeLeast",
 //       "documentType": "Ghana Card",
 // }
-
-
