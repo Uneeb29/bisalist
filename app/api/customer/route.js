@@ -8,6 +8,7 @@ export async function POST(request) {
   try {
     // get the customer data from the request body
     const body = await request.json();
+	console.log(body);
 
     const action = body.action;
 
@@ -85,6 +86,7 @@ export async function POST(request) {
         break;
 
       case "update":
+	console.log("update point reached");
         // update customer in the database
         const updatedCustomer = await prisma.customer.update({
           where: {
@@ -99,6 +101,11 @@ export async function POST(request) {
 
           }
         });
+
+	return new Response(JSON.stringify("Info Updated"),{status:200});
+
+
+
     }
 
 

@@ -56,11 +56,12 @@ export default function EditCustomer() {
   }
 
   useEffect(() => {
+	if(session){
     fetchData().then((data) => {
       setValue("name", data.name);
       setValue("email", data.email);
       setValue("phone", data.phone);
-    });
+    });}
   }, [session]);
 
   console.log("Errors: ", errors);
