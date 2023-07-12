@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 
-export default function BecomeCustomer() {
+export default function EditCustomer() {
   // default values added here only for testing purposes and will be removed later
   const { data: session, status } = useSession();
   // store the customer data in the state

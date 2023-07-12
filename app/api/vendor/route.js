@@ -46,25 +46,12 @@ export async function POST(request) {
             email: body.email,
             password: await bcrypt.hash(body.password, 10),
             fileType: body.documentType,
-            // file is required so check if it is provided
-            ...(body.document && { file: body.document }),
+            file: body.document,
+
+            // optional
             ...(body.avi && { avi: body.avi }),
           },
         });
-
-        // if image is provided add to vendor info
-        // if (body.avi) {
-        //   const image = body.avi;
-
-        //   await prisma.vendor.update({
-        //     where: {
-        //       id: user.id,
-        //     },
-        //     data: {
-        //       avi: image,
-        //     },
-        //   });
-        // }
 
         // add service to the service model
         const service = await prisma.service.create({
@@ -73,7 +60,11 @@ export async function POST(request) {
             startingCost: body.startingCost,
             companyName: body.companyName,
             location: `${body.streetName}, ${body.city}`,
+
+            // optional
             ...(body.cover && { cover: body.cover }),
+
+            // default values
             rating: 0,
             noOfComments: 0,
 
@@ -135,11 +126,25 @@ export async function POST(request) {
           },
         });
 
+        const userServiceID = await prisma.vendor.findUnique({
+          where: {
+            email: body.email,
+          },
+          select: {
+            services: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        });
+
         // update service
         const serviceUpdate = await prisma.service.update({
           where: {
-            vendorId: vendor.id,
+            id: userServiceID.services[0].id,
           },
+
           data: {
             title: body.service,
             startingCost: body.startingCost,
@@ -196,14 +201,6 @@ export async function POST(request) {
               },
             },
           },
-          // include services from the service model and category from the category model which is connected to the service model
-          include: {
-            services: {
-              include: {
-                category: true,
-              },
-            },
-          },
         });
         return new Response(JSON.stringify(vendorInfo), {
           status: 200,
@@ -212,7 +209,7 @@ export async function POST(request) {
     }
   } catch (err) {
     console.log("Error creating vendor: ", err);
-    return new Response(JSON.stringify("Error creating vendor"), {
+    return new Response(JSON.stringify("Error in vendor action"), {
       status: 500,
     });
   }

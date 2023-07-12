@@ -109,6 +109,7 @@ model Service {
   category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
+
 // a model to store only categories and their images
 // will only be updated by the admin
 model Category {

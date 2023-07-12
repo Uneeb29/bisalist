@@ -2,7 +2,6 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
-
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -15,9 +14,14 @@ export const authOptions = {
         const res = await import("../../login/route");
 
         const payload = await (await res.POST(credentials)).json();
-
+	console.log(payload);
         const user = {
-          name: payload.name,
+          // if the role is customer then name: payload.name else name: payload.firstName+payload.lastName
+          ...(credentials.role === "customer" && { name: payload.name }),
+          ...(credentials.role === "vendor" && {
+            name: payload.firstname + " " + payload.lastname,
+          }),
+
           email: payload.email,
           role: credentials.role,
         };
@@ -40,4 +44,4 @@ export const authOptions = {
 };
 
 const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST };

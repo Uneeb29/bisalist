@@ -24,45 +24,41 @@ import { useSession } from "next-auth/react";
 // Reminders:
 // create a check on the starting cost (It should be a number greater than 0)
 
-export default function BecomeVendor() {
+export default function EditVendor() {
   const { data: session, status } = useSession();
-  // this will store the vendor info
-  const [vendor, setVendor] = useState({});
 
-  async function fetchVendorInfo() {
-    if (!session) {
-      return;
-    }
-    const res = await fetch(`/api/vendor`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        action: "fetchSingle",
-        email: session.user.email,
-      }),
-    });
-
-    const data = await res.json();
-    console.log("Vendor Info: ", data);
-
-    return data;
+  if (session) {
+    console.log("Session edit vendor: ", session);
   }
 
-  useEffect(() => {
-    fetchVendorInfo().then((data) => {
-      setVendor(data);
-    });
-  }, [session]);
+  async function fetchVendorInfo() {
+    if (session) {
+      const res = await fetch(`/api/vendor`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "fetchSingle",
+          email: session.user.email,
+        }),
+      });
 
-  useEffect(() => {
-    console.log("Vendor: ", vendor);
-  }, [vendor]);
+      const data = await res.json();
+      console.log("Vendor Info: ", data);
+
+      return data;
+    }
+  }
+
+  // useEffect(() => {
+  //   console.log("Vendor: ", vendor);
+  // }, [vendor]);
 
   const {
     register,
     handleSubmit,
+    setValue,
     setError,
     formState: { errors, isDirty, isValid },
   } = useForm({
@@ -86,7 +82,26 @@ export default function BecomeVendor() {
     },
   });
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    fetchVendorInfo().then((data) => {
+      // setVendor(data);
+      setValue("companyName", data.services[0].companyName);
+      setValue("firstname", data.firstname);
+      setValue("lastname", data.lastname);
+      setValue("streetName", data.streetName);
+      setValue("city", data.city);
+      setValue("postAddress", data.postAddress);
+      setValue("telephoneNumber", data.telephoneNumber);
+      setValue("service", data.services[0].title);
+      setValue("description", data.description);
+      setValue("startingCost", data.services[0].startingCost);
+      setValue("email", data.email);
+      // setValue("password", data.password);
+      // setValue("confirmPassword", data.confirmPassword);
+      // setValue("documentType", data.documentType);
+      // setValue("file", data.file);
+    });
+  }, [session]);
 
   console.log("Errors: ", errors);
 
@@ -106,25 +121,35 @@ export default function BecomeVendor() {
   /* New validation functions */
   function validateFileType(file) {
     // file type should be image jpeg or png or jpg or any other image type
-    if (
-      file[0].type !== "image/jpeg" &&
-      file[0].type !== "image/png" &&
-      file[0].type !== "image/jpg"
-    ) {
-      return false;
+    if (file.length > 0) {
+      if (
+        file[0].type !== "image/jpeg" &&
+        file[0].type !== "image/png" &&
+        file[0].type !== "image/jpg"
+      ) {
+        return false;
+      }
+      return true;
+    } else {
+      return true;
     }
-    return true;
   }
 
   function validateFileSize(file) {
-    if (file[0].size > 2000000) {
-      return false;
+    // only validate if file is not undefined
+    if (file.length > 0) {
+      if (file[0].size > 2000000) {
+        return false;
+      }
+      return true;
+    } else {
+      return true;
     }
-    return true;
   }
 
   async function sendData(data) {
     // log data in console if all checks are passed
+    console.log("data: ", data);
     if (
       validateEmail(data.email) &&
       validatePhone(data.telephoneNumber) &&
@@ -623,7 +648,6 @@ export default function BecomeVendor() {
                       {...register("companyName", {
                         required: "Company Name is required.",
                       })}
-                      value={vendor.service.companyName}
                       placeholder="Company Name"
                       size="small"
                       sx={{
@@ -1074,9 +1098,10 @@ export default function BecomeVendor() {
                     </Typography>
                     <TextField
                       {...register("email", {
-                        required: "Email is required.",
+                        // required: "Email is required.",
                       })}
                       placeholder="john@doe.com"
+                      disabled={true}
                       size="small"
                       sx={{
                         bgcolor: "#eeeeee",
@@ -1116,7 +1141,7 @@ export default function BecomeVendor() {
                     </Typography>
                     <TextField
                       {...register("password", {
-                        required: "Password is required.",
+                        // required: "Password is required.",
                         minLength: {
                           value: 8,
                           message: "Password must be at least 8 characters",
@@ -1167,7 +1192,7 @@ export default function BecomeVendor() {
                     </Typography>
                     <TextField
                       {...register("confirmPassword", {
-                        required: "Confirm Password is required.",
+                        // required: "Confirm Password is required.",
                         minLength: {
                           value: 8,
                           message: "Password must be at least 8 characters",
@@ -1217,7 +1242,7 @@ export default function BecomeVendor() {
                     </Typography>
                     <Select
                       {...register("documentType", {
-                        required: "Document type is required.",
+                        // required: "Document type is required.",
                       })}
                       label="Select document type"
                       sx={{ width: "45%", bgcolor: "#eeeeee" }}
@@ -1277,9 +1302,7 @@ export default function BecomeVendor() {
                       </Typography>
                       <input
                         accept="application/pdf" // only takes pdf files
-                        {...register("file", {
-                          // required: "File is required.",
-                        })}
+                        {...register("file")}
                         type="file"
                         hidden
                       />
@@ -1306,7 +1329,7 @@ export default function BecomeVendor() {
                 type="submit"
                 // button is disabled if form has not been changed
                 // or if there are errors
-                disabled={!isDirty || !isValid}
+                disabled={!isValid}
               >
                 <Typography
                   sx={{ color: "white", fontSize: "14px", fontWeight: "bold" }}
