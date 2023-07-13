@@ -212,8 +212,8 @@ export default function Login() {
                 /> */}
                 {/* <Typography sx={{ fontSize: "14px" }}>Remember Me</Typography> */}
               </Box>
-              <Link underline="none" onClick={handleForgotPassword}>
-                <Typography sx={{ color: "#245cbc", fontSize: "14px" }}>
+              <Link underline="none" onClick={handleForgotPassword} sx={{display: forgotPassword ? "none" : "block"}}>
+                <Typography sx={{ color: "#245cbc", fontSize: "14px", cursor:"pointer", "&:hover":{textDecoration:"underline"} }}>
                   Forgot Password?
                 </Typography>
               </Link>
@@ -283,41 +283,12 @@ export default function Login() {
                   alignItems: "center",
                 }}
               >
-                {/* <Link
-                  href="becomecustomer"
-                  sx={{
-                    bgcolor: "#4db4f9",
-                    color: "white",
-                    borderRadius: "8px",
-                    p: 1,
-                    width: "40%",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                  underline="none"
-                >
-                  <Typography>Become a Customer</Typography>
-                </Link>
-                <Link
-                  href="\becomevendor"
-                  sx={{
-                    bgcolor: "#4db4f9",
-                    color: "white",
-                    borderRadius: "8px",
-                    p: 1,
-                    width: "40%",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                  underline="none"
-                >
-                  <Typography>Become a Vendor</Typography>
-                </Link> */}
                 <Typography
                   sx={{ fontSize: "18px", fontWeight: "bold", mb: 4 }}
                 >
                   Enter OTP
                 </Typography>
+                <Box sx={{display:"flex", flexDirection:"row", width:"100%"}}>
                 <TextField
                   variant="standard"
                   InputProps={{ disableUnderline: true }}
@@ -326,9 +297,13 @@ export default function Login() {
                     bgcolor: "#eeeeee",
                     p: 1,
                     borderRadius: "8px",
-                    width: "100%",
+                    width: "90%",
+                    mr:2
                   }}
                 ></TextField>
+                <Button sx={{bgcolor:"#245cbc", color:"white", "&:hover":{bgcolor:"#334576"}, p:1}}><Typography sx={{textTransform:"capitalize"}}>Enter</Typography></Button>
+                </Box>
+                <Button sx={{bgcolor:"#245cbc", color:"white", "&:hover":{bgcolor:"#334576"}, p:1, mt:4}}><Typography sx={{textTransform:"capitalize"}}>Resend OTP</Typography></Button>
               </Box>
             </Modal>
           </Container>
