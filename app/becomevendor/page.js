@@ -307,15 +307,15 @@ export default function BecomeVendor() {
     }
   }
 
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedCover, setSelectedCover] = useState(null);
+  const [selectedProfilePicture, setselectedProfilePicture] = useState(null);
+  const [selectedCoverPicture, setselectedCoverPicture] = useState(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setSelectedFile(reader.result);
+        setselectedProfilePicture(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -326,7 +326,7 @@ export default function BecomeVendor() {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setSelectedCover(reader.result);
+        setselectedCoverPicture(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -350,10 +350,11 @@ export default function BecomeVendor() {
             sx={{
               display: "flex",
               flexDirection: "row",
-              width: "100%",
+              mx: "auto",
+              width: "30%",
               height: "250px",
               zIndex: 1,
-              backgroundImage: `url(${selectedCover})`,
+              backgroundImage: `url(${selectedCoverPicture})`,
             }}
           >
             <Button
@@ -365,7 +366,7 @@ export default function BecomeVendor() {
               ></AddAPhotoIcon>
               {/* <img
                 id="cover"
-                src={selectedCover}
+                src={selectedCoverPicture}
                 style={{ objectFit: "cover", width: "100%", height: "100%" }}
               /> */}
               <input
@@ -397,9 +398,9 @@ export default function BecomeVendor() {
                   alignSelf: "center",
                 }}
               >
-                {selectedFile ? (
+                {selectedProfilePicture ? (
                   <img
-                    src={selectedFile}
+                    src={selectedProfilePicture}
                     style={{
                       width: "100%",
                       height: "100%",
@@ -417,7 +418,7 @@ export default function BecomeVendor() {
                   cursor: "pointer",
                   backgroundColor: "#eeeeee",
                   "&:hover": { backgroundColor: "#f5f5f5" },
-                  boxShadow: selectedCover ? "none" : "2px 2px 2px 2px #eeeeee",
+                  boxShadow: selectedCoverPicture ? "none" : "2px 2px 2px 2px #eeeeee",
                   minWidth: "fit-content",
                   display: "flex",
                   mt: 2,
