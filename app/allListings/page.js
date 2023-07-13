@@ -63,7 +63,8 @@ export default function AllListings() {
         },
 
         body: JSON.stringify({
-          action: "fetchSingleCategory",
+          ...(cat !== "All" && { action: "fetchSingleCategory" }),
+          ...(cat === "All" && { action: "fetchAll" }),
           category: cat,
         }),
       });
@@ -161,32 +162,6 @@ export default function AllListings() {
         //     </Button>
         //   ))}
         // </Paper>
-<<<<<<< HEAD
-        <Drawer
-          sx={{
-            width: 250,
-            flexShrink: 0,
-            "& .MuiDrawer-paper": {
-              width: 250,
-              boxSizing: "border-box",
-              mt: 14,
-            },
-          }}
-          variant="permanent"
-          anchor="left"
-        >
-          <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
-            <Typography variant="h6" noWrap>
-              Listings
-            </Typography>
-          </Toolbar>
-          <Divider />
-          <List>
-            {categories.map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemText primary={text} />
-=======
         <Paper sx={{ width: "250px" }}>
           <Toolbar sx={{ display: "flex" }}>
             <Button noWrap onClick={() => setSelectedCategory("All")}>
@@ -201,17 +176,12 @@ export default function AllListings() {
                   onClick={() => setSelectedCategory(category.name)}
                 >
                   <ListItemText primary={category.name} />
->>>>>>> origin/backend
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
           <Divider />
-<<<<<<< HEAD
-        </Drawer>
-=======
         </Paper>
->>>>>>> origin/backend
       )}
       {selectedCategory !== "All" ? (
         <Container

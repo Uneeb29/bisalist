@@ -14,7 +14,14 @@ export const authOptions = {
       async authorize(credentials, req) {
         const res = await import("../../login/route");
 
-        const payload = await (await res.POST(credentials)).json();
+        const result = await res.POST(credentials);
+
+        if (result.status !== 200) {
+          return null;
+          //throw new Error("Login Failed");
+        }
+
+        const payload = await result.json();
         console.log(payload);
         const user = {
           // if the role is customer then name: payload.name else name: payload.firstName+payload.lastName

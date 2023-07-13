@@ -50,6 +50,19 @@ export default function Navbar() {
     signOut();
   };
 
+  function redirectToEdit() {
+    // if session.user.role === "customer" then redirect to /editcustomer
+    // if session.user.role === "vendor" then redirect to /editvendor
+    // else do nothing
+
+    if (session.user.role === "customer") {
+      window.location.href = "/editcustomer";
+    }
+    if (session.user.role === "vendor") {
+      window.location.href = "/editvendor";
+    }
+  }
+
   return (
     <Stack
       direction="row"
@@ -189,7 +202,7 @@ export default function Navbar() {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <MenuItem>
+              <MenuItem onClick={redirectToEdit}>
                 <Avatar /> My account
               </MenuItem>
               <Divider />

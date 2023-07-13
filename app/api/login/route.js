@@ -14,15 +14,23 @@ export async function POST(request) {
       },
     });
 
-    if (customer && (await bcrypt.compare(body.password, customer.password))) {
-      console.log("customer found");
+    if (customer) {
+      if (await bcrypt.compare(body.password, customer.password)) {
+        console.log("customer found");
 
-      // remove the password from the customer object before returning it
-      const { password, ...userWithoutPass } = customer;
+        // remove the password from the customer object before returning it
+        const { password, ...userWithoutPass } = customer;
 
-      userWithoutPass.role = "customer";
+        userWithoutPass.role = "customer";
 
-      return new Response(JSON.stringify(userWithoutPass));
+        return new Response(JSON.stringify(userWithoutPass), {
+          status: 200,
+        });
+      } else {
+        return new Response(null, {
+          status: 401,
+        });
+      }
     }
 
     // check if user is in the vendor table
@@ -32,17 +40,24 @@ export async function POST(request) {
       },
     });
 
-    if (vendor && (await bcrypt.compare(body.password, vendor.password))) {
-      console.log("vendor found");
+    if (vendor) {
+      if (await bcrypt.compare(body.password, vendor.password)) {
+        console.log("vendor found");
 
-      // remove the password from the vendor object before returning it
-      const { password, ...userWithoutPass } = vendor;
+        // remove the password from the vendor object before returning it
+        const { password, ...userWithoutPass } = vendor;
 
-      userWithoutPass.role = "vendor";
+        userWithoutPass.role = "vendor";
 
-      return new Response(JSON.stringify(userWithoutPass));
+        return new Response(JSON.stringify(userWithoutPass), {
+          status: 200,
+        });
+      } else {
+        return new Response(null, {
+          status: 401,
+        });
+      }
     }
-
     return new Response(null);
   } catch (err) {
     console.log("login1", err);

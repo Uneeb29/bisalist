@@ -63,10 +63,6 @@ export async function POST(request) {
               },
             },
           },
-
-          include: {
-            category: true,
-          },
         });
 
         return new Response(JSON.stringify(services), { status: 200 });
@@ -94,9 +90,6 @@ export async function POST(request) {
                 name: true,
               },
             },
-          },
-          include: {
-            category: true,
           },
         });
 
