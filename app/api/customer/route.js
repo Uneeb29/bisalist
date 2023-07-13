@@ -4,25 +4,30 @@ import * as bcrypt from "bcrypt";
 
 // only serve POST requests
 export async function POST(request) {
-
   try {
     // get the customer data from the request body
     const body = await request.json();
-	console.log(body);
+    console.log(body);
 
     const action = body.action;
 
     switch (action) {
       case "create":
         // check if email already exits in the customer table
-        const emailExists = await prisma.customer.findUnique({
+        const emailExistsCustomer = await prisma.customer.findUnique({
+          where: {
+            email: body.email,
+          },
+        });
+
+        const emailExistsVendor = await prisma.vendor.findUnique({
           where: {
             email: body.email,
           },
         });
 
         // if email exists, return an error
-        if (emailExists) {
+        if (emailExistsCustomer || emailExistsVendor) {
           return new Response(JSON.stringify("Email already exists"), {
             status: 400,
           });
@@ -58,9 +63,8 @@ export async function POST(request) {
             name: true,
             email: true,
             phone: true,
-          }
+          },
         });
-
 
         return new Response(JSON.stringify(customer), {
           status: 200,
@@ -86,7 +90,7 @@ export async function POST(request) {
         break;
 
       case "update":
-	console.log("update point reached");
+        console.log("update point reached");
         // update customer in the database
         const updatedCustomer = await prisma.customer.update({
           where: {
@@ -98,24 +102,16 @@ export async function POST(request) {
             ...(body.password && {
               password: await bcrypt.hash(body.password, 10),
             }),
-
-          }
+          },
         });
 
-	return new Response(JSON.stringify("Info Updated"),{status:200});
-
-
-
+        return new Response(JSON.stringify("Info Updated"), { status: 200 });
     }
-
-
-
   } catch (err) {
     console.log("Error: ", err);
     return new Response(JSON.stringify("Error"), {
       status: 500,
-    }
-    );
+    });
   }
 }
 

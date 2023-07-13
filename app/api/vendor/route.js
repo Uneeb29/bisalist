@@ -9,13 +9,21 @@ export async function POST(request) {
 
     switch (body.action) {
       case "create":
-        // Check if email already exists
-        const emailExists = await prisma.vendor.findUnique({
+        // check if email already exits in the customer table
+        const emailExistsCustomer = await prisma.customer.findUnique({
           where: {
             email: body.email,
           },
         });
-        if (emailExists) {
+
+        const emailExistsVendor = await prisma.vendor.findUnique({
+          where: {
+            email: body.email,
+          },
+        });
+
+        // if email exists, return an error
+        if (emailExistsCustomer || emailExistsVendor) {
           return new Response(JSON.stringify("Email already exists"), {
             status: 400,
           });

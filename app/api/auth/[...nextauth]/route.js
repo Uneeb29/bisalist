@@ -1,5 +1,6 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { prisma } from "../../../../lib/prisma-client";
 
 export const authOptions = {
   providers: [
@@ -14,11 +15,11 @@ export const authOptions = {
         const res = await import("../../login/route");
 
         const payload = await (await res.POST(credentials)).json();
-	console.log(payload);
+        console.log(payload);
         const user = {
           // if the role is customer then name: payload.name else name: payload.firstName+payload.lastName
-          ...(credentials.role === "customer" && { name: payload.name }),
-          ...(credentials.role === "vendor" && {
+          ...(payload.role === "customer" && { name: payload.name }),
+          ...(payload.role === "vendor" && {
             name: payload.firstname + " " + payload.lastname,
           }),
 
@@ -38,6 +39,44 @@ export const authOptions = {
       },
     }),
   ],
+
+  callbacks: {
+    async session({ session, token, user }) {
+      if (!session) return;
+
+      // if session exists, then we have a user
+      console.log("Session CallBack: ", session);
+
+      // finding the user in the database based on the email
+
+      const customer = await prisma.customer.findUnique({
+        where: {
+          email: session.user.email,
+        },
+      });
+
+      if (customer) {
+        session.user.email = customer.email;
+        session.user.name = customer.name;
+        session.user.role = "customer";
+        return session;
+      }
+
+      const vendor = await prisma.vendor.findUnique({
+        where: {
+          email: session.user.email,
+        },
+      });
+
+      if (vendor) {
+        session.user.role = "vendor";
+        session.user.email = vendor.email;
+        session.user.name = vendor.firstname + " " + vendor.lastname;
+        return session;
+      }
+    },
+  },
+
   pages: {
     signIn: "/auth/signIn",
   },
