@@ -146,9 +146,12 @@ export default function Navbar() {
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
               >
-                <Avatar sx={{ width: 38, height: 38 }}>
-                  {session.user.name.charAt(0).toUpperCase()}
-                </Avatar>
+                {/* only render next line if session.user.name is available */}
+                {session.user.name && (
+                  <Avatar sx={{ width: 38, height: 38 }}>
+                    {session.user.name.charAt(0).toUpperCase()}
+                  </Avatar>
+                )}
               </IconButton>
             </Tooltip>
             <Menu

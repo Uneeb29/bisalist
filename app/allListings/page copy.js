@@ -34,15 +34,7 @@ export default function AllListings() {
   // a function to fetch all the categories from the backend
   async function fetchCategories() {
     try {
-      const res = await fetch("/api/category", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          action: "fetchAll",
-        }),
-      });
+      const res = await fetch("/api/category?action=all");
       const data = await res.json();
       console.log(data);
       return data;
@@ -56,17 +48,7 @@ export default function AllListings() {
     try {
       // if the url of current page does not contain a category, fetch the services of
       // the category that is selected by the user
-      const res = await fetch(`/api/services`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify({
-          action: "fetchSingleCategory",
-          category: cat,
-        }),
-      });
+      const res = await fetch(`/api/services?category=${cat}`);
       const data = await res.json();
       console.log(data);
       return data;
@@ -161,7 +143,6 @@ export default function AllListings() {
         //     </Button>
         //   ))}
         // </Paper>
-<<<<<<< HEAD
         <Drawer
           sx={{
             width: 250,
@@ -175,21 +156,8 @@ export default function AllListings() {
           variant="permanent"
           anchor="left"
         >
-          <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
-            <Typography variant="h6" noWrap>
-              Listings
-            </Typography>
-          </Toolbar>
-          <Divider />
-          <List>
-            {categories.map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemText primary={text} />
-=======
-        <Paper sx={{ width: "250px" }}>
           <Toolbar sx={{ display: "flex" }}>
-            <Button noWrap onClick={() => setSelectedCategory("All")}>
+            <Button  noWrap onClick={() => setSelectedCategory("All")}>
               All categories
             </Button>
           </Toolbar>
@@ -197,21 +165,14 @@ export default function AllListings() {
           <List>
             {categories?.map((category, index) => (
               <ListItem key={category.name} disablePadding>
-                <ListItemButton
-                  onClick={() => setSelectedCategory(category.name)}
-                >
+                <ListItemButton  onClick={() => setSelectedCategory(category.name)}>
                   <ListItemText primary={category.name} />
->>>>>>> origin/backend
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
           <Divider />
-<<<<<<< HEAD
         </Drawer>
-=======
-        </Paper>
->>>>>>> origin/backend
       )}
       {selectedCategory !== "All" ? (
         <Container
@@ -258,7 +219,7 @@ export default function AllListings() {
                     justifyContent: "space-between",
                   }}
                 >
-                  {/* <Box
+                  <Box
                     sx={{
                       bgcolor: "#334576",
                       borderRadius: "50%",
@@ -278,7 +239,7 @@ export default function AllListings() {
                         },
                       }}
                     ></FavoriteBorderIcon>
-                  </Box> */}
+                  </Box>
                   <Box
                     sx={{
                       p: 0.5,
@@ -413,7 +374,7 @@ export default function AllListings() {
                         justifyContent: "space-between",
                       }}
                     >
-                      {/* <Box
+                      <Box
                         sx={{
                           bgcolor: "#334576",
                           borderRadius: "50%",
@@ -433,7 +394,7 @@ export default function AllListings() {
                             },
                           }}
                         ></FavoriteBorderIcon>
-                      </Box> */}
+                      </Box>
                       <Box
                         sx={{
                           p: 0.5,
@@ -441,7 +402,30 @@ export default function AllListings() {
                           bgcolor: "grey",
                           width: "30%",
                         }}
-                      ></Box>
+                      >
+                        <Box
+                          sx={{
+                            bgcolor: "#1de9b6",
+                            borderRadius: "16px",
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            p: 0.75,
+                          }}
+                        >
+                          <LockOpenRoundedIcon
+                            sx={{
+                              color: "white",
+                              height: "15px",
+                              width: "20px",
+                            }}
+                          ></LockOpenRoundedIcon>
+                          {/* <Typography sx={{ color: "white", fontSize: "10px" }}>
+                        Book Now
+                      </Typography> */}
+                        </Box>
+                      </Box>
                     </Box>
                     <Box
                       sx={{
@@ -458,7 +442,7 @@ export default function AllListings() {
                       <Box
                         sx={{
                           p: 1.25,
-                          //   bgcolor: "#334576",
+                          bgcolor: "#334576",
                           borderRadius: "5px",
                           mr: 2,
                         }}

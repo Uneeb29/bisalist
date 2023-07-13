@@ -30,6 +30,11 @@ export default function Login() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const { data: session, status } = useSession();
+  if (session) {
+    console.log("session", session);
+  }
   const {
     register,
     handleSubmit,
@@ -47,9 +52,9 @@ export default function Login() {
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
-      role: data.vendor ? "vendor" : "customer",
+      // role: data.vendor ? "vendor" : "customer",
       redirect: true,
-      callbackUrl: "/check", // Where to redirect after log in
+      callbackUrl: "/", // Where to redirect after log in
     });
   }
 
@@ -195,7 +200,7 @@ export default function Login() {
                   alignItems: "center",
                 }}
               >
-                <Checkbox
+                {/* <Checkbox
                   {...label}
                   {...register("remember")}
                   sx={{
@@ -204,8 +209,8 @@ export default function Login() {
                       color: "#334576",
                     },
                   }}
-                />
-                <Typography sx={{ fontSize: "14px" }}>Remember Me</Typography>
+                /> */}
+                {/* <Typography sx={{ fontSize: "14px" }}>Remember Me</Typography> */}
               </Box>
               <Link underline="none" onClick={handleForgotPassword}>
                 <Typography sx={{ color: "#245cbc", fontSize: "14px" }}>
