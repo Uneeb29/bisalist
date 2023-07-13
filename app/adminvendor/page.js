@@ -25,6 +25,33 @@ import { useSession } from "next-auth/react";
 // create a check on the starting cost (It should be a number greater than 0)
 
 export default function EditVendor() {
+
+  const [selectedProfilePicture, setselectedProfilePicture] = useState(null);
+  const [selectedCoverPicture, setselectedCoverPicture] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setselectedProfilePicture(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleCoverChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setselectedCoverPicture(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+
   const { data: session, status } = useSession();
 
   if (session) {
@@ -557,7 +584,7 @@ export default function EditVendor() {
             </Typography>
 
             <form onSubmit={handleSubmit(sendData)}>
-              <Box
+              {/* <Box
                 sx={{
                   width: "70%",
                   height: "250px",
@@ -616,7 +643,99 @@ export default function EditVendor() {
                   ></CreateIcon>
                   <input {...register("avi")} type="file" hidden />
                 </Button>
+              </Paper> */}
+              <Paper
+            elevation={3}
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              mx: "auto",
+              width: "30%",
+              height: "250px",
+              zIndex: 1,
+              backgroundImage: `url(${selectedCoverPicture})`,
+            }}
+          >
+            <Button
+              component="label"
+              sx={{ display: "flex", alignSelf: "flex-start" }}
+            >
+              <AddAPhotoIcon
+                sx={{ fontSize: "50px", cursor: "pointer", color: "#eeeeee" }}
+              ></AddAPhotoIcon>
+              {/* <img
+                id="cover"
+                src={selectedCoverPicture}
+                style={{ objectFit: "cover", width: "100%", height: "100%" }}
+              /> */}
+              <input
+                {...register("cover")}
+                type="file"
+                hidden
+                id="coverImage"
+                onChange={handleCoverChange}
+              />
+            </Button>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                mx: "auto",
+                width: "250px",
+                height: "250px",
+              }}
+            >
+              <Paper
+                elevation={3}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "200px",
+                  height: "200px",
+                  borderRadius: "50%",
+                  alignSelf: "center",
+                }}
+              >
+                {selectedProfilePicture ? (
+                  <img
+                    src={selectedProfilePicture}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "50%",
+                    }}
+                  />
+                ) : (
+                  <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
+                )}
               </Paper>
+              <Button
+                sx={{
+                  borderRadius: "50%",
+                  height: "fit-content",
+                  cursor: "pointer",
+                  backgroundColor: "#eeeeee",
+                  "&:hover": { backgroundColor: "#f5f5f5" },
+                  boxShadow: selectedCoverPicture ? "none" : "2px 2px 2px 2px #eeeeee",
+                  minWidth: "fit-content",
+                  display: "flex",
+                  mt: 2,
+                }}
+                component="label"
+              >
+                <CreateIcon
+                  sx={{ fontSize: "20px", color: "black" }}
+                ></CreateIcon>
+                <input
+                  {...register("avi")}
+                  type="file"
+                  hidden
+                  onChange={handleFileChange}
+                />
+              </Button>
+            </Box>
+          </Paper>
               <FormControl sx={{ width: "100%", mt: 4, ml: 3 }}>
                 <Box sx={{ display: "flex", flexDirection: "column" }}>
                   <Box sx={{ display: "flex", flexDirection: "row" }}>
