@@ -56,10 +56,10 @@ export default function Navbar() {
     // else do nothing
 
     if (session.user.role === "customer") {
-      window.location.href = "/editcustomer";
+      window.location.href = "/admincustomer";
     }
     if (session.user.role === "vendor") {
-      window.location.href = "/editvendor";
+      window.location.href = "/adminvendor";
     }
   }
 

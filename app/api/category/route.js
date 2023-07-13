@@ -4,17 +4,16 @@ export async function POST(request) {
   try {
     const body = await request.json();
 
-    // Check if category already exists (if category is not null)
-
-    const categoryExists = await prisma.category.findUnique({
-      where: {
-        ...(body.category && { name: body.category }),
-      },
-    });
-
     // do something based on the action
     switch (body.action) {
       case "add":
+        // Check if category already exists (if category is not null)
+
+        const categoryExists = await prisma.category.findUnique({
+          where: {
+            ...(body.category && { name: body.category }),
+          },
+        });
         // if category already exists, return error
         if (categoryExists) {
           return new Response(JSON.stringify("Category already exists"), {
@@ -90,7 +89,15 @@ export async function POST(request) {
 
       case "fetchAll":
         // get all categories
-        const allCategories = await prisma.category.findMany();
+        console.log("fetch all");
+
+        const allCategories = await prisma.category.findMany({
+          select: {
+            name: true,
+            image: true,
+            description: true,
+          },
+        });
 
         return new Response(JSON.stringify(allCategories), {
           status: 200,
@@ -105,7 +112,7 @@ export async function POST(request) {
     }
   } catch (error) {
     console.log(error);
-    return new Response(JSON.stringify("Error adding Category"), {
+    return new Response(JSON.stringify("Error Category"), {
       status: 500,
     });
   }

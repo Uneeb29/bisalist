@@ -23,9 +23,14 @@ import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import KeyboardAltOutlinedIcon from "@mui/icons-material/KeyboardAltOutlined";
 import Person2Icon from "@mui/icons-material/Person2";
 import CreateIcon from "@mui/icons-material/Create";
+import { useEffect, useState } from "react";
 
 export default function AddCategories() {
   const { register, handleSubmit, errors } = useForm();
+  // for another form
+  const { register: register2, handleSubmit: handleSubmit2 } = useForm();
+
+  const [listings, setListings] = useState([]);
 
   // creating a simple form that takes a category name and image
 
@@ -60,6 +65,34 @@ export default function AddCategories() {
     reader.readAsDataURL(data.image[0]);
   };
 
+  async function onSearch(data) {
+    console.log("searching");
+
+    const searchItem = document.getElementById("search").value;
+
+    console.log(searchItem);
+
+    const response = await fetch("/api/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ search: data.search }),
+    });
+
+    console.log("Status Code : ", response.status);
+
+    const res = await response.json();
+
+    console.log("Response : ", res);
+
+    setListings(res);
+  }
+
+  useEffect(() => {
+    console.log("listings: ", listings);
+  }, [listings]);
+
   return (
     <Container
       sx={{
@@ -90,157 +123,143 @@ export default function AddCategories() {
         >
           Search Listings
         </Typography>
-        <TextField
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <KeyboardAltOutlinedIcon sx={{ color: "#4db4f9" }} />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                <Button
-                  sx={{
-                    bgcolor: "#334576",
-                    color: "white",
-                    p: 1,
-                    pl: 4,
-                    pr: 4,
-                    "&:hover": { bgcolor: "#334576" },
-                  }}
-                >
-                  <Typography
-                    sx={{ textTransform: "capitalize", fontSize: "14px" }}
-                  >
-                    Search
-                  </Typography>
-                  <SearchIcon
-                    sx={{ ml: 1, height: "20px", color: "#4db4f9" }}
-                  />
-                </Button>
-              </InputAdornment>
-            ),
-          }}
-          placeholder="Listings..."
-          sx={{
-            bgcolor: "white",
-            borderRadius: "8px",
-            width: "100%",
-            height: "full",
-            mb: 10,
-          }}
-        ></TextField>
-        <Card
-          // key={service.title}
-          sx={{
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            width: "30%",
-            mb: 4,
-            borderRadius: "10px",
-            cursor: "pointer",
-            height: "400px",
-            mr: 3,
-            // display:
-            //   service.category.name === selectedCategory ||
-            //   selectedCategory == "All"
-            //     ? "block"
-            //     : "none",
-          }}
-        >
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              height="250"
-              image="electrician.jpg"
-            ></CardMedia>
+        {/* START */}
 
-            <Box
-              sx={{
-                position: "absolute",
-                top: 10,
-                left: 10,
-                zIndex: 1,
-                width: "90%",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              {/* <Box
+        <form onSubmit={handleSubmit2(onSearch)}>
+          <TextField
+            {...register2("search", { required: true })}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <KeyboardAltOutlinedIcon sx={{ color: "#4db4f9" }} />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Button
                     sx={{
                       bgcolor: "#334576",
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      p: 0.6,
-                      cursor: "pointer",
-                      height: "fit-content",
+                      color: "white",
+                      p: 1,
+                      pl: 4,
+                      pr: 4,
+                      "&:hover": { bgcolor: "#334576" },
                     }}
+                    type="submit"
                   >
-                    <FavoriteBorderIcon
-                      sx={{
-                        color: "white",
-                        height: "20px",
-                        "&:hover": {
-                          color: "#4db4f9",
-                        },
-                      }}
-                    ></FavoriteBorderIcon>
-                  </Box> */}
-              <Box
-                sx={{
-                  p: 0.5,
-                  borderRadius: "20px",
-                  bgcolor: "grey",
-                  width: "35%",
-                }}
-              >
+                    <Typography
+                      sx={{ textTransform: "capitalize", fontSize: "14px" }}
+                    >
+                      Search
+                    </Typography>
+                    <SearchIcon
+                      sx={{ ml: 1, height: "20px", color: "#4db4f9" }}
+                    />
+                  </Button>
+                </InputAdornment>
+              ),
+            }}
+            placeholder="Listings..."
+            sx={{
+              bgcolor: "white",
+              borderRadius: "8px",
+              width: "100%",
+              height: "full",
+              mb: 10,
+            }}
+          ></TextField>
+        </form>
+        {/* START */}
+
+        {listings.map((service) => {
+          return (
+            <Card
+              key={service.companyName}
+              sx={{
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                width: "30%",
+                mb: 4,
+                borderRadius: "10px",
+                cursor: "pointer",
+                height: "400px",
+                mr: 3,
+              }}
+            >
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="250"
+                  image={service.cover}
+                ></CardMedia>
+
                 <Box
                   sx={{
-                    bgcolor: "red",
-                    borderRadius: "16px",
+                    position: "absolute",
+                    top: 10,
+                    left: 10,
+                    zIndex: 1,
+                    width: "90%",
                     display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
                     justifyContent: "space-between",
-                    p: 0.75,
                   }}
                 >
-                  <BlockIcon
-                    sx={{ color: "white", height: "15px", width: "20px" }}
-                  ></BlockIcon>
-                  <Typography sx={{ color: "white", fontSize: "10px" }}>
-                    Block Vendor
-                  </Typography>
+                  <Box
+                    sx={{
+                      p: 0.5,
+                      borderRadius: "20px",
+                      bgcolor: "grey",
+                      width: "35%",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        bgcolor: "red",
+                        borderRadius: "16px",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        p: 0.75,
+                      }}
+                    >
+                      <BlockIcon
+                        sx={{ color: "white", height: "15px", width: "20px" }}
+                      ></BlockIcon>
+                      <Typography sx={{ color: "white", fontSize: "10px" }}>
+                        Block Vendor
+                      </Typography>
+                    </Box>
+                  </Box>
                 </Box>
-              </Box>
-            </Box>
-            <CardContent sx={{}}>
-              <Typography gutterBottom variant="h5" component="div">
-                Electrician
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  mb: 3,
-                }}
-              >
-                <LocationOnOutlinedIcon
-                  sx={{ color: "#4db4f9", fontSize: "15px", mr: 1 }}
-                ></LocationOnOutlinedIcon>
-                <Typography sx={{ fontSize: "12px" }}>
-                  location goes here
-                </Typography>
-              </Box>
-              <Typography variant="body2" color="text.secondary">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
+                <CardContent sx={{}}>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {service.vendor.firstname + " " + service.vendor.lastname}
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      mb: 3,
+                    }}
+                  >
+                    <LocationOnOutlinedIcon
+                      sx={{ color: "#4db4f9", fontSize: "15px", mr: 1 }}
+                    ></LocationOnOutlinedIcon>
+                    <Typography sx={{ fontSize: "12px" }}>
+                      {service.location}
+                    </Typography>
+                  </Box>
+                  <Typography variant="body2" color="text.secondary">
+                    {service.vendor.description}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          );
+        })}
+        {/* END */}
       </Paper>
       <Paper
         elevation={3}
@@ -308,7 +327,11 @@ export default function AddCategories() {
                 <CreateIcon
                   sx={{ fontSize: "20px", color: "black" }}
                 ></CreateIcon>
-                <input {...register("avi")} type="file" hidden />
+                <input
+                  {...register("image", { required: true })}
+                  type="file"
+                  hidden
+                />
               </Button>
             </Box>
             <Box
