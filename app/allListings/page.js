@@ -12,6 +12,13 @@ import {
   CardActions,
   Button,
   Paper,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  Drawer,
+  Toolbar,
+  ListItemButton,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
@@ -80,61 +87,91 @@ export default function AllListings() {
   return (
     <Stack direction={"row"} sx={{ mt: 14 }}>
       {categories.length > 1 && (
-        <Paper
+        // <Paper
+        //   sx={{
+        //     display: "flex",
+        //     flexDirection: "column",
+        //     height: "100%",
+        //     p: 2,
+        //     bgcolor: "#334576",
+        //   }}
+        //   elevation={2}
+        // >
+        //   <Button
+        //     sx={{
+        //       mt: 0,
+        //       backgroundColor:
+        //         selectedCategory === "All" ? "#4db4f9" : "transparent",
+        //     }}
+        //     onClick={() => setSelectedCategory("All")}
+        //   >
+        //     <Typography
+        //       sx={{
+        //         color: selectedCategory === "All" ? "#334576" : "white",
+        //         textTransform: "capitalize",
+        //         "&:hover": { color: "#4db4f9" },
+        //       }}
+        //     >
+        //       All Listings
+        //     </Typography>
+        //   </Button>
+        //   {categories?.map((category, index) => (
+        //     <Button
+        //       key={index}
+        //       sx={{
+        //         mt: index != 0 ? 5 : 0,
+        //         backgroundColor:
+        //           selectedCategory === category.name
+        //             ? "#4db4f9"
+        //             : "transparent",
+        //       }}
+        //       onClick={() => {
+        //         setSelectedCategory(category.name);
+        //       }}
+        //     >
+        //       <Typography
+        //         sx={{
+        //           color:
+        //             selectedCategory === category.name ? "#334576" : "white",
+        //           textTransform: "capitalize",
+        //           "&:hover": { color: "#4db4f9" },
+        //         }}
+        //       >
+        //         {category.name}
+        //       </Typography>
+        //     </Button>
+        //   ))}
+        // </Paper>
+        <Drawer
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            height: "100%",
-            p: 2,
-            bgcolor: "#334576",
+            width: 250,
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: 250,
+              boxSizing: "border-box",
+              mt: 14,
+            },
           }}
-          elevation={2}
+          variant="permanent"
+          anchor="left"
         >
-          <Button
-            sx={{
-              mt: 0,
-              backgroundColor:
-                selectedCategory === "All" ? "#4db4f9" : "transparent",
-            }}
-            onClick={() => setSelectedCategory("All")}
-          >
-            <Typography
-              sx={{
-                color: selectedCategory === "All" ? "#334576" : "white",
-                textTransform: "capitalize",
-                "&:hover": { color: "#4db4f9" },
-              }}
-            >
-              All Listings
+          <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
+            <Typography variant="h6" noWrap>
+              Listings
             </Typography>
-          </Button>
-          {categories?.map((category, index) => (
-            <Button
-              key={index}
-              sx={{
-                mt: index != 0 ? 5 : 0,
-                backgroundColor:
-                  selectedCategory === category.name
-                    ? "#4db4f9"
-                    : "transparent",
-              }}
-              onClick={() => {
-                setSelectedCategory(category.name);
-              }}
-            >
-              <Typography
-                sx={{
-                  color:
-                    selectedCategory === category.name ? "#334576" : "white",
-                  textTransform: "capitalize",
-                  "&:hover": { color: "#4db4f9" },
-                }}
-              >
-                {category.name}
-              </Typography>
-            </Button>
-          ))}
-        </Paper>
+          </Toolbar>
+          <Divider />
+          <List>
+            {categories.map((text, index) => (
+              <ListItem key={text} disablePadding>
+                <ListItemButton>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+        </Drawer>
       )}
       {selectedCategory !== "All" ? (
         <Container

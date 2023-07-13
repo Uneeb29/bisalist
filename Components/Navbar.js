@@ -252,11 +252,11 @@ export default function Navbar() {
           //     </Typography>
           //   </Button>
           // )
-          // // </div>
+          // </div>
         }
       </Box>
 
-      {/* <Modal
+      <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -309,7 +309,7 @@ export default function Navbar() {
             <Typography>Become a Vendor</Typography>
           </Link>
         </Box>
-      </Modal> */}
+      </Modal>
 
       {/* <Badge badgeContent={1} color="primary">
         <FavoriteBorderIcon sx={{ color: "white" }} />

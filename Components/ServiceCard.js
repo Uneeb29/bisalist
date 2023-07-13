@@ -67,6 +67,7 @@ export default function ServiceCard() {
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
               width: "90%",
+              height: "120%",
               mr: 3.5,
               borderRadius: "10px",
               cursor: "pointer",
@@ -78,42 +79,30 @@ export default function ServiceCard() {
                   sx={{
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "space-between",
-                    mb: 10,
+                    // justifyContent: "space-between",
+                    // mb: 2,
+                    height: "8rem",
                   }}
                 >
                   <Box
                     sx={{
-                      bgcolor: "#334576",
-                      borderRadius: "50%",
                       display: "flex",
-                      alignItems: "center",
-                      cursor: "pointer",
-                      height: "30px",
-                      width: "30px",
-                      justifyContent: "center",
-                      alignItems: "center",
+                      // alignItems: "center",
+
+                      // justifyContent: "center",
+                      // alignItems: "center",
+                      ml: 2,
                     }}
-                  >
-                    <FavoriteBorderIcon
-                      sx={{
-                        color: "white",
-                        height: "20px",
-                        "&:hover": {
-                          color: "#4db4f9",
-                        },
-                      }}
-                    ></FavoriteBorderIcon>
-                  </Box>
-                  <Box
+                  ></Box>
+                  {/* <Box
                     sx={{
                       p: 0.5,
                       borderRadius: "20px",
                       bgcolor: "grey",
                       width: "32%",
                     }}
-                  >
-                    <Box
+                  > */}
+                  {/* <Box
                       sx={{
                         bgcolor: "#1de9b6",
                         borderRadius: "16px",
@@ -130,14 +119,14 @@ export default function ServiceCard() {
                       <Typography sx={{ color: "white", fontSize: "12px" }}>
                         Book Now
                       </Typography>
-                    </Box>
-                  </Box>
+                    </Box> */}
+                  {/* </Box> */}
                 </Box>
-                <Box
+                {/* <Box
                   sx={{
                     display: "flex",
                     flexDirection: "row",
-                    alignItems: "center",
+                    alignItems: "top",
                     mb: 3,
                   }}
                 >
@@ -146,24 +135,10 @@ export default function ServiceCard() {
                   >
                     {card.title}
                   </Typography>
-                  <Box
-                    sx={{
-                      borderRadius: "50%",
-                      bgcolor: "#1de9b6",
-                      width: "5%",
-                      height: "15%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <DoneIcon
-                      sx={{ color: "white", height: "15px", width: "15px" }}
-                    ></DoneIcon>
-                  </Box>
-                </Box>
-                <Divider sx={{ bgcolor: "white", mb: 2 }}></Divider>
-                <Box sx={{ display: "flex", flexDirection: "row" }}>
+                
+                </Box> */}
+                {/* <Divider sx={{ bgcolor: "white", mb: 2 }}></Divider> */}
+                {/* <Box sx={{ display: "flex", flexDirection: "row" }}>
                   <Typography sx={{ color: "white", mr: 2, fontSize: "14px" }}>
                     {card.category}
                   </Typography>
@@ -179,10 +154,21 @@ export default function ServiceCard() {
                   <Typography sx={{ color: "white", fontSize: "14px" }}>
                     {card.createdBy}
                   </Typography>
-                </Box>
+                </Box> */}
               </Stack>
             </CardContent>
           </Card>
+          <Typography
+            sx={{
+              color: "black",
+              fontWeight: "bold",
+              mt: 2,
+              alignSelf: "center",
+              fontSize: "20px",
+            }}
+          >
+            {card.title}
+          </Typography>
         </Link>
       ))}
     </Container>

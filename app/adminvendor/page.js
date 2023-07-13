@@ -18,7 +18,6 @@ import SendIcon from "@mui/icons-material/Send";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { useForm } from "react-hook-form";
 import { basePath } from "../../next.config";
-import { useState } from "react";
 
 // Reminders:
 // create a check on the starting cost (It should be a number greater than 0)
@@ -96,7 +95,6 @@ export default function BecomeVendor() {
       console.log("Data: ", data);
 
       if (data.avi.length !== 0) {
-        // avi = profile picture
         const fileReader = new FileReader();
         // convert image to base64 string and store it in a variable
         // this variable will be sent to the server
@@ -287,31 +285,6 @@ export default function BecomeVendor() {
     }
   }
 
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedCover, setSelectedCover] = useState(null);
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setSelectedFile(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleCoverChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setSelectedCover(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   return (
     <Container sx={{ mt: 14 }}>
       <Paper
@@ -321,100 +294,65 @@ export default function BecomeVendor() {
         <Typography
           sx={{ fontSize: "20px", fontWeight: "bold", mt: 6, ml: 3, mb: 4 }}
         >
-          Register
+          Edit Profile
         </Typography>
 
         <form onSubmit={handleSubmit(sendData)}>
+          <Box
+            sx={{
+              width: "70%",
+              height: "250px",
+              position: "absolute",
+              zIndex: 0,
+              borderRadius: "16px",
+            }}
+          >
+            <Button component="label">
+              <AddAPhotoIcon
+                sx={{ fontSize: "50px", cursor: "pointer", color: "#eeeeee" }}
+              ></AddAPhotoIcon>
+              <input {...register("cover")} type="file" hidden />
+            </Button>
+          </Box>
           <Paper
             elevation={3}
             sx={{
               display: "flex",
               flexDirection: "row",
+              justifyContent: "center",
               width: "100%",
-              height: "250px",
-              zIndex: 1,
-              backgroundImage: `url(${selectedCover})`,
+              height: "200px",
             }}
           >
-            <Button
-              component="label"
-              sx={{ display: "flex", alignSelf: "flex-start" }}
-            >
-              <AddAPhotoIcon
-                sx={{ fontSize: "50px", cursor: "pointer", color: "#eeeeee" }}
-              ></AddAPhotoIcon>
-              {/* <img
-                id="cover"
-                src={selectedCover}
-                style={{ objectFit: "cover", width: "100%", height: "100%" }}
-              /> */}
-              <input
-                {...register("cover")}
-                type="file"
-                hidden
-                id="coverImage"
-                onChange={handleCoverChange}
-              />
-            </Button>
-            <Box
+            <Paper
+              elevation={3}
               sx={{
                 display: "flex",
-                flexDirection: "row",
-                mx: "auto",
-                width: "250px",
-                height: "250px",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "200px",
+                height: "200px",
+                borderRadius: "50%",
               }}
             >
-              <Paper
-                elevation={3}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "200px",
-                  height: "200px",
-                  borderRadius: "50%",
-                  alignSelf: "center",
-                }}
-              >
-                {selectedFile ? (
-                  <img
-                    src={selectedFile}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "50%",
-                    }}
-                  />
-                ) : (
-                  <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
-                )}
-              </Paper>
-              <Button
-                sx={{
-                  borderRadius: "50%",
-                  height: "fit-content",
-                  cursor: "pointer",
-                  backgroundColor: "#eeeeee",
-                  "&:hover": { backgroundColor: "#f5f5f5" },
-                  boxShadow: selectedCover ? "none" : "2px 2px 2px 2px #eeeeee",
-                  minWidth: "fit-content",
-                  display: "flex",
-                  mt: 2,
-                }}
-                component="label"
-              >
-                <CreateIcon
-                  sx={{ fontSize: "20px", color: "black" }}
-                ></CreateIcon>
-                <input
-                  {...register("avi")}
-                  type="file"
-                  hidden
-                  onChange={handleFileChange}
-                />
-              </Button>
-            </Box>
+              <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
+            </Paper>
+            <Button
+              sx={{
+                borderRadius: "50%",
+                height: "fit-content",
+                cursor: "pointer",
+                "&:hover": { backgroundColor: "#f5f5f5" },
+                boxShadow: "2px 2px 2px 2px #eeeeee",
+                minWidth: "fit-content",
+              }}
+              component="label"
+            >
+              <CreateIcon
+                sx={{ fontSize: "20px", color: "black" }}
+              ></CreateIcon>
+              <input {...register("avi")} type="file" hidden />
+            </Button>
           </Paper>
           <FormControl sx={{ width: "100%", mt: 4, ml: 3 }}>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -900,6 +838,7 @@ export default function BecomeVendor() {
                       required: "Email is required.",
                     })}
                     placeholder="john@doe.com"
+                    disabled
                     size="small"
                     sx={{
                       bgcolor: "#eeeeee",
@@ -1174,7 +1113,7 @@ export default function BecomeVendor() {
               <Typography
                 sx={{ color: "white", fontSize: "14px", fontWeight: "bold" }}
               >
-                Submit Now
+                Save Changes
               </Typography>
               <SendIcon sx={{ ml: 1, color: "white", fontSize: "16px" }} />
             </Button>
