@@ -33,24 +33,32 @@ export async function POST(request) {
         });
         break;
 
-      case "updateImg":
-        // add image to the category model
-        if (!categoryExists) {
+      case "update":
+        // update category
+        const categoryExist = await prisma.category.findUnique({
+          where: {
+            id: body.id,
+          },
+        });
+
+        if (!categoryExist) {
           return new Response(JSON.stringify("Category does not exist"), {
             status: 400,
           });
         }
 
-        const image = body.image;
         await prisma.category.update({
           where: {
-            name: body.category,
+            id: body.id,
           },
           data: {
-            image: image,
+            ...(body.category && { name: body.category }),
+            ...(body.image && { image: body.image }),
+            ...(body.description && { description: body.description }),
           },
         });
-        return new Response(JSON.stringify("Image Added"), {
+
+        return new Response(JSON.stringify("Category Updated"), {
           status: 200,
         });
         break;
@@ -93,6 +101,7 @@ export async function POST(request) {
 
         const allCategories = await prisma.category.findMany({
           select: {
+            id: true,
             name: true,
             image: true,
             description: true,
