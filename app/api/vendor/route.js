@@ -229,6 +229,21 @@ export async function POST(request) {
           status: 200,
         });
         break;
+
+      case "unblock":
+        const unblockVendor = await prisma.vendor.update({
+          where: {
+            id: body.id,
+          },
+
+          data: {
+            blocked: false,
+          },
+        });
+        return new Response(JSON.stringify("Vendor Unblocked"), {
+          status: 200,
+        });
+        break;
     }
   } catch (err) {
     console.log("Error creating vendor: ", err);
