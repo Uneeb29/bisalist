@@ -33,6 +33,7 @@ CREATE TABLE "Vendor" (
     "password" TEXT NOT NULL,
     "avi" TEXT,
     "fileType" TEXT NOT NULL,
+    "file" TEXT,
     "blocked" BOOLEAN DEFAULT false,
 
     CONSTRAINT "Vendor_pkey" PRIMARY KEY ("id")

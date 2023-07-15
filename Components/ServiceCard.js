@@ -81,23 +81,19 @@ export default function ServiceCard() {
                     flexDirection: "row",
                     // justifyContent: "space-between",
                     // mb: 2,
-                    height:"8rem"
+                    height: "8rem",
                   }}
                 >
-                   <Box
+                  <Box
                     sx={{
-                
                       display: "flex",
                       // alignItems: "center",
-                      
-                      
+
                       // justifyContent: "center",
                       // alignItems: "center",
                       ml: 2,
                     }}
-                  >
-                  
-                  </Box> 
+                  ></Box>
                   {/* <Box
                     sx={{
                       p: 0.5,
@@ -106,7 +102,7 @@ export default function ServiceCard() {
                       width: "32%",
                     }}
                   > */}
-                    {/* <Box
+                  {/* <Box
                       sx={{
                         bgcolor: "#1de9b6",
                         borderRadius: "16px",
@@ -161,13 +157,18 @@ export default function ServiceCard() {
                 </Box> */}
               </Stack>
             </CardContent>
-            
           </Card>
-          <Typography 
-                    sx={{ color: "black", fontWeight: "bold", mt: 2 , alignSelf:"center", fontSize:"20px"}}
-                  >
-                    {card.title}
-                  </Typography>
+          <Typography
+            sx={{
+              color: "black",
+              fontWeight: "bold",
+              mt: 2,
+              alignSelf: "center",
+              fontSize: "20px",
+            }}
+          >
+            {card.title}
+          </Typography>
         </Link>
       ))}
     </Container>

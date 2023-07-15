@@ -4,27 +4,28 @@ export async function POST(request) {
   try {
     const body = await request.json();
 
-    // Check if category already exists
-    const categoryExists = await prisma.category.findUnique({
-      where: {
-        name: body.category,
-      },
-    });
-
-    if (categoryExists) {
-      return new Response(JSON.stringify("Category already exists"), {
-        status: 400,
-      });
-    }
-
     // do something based on the action
     switch (body.action) {
       case "add":
-        // add category to the category model
-        const category = await prisma.category.create({
+        // Check if category already exists (if category is not null)
+
+        const categoryExists = await prisma.category.findUnique({
+          where: {
+            ...(body.category && { name: body.category }),
+          },
+        });
+        // if category already exists, return error
+        if (categoryExists) {
+          return new Response(JSON.stringify("Category already exists"), {
+            status: 400,
+          });
+        }
+
+        // else add category to the category model
+        await prisma.category.create({
           data: {
             name: body.category,
-            image: body.image,
+            ...(body.image && { image: body.image }),
           },
         });
         return new Response(JSON.stringify("Category Added"), {
@@ -32,8 +33,14 @@ export async function POST(request) {
         });
         break;
 
-      case "image":
+      case "updateImg":
         // add image to the category model
+        if (!categoryExists) {
+          return new Response(JSON.stringify("Category does not exist"), {
+            status: 400,
+          });
+        }
+
         const image = body.image;
         await prisma.category.update({
           where: {
@@ -48,6 +55,55 @@ export async function POST(request) {
         });
         break;
 
+      case "delete":
+        // delete category
+        if (!categoryExists) {
+          return new Response(JSON.stringify("Category does not exist"), {
+            status: 400,
+          });
+        }
+
+        await prisma.category.delete({
+          where: {
+            name: body.category,
+          },
+        });
+
+        return new Response(JSON.stringify("Category Deleted"), {
+          status: 200,
+        });
+        break;
+
+      case "fetchNames":
+        // get all category names
+        const categories = await prisma.category.findMany({
+          select: {
+            name: true,
+          },
+        });
+
+        return new Response(JSON.stringify(categories), {
+          status: 200,
+        });
+        break;
+
+      case "fetchAll":
+        // get all categories
+        console.log("fetch all");
+
+        const allCategories = await prisma.category.findMany({
+          select: {
+            name: true,
+            image: true,
+            description: true,
+          },
+        });
+
+        return new Response(JSON.stringify(allCategories), {
+          status: 200,
+        });
+        break;
+
       default:
         return new Response(JSON.stringify("Invalid Action"), {
           status: 400,
@@ -56,45 +112,7 @@ export async function POST(request) {
     }
   } catch (error) {
     console.log(error);
-    return new Response(JSON.stringify("Error adding Category"), {
-      status: 500,
-    });
-  }
-}
-
-export async function GET(request) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const action = searchParams.get("action");
-    if (action === "name") {
-      const categories = await prisma.category.findMany({
-        select: {
-          name: true,
-        },
-      });
-
-      return new Response(JSON.stringify(categories), {
-        status: 200,
-      });
-    }
-
-    if (action === "all") {
-      // get all categories
-      const categories = await prisma.category.findMany({
-        select: {
-          id: true,
-          name: true,
-          image: true,
-        },
-      });
-
-      return new Response(JSON.stringify(categories), {
-        status: 200,
-      });
-    }
-  } catch (error) {
-    console.log(error);
-    return new Response(JSON.stringify("Error getting Categories"), {
+    return new Response(JSON.stringify("Error Category"), {
       status: 500,
     });
   }

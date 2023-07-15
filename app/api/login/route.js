@@ -7,23 +7,59 @@ export async function POST(request) {
   const body = await request;
 
   try {
-    const user = await prisma[body.role].findUnique({
+    // check if user is in the customer table
+    const customer = await prisma.customer.findUnique({
       where: {
         email: body.email,
       },
     });
 
-    if (user && (await bcrypt.compare(body.password, user.password))) {
-      console.log("User found");
+    if (customer) {
+      if (await bcrypt.compare(body.password, customer.password)) {
+        console.log("customer found");
 
-      // remove the password from the user object before returning it
-      const { password, ...userWithoutPass } = user;
+        // remove the password from the customer object before returning it
+        const { password, ...userWithoutPass } = customer;
 
-      return new Response(JSON.stringify(userWithoutPass));
-    } else {
-      return new Response(JSON.stringify(null));
+        userWithoutPass.role = "customer";
+
+        return new Response(JSON.stringify(userWithoutPass), {
+          status: 200,
+        });
+      } else {
+        return new Response(null, {
+          status: 401,
+        });
+      }
     }
+
+    // check if user is in the vendor table
+    const vendor = await prisma.vendor.findUnique({
+      where: {
+        email: body.email,
+      },
+    });
+
+    if (vendor) {
+      if (await bcrypt.compare(body.password, vendor.password)) {
+        console.log("vendor found");
+
+        // remove the password from the vendor object before returning it
+        const { password, ...userWithoutPass } = vendor;
+
+        userWithoutPass.role = "vendor";
+
+        return new Response(JSON.stringify(userWithoutPass), {
+          status: 200,
+        });
+      } else {
+        return new Response(null, {
+          status: 401,
+        });
+      }
+    }
+    return new Response(null);
   } catch (err) {
-    console.log('login1',err);
+    console.log("login1", err);
   }
 }

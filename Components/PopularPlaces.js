@@ -76,7 +76,7 @@ export default function PopularPlaces() {
             fontSize: "30px",
             fontWeight: "bold",
             textTransform: "capitalize",
-            mt:10,
+            mt: 10,
           }}
         >
           Most Popular Places
@@ -242,35 +242,35 @@ export default function PopularPlaces() {
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <Link underline="none" href="/allListings">
-        <Button
-          sx={{
-            color: "white",
-            bgcolor: "#334576",
-            borderRadius: "25px",
-            p: 2,
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            "&:hover": { bgcolor: "#334576" },
-            mb: 22,
-          }}
-        >
-          <Typography
+          <Button
             sx={{
-              mr: 1,
-              textTransform: "capitalize",
-              fontSize: "13px",
-              fontWeight: "bold",
+              color: "white",
+              bgcolor: "#334576",
+              borderRadius: "25px",
+              p: 2,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              "&:hover": { bgcolor: "#334576" },
+              mb: 22,
             }}
           >
-            Check Out All Listings
-          </Typography>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <ArrowForwardOutlinedIcon
-              sx={{ color: "#4db4f9" }}
-            ></ArrowForwardOutlinedIcon>
-          </Box>
-        </Button>
+            <Typography
+              sx={{
+                mr: 1,
+                textTransform: "capitalize",
+                fontSize: "13px",
+                fontWeight: "bold",
+              }}
+            >
+              Check Out All Listings
+            </Typography>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <ArrowForwardOutlinedIcon
+                sx={{ color: "#4db4f9" }}
+              ></ArrowForwardOutlinedIcon>
+            </Box>
+          </Button>
         </Link>
       </Box>
       <Box

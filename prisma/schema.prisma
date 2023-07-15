@@ -84,6 +84,7 @@ model Vendor {
   password        String
   avi             String? // these images are for the user profile
   fileType        String
+  file           String?
   blocked         Boolean?  @default(false)
   // foreign key (creates a relationship between the vendor and the listing)
   services        Service[]
@@ -107,6 +108,7 @@ model Service {
   // foreign key (creates a relationship between the listing and the category)
   category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
+
 
 // a model to store only categories and their images
 // will only be updated by the admin

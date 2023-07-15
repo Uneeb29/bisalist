@@ -29,14 +29,14 @@ export async function POST(request) {
     console.log(email, role);
 
     // check if the email exists in the database
-    // const user = await prisma[role].findUnique({
-    //   where: {
-    //     email,
-    //   },
-    // });
+    const user = await prisma[role].findUnique({
+      where: {
+        email,
+      },
+    });
 
     // if the email exists, send a mail to the user with an otp code
-    // if (user) {
+    if (user) {
     // generate an otp code
     const otp = Math.floor(100000 + Math.random() * 900000);
 
@@ -72,10 +72,10 @@ export async function POST(request) {
     });
 
     return new Response(JSON.stringify("OTP Sent."), { status: 200 });
-    // } else {
+    } else {
     // if the email does not exist, return an error
     return new Response(JSON.stringify("User not Found."), { status: 400 });
-    // }
+    }
   } catch (error) {
     console.log(error);
     return new Response(JSON.stringify("Error"), { status: 500 });

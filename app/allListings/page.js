@@ -34,7 +34,15 @@ export default function AllListings() {
   // a function to fetch all the categories from the backend
   async function fetchCategories() {
     try {
-      const res = await fetch("/api/category?action=all");
+      const res = await fetch("/api/category", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "fetchAll",
+        }),
+      });
       const data = await res.json();
       console.log(data);
       return data;
@@ -48,7 +56,18 @@ export default function AllListings() {
     try {
       // if the url of current page does not contain a category, fetch the services of
       // the category that is selected by the user
-      const res = await fetch(`/api/services?category=${cat}`);
+      const res = await fetch(`/api/services`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          ...(cat !== "All" && { action: "fetchSingleCategory" }),
+          ...(cat === "All" && { action: "fetchAll" }),
+          category: cat,
+        }),
+      });
       const data = await res.json();
       console.log(data);
       return data;
@@ -392,9 +411,7 @@ export default function AllListings() {
                           bgcolor: "grey",
                           width: "30%",
                         }}
-                      >
-                      
-                      </Box>
+                      ></Box>
                     </Box>
                     <Box
                       sx={{

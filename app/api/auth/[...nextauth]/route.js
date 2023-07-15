@@ -1,11 +1,8 @@
-// import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth/next";
-import { prisma } from "../../../../lib/prisma-client";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { prisma } from "../../../../lib/prisma-client";
 
 export const authOptions = {
-//   adapter: PrismaAdapter(prisma),
-
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -17,11 +14,24 @@ export const authOptions = {
       async authorize(credentials, req) {
         const res = await import("../../login/route");
 
-        const payload = await (await res.POST(credentials)).json();
-        
+        const result = await res.POST(credentials);
+
+        if (result.status !== 200) {
+          return null;
+          //throw new Error("Login Failed");
+        }
+
+        const payload = await result.json();
+        console.log(payload);
         const user = {
-          name: payload.name,
+          // if the role is customer then name: payload.name else name: payload.firstName+payload.lastName
+          ...(payload.role === "customer" && { name: payload.name }),
+          ...(payload.role === "vendor" && {
+            name: payload.firstname + " " + payload.lastname,
+          }),
+
           email: payload.email,
+          role: credentials.role,
         };
 
         if (user) {
@@ -36,10 +46,48 @@ export const authOptions = {
       },
     }),
   ],
+
+  callbacks: {
+    async session({ session, token, user }) {
+      if (!session) return;
+
+      // if session exists, then we have a user
+      console.log("Session CallBack: ", session);
+
+      // finding the user in the database based on the email
+
+      const customer = await prisma.customer.findUnique({
+        where: {
+          email: session.user.email,
+        },
+      });
+
+      if (customer) {
+        session.user.email = customer.email;
+        session.user.name = customer.name;
+        session.user.role = "customer";
+        return session;
+      }
+
+      const vendor = await prisma.vendor.findUnique({
+        where: {
+          email: session.user.email,
+        },
+      });
+
+      if (vendor) {
+        session.user.role = "vendor";
+        session.user.email = vendor.email;
+        session.user.name = vendor.firstname + " " + vendor.lastname;
+        return session;
+      }
+    },
+  },
+
   pages: {
     signIn: "/auth/signIn",
   },
 };
 
 const handler = NextAuth(authOptions);
-export {handler as GET, handler as POST}
+export { handler as GET, handler as POST };

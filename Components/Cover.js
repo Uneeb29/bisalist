@@ -129,6 +129,7 @@ export default function Cover() {
                     p: 1,
                     pl: 4,
                     pr: 4,
+                    "&:hover": { bgcolor: "#334576" },
                   }}
                 >
                   <Typography

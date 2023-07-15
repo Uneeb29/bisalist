@@ -16,7 +16,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import QueueOutlinedIcon from "@mui/icons-material/QueueOutlined";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
-import Avatar from '@mui/material/Avatar';
+import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -26,16 +26,14 @@ import Logout from "@mui/icons-material/Logout";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 
-
-
 export default function Navbar() {
   const { data: session, status } = useSession();
 
-  if (session){
+  if (session) {
     console.log("session1", session);
   }
-  const [anchorEl, setAnchorEl] =useState(null);
-  const menuOpen  =Boolean(anchorEl);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const menuOpen = Boolean(anchorEl);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -51,6 +49,19 @@ export default function Navbar() {
     setAnchorEl(null);
     signOut();
   };
+
+  function redirectToEdit() {
+    // if session.user.role === "customer" then redirect to /editcustomer
+    // if session.user.role === "vendor" then redirect to /editvendor
+    // else do nothing
+
+    if (session.user.role === "customer") {
+      window.location.href = "/admincustomer";
+    }
+    if (session.user.role === "vendor") {
+      window.location.href = "/adminvendor";
+    }
+  }
 
   return (
     <Stack
@@ -72,7 +83,7 @@ export default function Navbar() {
       <Link sx={{ ml: 4, cursor: "pointer" }} height={"100%"} href="/">
         <img src="logo1.png" style={{ height: "50%", marginTop: "10%" }}></img>
       </Link>
-      
+
       <Stack direction={"row"} spacing={10}>
         <Link underline="none" sx={{ cursor: "pointer" }} href="/">
           <Typography
@@ -88,7 +99,7 @@ export default function Navbar() {
             Home
           </Typography>
         </Link>
-     
+
         <Link
           underline="none"
           sx={{
@@ -123,147 +134,144 @@ export default function Navbar() {
             About us
           </Typography>
         </Link>
-     
       </Stack>
-        
-      <Box 
-      sx={{width: "20%",
-      display:"flex",
-      justifyContent:'space-between',
-      alignItems:"center"}}>
 
-      <Divider
-        sx={{ bgcolor: "#4db4f9", height: "20px", width: "1px", mr: 1 }}
-      ></Divider>
-
-      
-    {session &&  
-  
-    <Box>
-     <Tooltip title="Account settings">
-          <IconButton
-            onClick={handleClick}
-            size="small"
-            sx={{ mr: 8 }}
-            aria-controls={open ? 'account-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-          >
-            <Avatar sx={{ width: 38, height: 38 }}>{session.user.name.charAt(0).toUpperCase()}</Avatar>
-          </IconButton>
-        </Tooltip>
-    <Menu
-    anchorEl={anchorEl}
-    id="account-menu"
-    open={menuOpen}
-    onClose={handleCloseMenu}
-    onClick={handleCloseMenu}
-    PaperProps={{
-      elevation: 0,
-      sx: {
-        overflow: 'visible',
-        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-        mt: 1.5,
-        '& .MuiAvatar-root': {
-          width: 32,
-          height: 32,
-          ml: -0.5,
-          mr: 1,
-        },
-        '&:before': {
-          content: '""',
-          display: 'block',
-          position: 'absolute',
-          top: 0,
-          right: 14,
-          width: 10,
-          height: 10,
-          bgcolor: 'background.paper',
-          transform: 'translateY(-50%) rotate(45deg)',
-          zIndex: 0,
-        },
-      },
-    }}
-    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-  >
-    
-    <MenuItem >
-      <Avatar /> My account
-    </MenuItem>
-    <Divider />
-   
-    
-    <MenuItem onClick={handleSignOut}>
-      <ListItemIcon>
-        <Logout fontSize="small" />
-      </ListItemIcon>
-      Sign Out
-    </MenuItem>
-  </Menu>
-  </Box>
-   }
-
-    {!session &&
-    // <div>
-        <Link underline="none" href="/login">
-        <Button
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            mr: 2,
-          }}
-        >
-          <PermIdentityIcon sx={{ color: "#4db4f9" }} />
-          <Typography
-            sx={{
-              color: "white",
-              fontSize: "13px",
-              fontWeight: "bold",
-              textTransform: "capitalize",
-            }}
-          >
-            Sign in
-          </Typography>
-        </Button>
-      </Link>
-}
-{!session &&
-      <Button
+      <Box
         sx={{
+          width: "20%",
           display: "flex",
-          flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          mr: 2,
         }}
-        onClick={handleOpen}
       >
-        <PermIdentityIcon sx={{ color: "#4db4f9" }} />
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: "13px",
-            fontWeight: "bold",
-            textTransform: "capitalize",
-          }}
-        >
-          Sign up
-        </Typography>
-      </Button>
-    // </div>
-    
-    }
-    
-    
+        <Divider
+          sx={{ bgcolor: "#4db4f9", height: "20px", width: "1px", mr: 1 }}
+        ></Divider>
 
-        
+        {session && (
+          <Box>
+            <Tooltip title="Account settings">
+              <IconButton
+                onClick={handleClick}
+                size="small"
+                sx={{ mr: 8 }}
+                aria-controls={open ? "account-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+              >
+                {/* only render next line if session.user.name is available */}
+                {session.user.name && (
+                  <Avatar sx={{ width: 38, height: 38 }}>
+                    {session.user.name.charAt(0).toUpperCase()}
+                  </Avatar>
+                )}
+              </IconButton>
+            </Tooltip>
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={menuOpen}
+              onClose={handleCloseMenu}
+              onClick={handleCloseMenu}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  mt: 1.5,
+                  "& .MuiAvatar-root": {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  "&:before": {
+                    content: '""',
+                    display: "block",
+                    position: "absolute",
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: "background.paper",
+                    transform: "translateY(-50%) rotate(45deg)",
+                    zIndex: 0,
+                  },
+                },
+              }}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            >
+              <MenuItem onClick={redirectToEdit}>
+                <Avatar /> My account
+              </MenuItem>
+              <Divider />
 
+              <MenuItem onClick={handleSignOut}>
+                <ListItemIcon>
+                  <Logout fontSize="small" />
+                </ListItemIcon>
+                Sign Out
+              </MenuItem>
+            </Menu>
+          </Box>
+        )}
+
+        {!session && (
+          // <div>
+          <Link underline="none" href="/login">
+            <Button
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                mr: 2,
+              }}
+            >
+              <PermIdentityIcon sx={{ color: "#4db4f9" }} />
+              <Typography
+                sx={{
+                  color: "white",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  textTransform: "capitalize",
+                }}
+              >
+                Sign in
+              </Typography>
+            </Button>
+          </Link>
+        )}
+        {
+          // !session && (
+          //   <Button
+          //     sx={{
+          //       display: "flex",
+          //       flexDirection: "row",
+          //       justifyContent: "space-between",
+          //       alignItems: "center",
+          //       mr: 2,
+          //     }}
+          //     onClick={handleOpen}
+          //   >
+          //     <PermIdentityIcon sx={{ color: "#4db4f9" }} />
+          //     <Typography
+          //       sx={{
+          //         color: "white",
+          //         fontSize: "13px",
+          //         fontWeight: "bold",
+          //         textTransform: "capitalize",
+          //       }}
+          //     >
+          //       Sign up
+          //     </Typography>
+          //   </Button>
+          // )
+          // </div>
+        }
       </Box>
-        
-        
+
       <Modal
         open={open}
         onClose={handleClose}
