@@ -69,14 +69,19 @@ export default function BecomeVendor() {
   /* New validation functions */
 
   function validateFileType(file) {
-    if (file[0].type !== "application/pdf") {
+    // file type should be image jpeg or png or jpg or any other image type
+    if (
+      file[0].type !== "image/jpeg" &&
+      file[0].type !== "image/png" &&
+      file[0].type !== "image/jpg"
+    ) {
       return false;
     }
     return true;
   }
 
   function validateFileSize(file) {
-    if (file[0].size > 5000000) {
+    if (file[0].size > 2000000) {
       return false;
     }
     return true;
@@ -87,30 +92,70 @@ export default function BecomeVendor() {
     if (
       validateEmail(data.email) &&
       validatePhone(data.telephoneNumber) &&
-      // removing file validation for now
-      // validateFileType(data.file) &&
-      // validateFileSize(data.file) &&
+      validateFileType(data.file) &&
+      validateFileSize(data.file) &&
       data.startingCost > 0 &&
       data.password === data.confirmPassword
     ) {
       console.log("Data: ", data);
 
-      if (data.avi.length !== 0) {
-        // avi = profile picture
-        const fileReader = new FileReader();
-        // convert image to base64 string and store it in a variable
-        // this variable will be sent to the server
+      // convert file to base64 string and store it in a variable
+      const file64 = new FileReader();
 
-        fileReader.onload = async function () {
-          const base64img = fileReader.result;
+      file64.onload = async function () {
+        const doc64 = file64.result;
 
-          // for the cover image now
-          if (data.cover.length !== 0) {
-            const fileReader2 = new FileReader();
+        if (data.avi.length !== 0) {
+          // avi = profile picture
+          const fileReader = new FileReader();
+          // convert image to base64 string and store it in a variable
+          // this variable will be sent to the server
 
-            fileReader2.onload = async function () {
-              const base64img2 = fileReader2.result;
+          fileReader.onload = async function () {
+            const base64img = fileReader.result;
 
+            // for the cover image now
+            if (data.cover.length !== 0) {
+              const fileReader2 = new FileReader();
+
+              fileReader2.onload = async function () {
+                const base64img2 = fileReader2.result;
+
+                // send data to the server
+                const dataToSend = {
+                  companyName: data.companyName,
+                  firstname: data.firstname,
+                  lastname: data.lastname,
+                  streetName: data.streetName,
+                  city: data.city,
+                  postAddress: data.postAddress,
+                  telephoneNumber: data.telephoneNumber,
+                  service: data.service,
+                  description: data.description,
+                  startingCost: data.startingCost,
+                  email: data.email,
+                  password: data.password,
+                  documentType: data.documentType,
+                  avi: base64img,
+                  cover: base64img2,
+                  file: doc64,
+                  action: "create",
+                };
+
+                const result = await fetch("/api/vendor", {
+                  method: "POST",
+                  body: JSON.stringify(dataToSend),
+                });
+
+                console.log("Response Status: ", result.status);
+
+                const response = await result.json();
+
+                console.log("Data Response: ", response);
+              };
+
+              fileReader2.readAsDataURL(data.cover[0]);
+            } else {
               // send data to the server
               const dataToSend = {
                 companyName: data.companyName,
@@ -126,8 +171,52 @@ export default function BecomeVendor() {
                 email: data.email,
                 password: data.password,
                 documentType: data.documentType,
+                file: doc64,
                 avi: base64img,
+                action: "create",
+              };
+
+              const result = await fetch("/api/vendor", {
+                method: "POST",
+                body: JSON.stringify(dataToSend),
+              });
+
+              console.log("Response Status: ", result.status);
+
+              const response = await result.json();
+
+              console.log("Data Response: ", response);
+            }
+          };
+
+          fileReader.readAsDataURL(data.avi[0]);
+        } else {
+          // if avi doesnt exist but cover does
+          if (data.cover.length !== 0) {
+            const fileReader2 = new FileReader();
+
+            fileReader2.onload = async function () {
+              const base64img2 = fileReader2.result;
+
+              // send data to the server
+
+              const dataToSend = {
+                companyName: data.companyName,
+                firstname: data.firstname,
+                lastname: data.lastname,
+                streetName: data.streetName,
+                city: data.city,
+                postAddress: data.postAddress,
+                telephoneNumber: data.telephoneNumber,
+                service: data.service,
+                description: data.description,
+                startingCost: data.startingCost,
+                email: data.email,
+                password: data.password,
+                documentType: data.documentType,
                 cover: base64img2,
+                action: "create",
+                file: doc64,
               };
 
               const result = await fetch("/api/vendor", {
@@ -144,7 +233,6 @@ export default function BecomeVendor() {
 
             fileReader2.readAsDataURL(data.cover[0]);
           } else {
-            // send data to the server
             const dataToSend = {
               companyName: data.companyName,
               firstname: data.firstname,
@@ -159,8 +247,8 @@ export default function BecomeVendor() {
               email: data.email,
               password: data.password,
               documentType: data.documentType,
-
-              avi: base64img,
+              action: "create",
+              file: doc64,
             };
 
             const result = await fetch("/api/vendor", {
@@ -174,78 +262,10 @@ export default function BecomeVendor() {
 
             console.log("Data Response: ", response);
           }
-        };
-
-        fileReader.readAsDataURL(data.avi[0]);
-      } else {
-        // if avi doesnt exist but cover does
-        if (data.cover.length !== 0) {
-          const fileReader2 = new FileReader();
-
-          fileReader2.onload = async function () {
-            const base64img2 = fileReader2.result;
-
-            // send data to the server
-
-            const dataToSend = {
-              companyName: data.companyName,
-              firstname: data.firstname,
-              lastname: data.lastname,
-              streetName: data.streetName,
-              city: data.city,
-              postAddress: data.postAddress,
-              telephoneNumber: data.telephoneNumber,
-              service: data.service,
-              description: data.description,
-              startingCost: data.startingCost,
-              email: data.email,
-              password: data.password,
-              documentType: data.documentType,
-              cover: base64img2,
-            };
-
-            const result = await fetch("/api/vendor", {
-              method: "POST",
-              body: JSON.stringify(dataToSend),
-            });
-
-            console.log("Response Status: ", result.status);
-
-            const response = await result.json();
-
-            console.log("Data Response: ", response);
-          };
-
-          fileReader2.readAsDataURL(data.cover[0]);
-        } else {
-          const dataToSend = {
-            companyName: data.companyName,
-            firstname: data.firstname,
-            lastname: data.lastname,
-            streetName: data.streetName,
-            city: data.city,
-            postAddress: data.postAddress,
-            telephoneNumber: data.telephoneNumber,
-            service: data.service,
-            description: data.description,
-            startingCost: data.startingCost,
-            email: data.email,
-            password: data.password,
-            documentType: data.documentType,
-          };
-
-          const result = await fetch("/api/vendor", {
-            method: "POST",
-            body: JSON.stringify(dataToSend),
-          });
-
-          console.log("Response Status: ", result.status);
-
-          const response = await result.json();
-
-          console.log("Data Response: ", response);
         }
-      }
+      };
+
+      file64.readAsDataURL(data.file[0]);
     } else {
       // set error if any of the checks fail
       if (!validateEmail(data.email)) {
@@ -263,13 +283,13 @@ export default function BecomeVendor() {
       if (!validateFileSize(data.file)) {
         setError("file", {
           type: "manual",
-          message: "File size must be less than 5MB",
+          message: "File size must be less than 2MB",
         });
       }
       if (!validateFileType(data.file)) {
         setError("file", {
           type: "manual",
-          message: "File must be a PDF",
+          message: "File must be an image",
         });
       }
       if (data.startingCost <= 0) {
@@ -287,15 +307,15 @@ export default function BecomeVendor() {
     }
   }
 
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedCover, setSelectedCover] = useState(null);
+  const [selectedProfilePicture, setselectedProfilePicture] = useState(null);
+  const [selectedCoverPicture, setselectedCoverPicture] = useState(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setSelectedFile(reader.result);
+        setselectedProfilePicture(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -306,7 +326,7 @@ export default function BecomeVendor() {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setSelectedCover(reader.result);
+        setselectedCoverPicture(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -330,10 +350,11 @@ export default function BecomeVendor() {
             sx={{
               display: "flex",
               flexDirection: "row",
-              width: "100%",
+              mx: "auto",
+              width: "30%",
               height: "250px",
               zIndex: 1,
-              backgroundImage: `url(${selectedCover})`,
+              backgroundImage: `url(${selectedCoverPicture})`,
             }}
           >
             <Button
@@ -345,7 +366,7 @@ export default function BecomeVendor() {
               ></AddAPhotoIcon>
               {/* <img
                 id="cover"
-                src={selectedCover}
+                src={selectedCoverPicture}
                 style={{ objectFit: "cover", width: "100%", height: "100%" }}
               /> */}
               <input
@@ -377,9 +398,9 @@ export default function BecomeVendor() {
                   alignSelf: "center",
                 }}
               >
-                {selectedFile ? (
+                {selectedProfilePicture ? (
                   <img
-                    src={selectedFile}
+                    src={selectedProfilePicture}
                     style={{
                       width: "100%",
                       height: "100%",
@@ -397,7 +418,7 @@ export default function BecomeVendor() {
                   cursor: "pointer",
                   backgroundColor: "#eeeeee",
                   "&:hover": { backgroundColor: "#f5f5f5" },
-                  boxShadow: selectedCover ? "none" : "2px 2px 2px 2px #eeeeee",
+                  boxShadow: selectedCoverPicture ? "none" : "2px 2px 2px 2px #eeeeee",
                   minWidth: "fit-content",
                   display: "flex",
                   mt: 2,
@@ -1139,9 +1160,10 @@ export default function BecomeVendor() {
                       Upload File
                     </Typography>
                     <input
-                      accept="application/pdf" // only takes pdf files
+                      // only accept pictures
+                      accept="image/*"
                       {...register("file", {
-                        // required: "File is required.",
+                        required: "File is required.",
                       })}
                       type="file"
                       hidden

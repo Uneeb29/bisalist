@@ -50,6 +50,19 @@ export default function Navbar() {
     signOut();
   };
 
+  function redirectToEdit() {
+    // if session.user.role === "customer" then redirect to /editcustomer
+    // if session.user.role === "vendor" then redirect to /editvendor
+    // else do nothing
+
+    if (session.user.role === "customer") {
+      window.location.href = "/admincustomer";
+    }
+    if (session.user.role === "vendor") {
+      window.location.href = "/adminvendor";
+    }
+  }
+
   return (
     <Stack
       direction="row"
@@ -146,9 +159,12 @@ export default function Navbar() {
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
               >
-                <Avatar sx={{ width: 38, height: 38 }}>
-                  {session.user.name.charAt(0).toUpperCase()}
-                </Avatar>
+                {/* only render next line if session.user.name is available */}
+                {session.user.name && (
+                  <Avatar sx={{ width: 38, height: 38 }}>
+                    {session.user.name.charAt(0).toUpperCase()}
+                  </Avatar>
+                )}
               </IconButton>
             </Tooltip>
             <Menu
@@ -186,7 +202,7 @@ export default function Navbar() {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <MenuItem>
+              <MenuItem onClick={redirectToEdit}>
                 <Avatar /> My account
               </MenuItem>
               <Divider />

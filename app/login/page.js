@@ -11,6 +11,8 @@ import {
   Button,
   Modal,
 } from "@mui/material";
+
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useForm } from "react-hook-form";
 import { signIn, useSession } from "next-auth/react";
 import { use, useState } from "react";
@@ -30,6 +32,11 @@ export default function Login() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const { data: session, status } = useSession();
+  if (session) {
+    console.log("session", session);
+  }
   const {
     register,
     handleSubmit,
@@ -47,9 +54,9 @@ export default function Login() {
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
-      role: data.vendor ? "vendor" : "customer",
+      // role: data.vendor ? "vendor" : "customer",
       redirect: true,
-      callbackUrl: "/check", // Where to redirect after log in
+      callbackUrl: "/", // Where to redirect after log in
     });
   }
 
@@ -77,29 +84,53 @@ export default function Login() {
       >
         <form onSubmit={handleSubmit(sendData)}>
           <Container>
-            <Typography
+            <Box
               sx={{
-                mt: 2,
-                fontSize: "22px",
-                fontWeight: "bold",
-                mb: 4,
-                display: forgotPassword ? "none" : "block",
+                width: "100%",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
               }}
             >
-              Log In
-            </Typography>
-            <Typography
-              sx={{
-                mt: 2,
-                fontSize: "22px",
-                fontWeight: "bold",
-                mb: 4,
-                display: forgotPassword ? "block" : "none",
-              }}
-            >
-              Forgot Password
-            </Typography>
+              <Typography
+                sx={{
+                  mt: 2,
+                  fontSize: "22px",
+                  fontWeight: "bold",
+                  mb: 4,
+                  display: forgotPassword ? "none" : "block",
+                }}
+              >
+                Log In
+              </Typography>
 
+              <Typography
+                sx={{
+                  mt: 2,
+                  fontSize: "22px",
+                  fontWeight: "bold",
+                  mb: 4,
+                  display: forgotPassword ? "block" : "none",
+                }}
+              >
+                Forgot Password
+              </Typography>
+              <Link
+                href="/login"
+                underline="none"
+                sx={{ display: forgotPassword ? "block" : "none" }}
+              >
+                <ArrowBackIcon
+                  sx={{
+                    mt: 2,
+                    fontSize: "30px",
+                    color: "#245cbc",
+                    cursor: "pointer",
+                    "&:hover": { color: "#334576" },
+                  }}
+                />
+              </Link>
+            </Box>
             {/* <Box
               sx={{
                 display: "flex",
@@ -195,7 +226,7 @@ export default function Login() {
                   alignItems: "center",
                 }}
               >
-                <Checkbox
+                {/* <Checkbox
                   {...label}
                   {...register("remember")}
                   sx={{
@@ -204,23 +235,35 @@ export default function Login() {
                       color: "#334576",
                     },
                   }}
-                />
-                <Typography sx={{ fontSize: "14px" }}>Remember Me</Typography>
+                /> */}
+                {/* <Typography sx={{ fontSize: "14px" }}>Remember Me</Typography> */}
               </Box>
-              <Link underline="none" onClick={handleForgotPassword}>
-                <Typography sx={{ color: "#245cbc", fontSize: "14px" }}>
+              <Link
+                underline="none"
+                onClick={handleForgotPassword}
+                sx={{ display: forgotPassword ? "none" : "block" }}
+              >
+                <Typography
+                  sx={{
+                    color: "#245cbc",
+                    fontSize: "14px",
+                    cursor: "pointer",
+                    "&:hover": { textDecoration: "underline" },
+                  }}
+                >
                   Forgot Password?
                 </Typography>
               </Link>
             </Box>
             <Button
               sx={{
-                width: "100%",
+                width: "45%",
                 bgcolor: "#245cbc",
                 mt: 2,
-                p: 1.5,
+                p: 1,
                 "&:hover": { bgcolor: "#334576" },
                 display: forgotPassword ? "none" : "block",
+                mx: "auto",
               }}
               type="submit"
             >
@@ -236,12 +279,13 @@ export default function Login() {
             </Button>
             <Button
               sx={{
-                width: "100%",
+                width: "45%",
                 bgcolor: "#245cbc",
                 mt: 2,
                 p: 1.5,
                 "&:hover": { bgcolor: "#334576" },
                 display: forgotPassword ? "block" : "none",
+                mx: "auto",
               }}
               type="submit"
               onClick={handleOpen}
@@ -266,8 +310,8 @@ export default function Login() {
                 sx={{
                   position: "absolute",
                   top: "30%",
-                  left: "25%",
-                  width: "50%",
+                  left: "37%",
+                  width: "20%",
                   height: "20%",
                   bgcolor: "background.paper",
                   borderRadius: "8px",
@@ -278,52 +322,58 @@ export default function Login() {
                   alignItems: "center",
                 }}
               >
-                {/* <Link
-                  href="becomecustomer"
-                  sx={{
-                    bgcolor: "#4db4f9",
-                    color: "white",
-                    borderRadius: "8px",
-                    p: 1,
-                    width: "40%",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                  underline="none"
-                >
-                  <Typography>Become a Customer</Typography>
-                </Link>
-                <Link
-                  href="\becomevendor"
-                  sx={{
-                    bgcolor: "#4db4f9",
-                    color: "white",
-                    borderRadius: "8px",
-                    p: 1,
-                    width: "40%",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                  underline="none"
-                >
-                  <Typography>Become a Vendor</Typography>
-                </Link> */}
                 <Typography
                   sx={{ fontSize: "18px", fontWeight: "bold", mb: 4 }}
                 >
                   Enter OTP
                 </Typography>
-                <TextField
-                  variant="standard"
-                  InputProps={{ disableUnderline: true }}
-                  placeholder="OTP"
+                <Box
+                  sx={{ display: "flex", flexDirection: "row", width: "100%" }}
+                >
+                  <TextField
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                    placeholder="OTP"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "8px",
+                      width: "100%",
+                      mr: 2,
+                    }}
+                  ></TextField>
+                </Box>
+                <Box
+                  sx={{ width: "100%", display: "flex", justifyContent: "end" }}
+                >
+                  <Link underline="none">
+                    <Typography
+                      sx={{
+                        color: "#245cbc",
+                        fontSize: "12px",
+                        cursor: "pointer",
+                        "&:hover": { textDecoration: "underline" },
+                        mt: 1,
+                      }}
+                    >
+                      Resend OTP
+                    </Typography>
+                  </Link>
+                </Box>
+                {/* <Button sx={{bgcolor:"#245cbc", color:"white", "&:hover":{bgcolor:"#334576"}, p:1}}><Typography sx={{textTransform:"capitalize"}}>Enter</Typography></Button> */}
+                <Button
                   sx={{
-                    bgcolor: "#eeeeee",
+                    bgcolor: "#245cbc",
+                    color: "white",
+                    "&:hover": { bgcolor: "#334576" },
                     p: 1,
-                    borderRadius: "8px",
-                    width: "100%",
+                    mt: 2,
                   }}
-                ></TextField>
+                >
+                  <Typography sx={{ textTransform: "capitalize" }}>
+                    Enter
+                  </Typography>
+                </Button>
               </Box>
             </Modal>
           </Container>

@@ -1,6 +1,5 @@
 import { prisma } from "../../../lib/prisma-client";
 import * as bcrypt from "bcrypt";
-const cloudinary = require("cloudinary").v2;
 
 // category will be a dropdown menu
 
@@ -8,97 +7,247 @@ export async function POST(request) {
   try {
     const body = await request.json();
 
-    // Check if email already exists
-    const emailExists = await prisma.vendor.findUnique({
-      where: {
-        email: body.email,
-      },
-    });
-
-    if (emailExists) {
-      return new Response(JSON.stringify("Email already exists"), {
-        status: 400,
-      });
-    } else {
-      // temporary fix for category if category does not exist return error
-      const categoryExists = await prisma.category.findUnique({
-        where: {
-          name: body.category,
-        },
-      });
-
-      if (!categoryExists) {
-        return new Response(JSON.stringify("Category does not exist"), {
-          status: 400,
-        });
-      }
-
-      // create vendor
-
-      const user = await prisma.vendor.create({
-        data: {
-          // companyName: body.companyName,
-          firstname: body.firstname,
-          lastname: body.lastname,
-          streetName: body.streetName,
-          city: body.city,
-          postAddress: body.postAddress,
-          telephoneNumber: body.telephoneNumber,
-          // service: body.service,
-          description: body.description,
-          // startingCost: body.startingCost,
-          email: body.email,
-          password: await bcrypt.hash(body.password, 10),
-          fileType: body.documentType,
-        },
-      });
-
-      // if image is provided add to vendor info
-      if (body.avi) {
-        const image = body.avi;
-
-        await prisma.vendor.update({
+    switch (body.action) {
+      case "create":
+        // check if email already exits in the customer table
+        const emailExistsCustomer = await prisma.customer.findUnique({
           where: {
-            id: user.id,
+            email: body.email,
+          },
+        });
+
+        const emailExistsVendor = await prisma.vendor.findUnique({
+          where: {
+            email: body.email,
+          },
+        });
+
+        // if email exists, return an error
+        if (emailExistsCustomer || emailExistsVendor) {
+          return new Response(JSON.stringify("Email already exists"), {
+            status: 400,
+          });
+        }
+        // temporary fix for category if category does not exist return error
+        const categoryExists = await prisma.category.findUnique({
+          where: {
+            name: body.service,
+          },
+        });
+
+        if (!categoryExists) {
+          return new Response(JSON.stringify("Category does not exist"), {
+            status: 400,
+          });
+        }
+
+        // create vendor
+        const user = await prisma.vendor.create({
+          data: {
+            firstname: body.firstname,
+            lastname: body.lastname,
+            streetName: body.streetName,
+            city: body.city,
+            postAddress: body.postAddress,
+            telephoneNumber: body.telephoneNumber,
+            description: body.description,
+            email: body.email,
+            password: await bcrypt.hash(body.password, 10),
+            fileType: body.documentType,
+            file: body.document,
+
+            // optional
+            ...(body.avi && { avi: body.avi }),
+          },
+        });
+
+        // add service to the service model
+        const service = await prisma.service.create({
+          data: {
+            title: body.service,
+            startingCost: body.startingCost,
+            companyName: body.companyName,
+            location: `${body.streetName}, ${body.city}`,
+
+            // optional
+            ...(body.cover && { cover: body.cover }),
+
+            // default values
+            rating: 0,
+            noOfComments: 0,
+
+            vendor: {
+              connect: {
+                id: user.id,
+              },
+            },
+
+            //category name is given so connect to category
+            category: {
+              connect: {
+                name: body.service,
+              },
+            },
+          },
+        });
+
+        // if cover is provided add to service info
+        // if (body.cover) {
+        //   const cover = body.cover;
+
+        //   await prisma.service.update({
+        //     where: {
+        //       id: service.id,
+        //     },
+        //     data: {
+        //       cover: cover,
+        //     },
+        //   });
+        // }
+
+        return new Response(JSON.stringify("Vendor Created"), {
+          status: 201,
+        });
+        break;
+
+      case "update":
+        // update vendor
+        const vendor = await prisma.vendor.update({
+          where: {
+            email: body.email,
           },
           data: {
-            avi: image,
+            firstname: body.firstname,
+            lastname: body.lastname,
+            streetName: body.streetName,
+            city: body.city,
+            postAddress: body.postAddress,
+            telephoneNumber: body.telephoneNumber,
+            description: body.description,
+            // update password, document type and file only if they are provided
+            ...(body.password && {
+              password: await bcrypt.hash(body.password, 10),
+            }),
+            ...(body.documentType && { fileType: body.documentType }),
+            ...(body.document && { file: body.document }),
+            ...(body.avi && { avi: body.avi }),
           },
         });
-      }
 
-      // add service to the service model
-      const service = await prisma.service.create({
-        data: {
-          title: body.service,
-          startingCost: body.startingCost,
-          companyName: body.companyName,
-          location: `${body.streetName}, ${body.city}`,
-          rating: 0,
-          noOfComments: 0,
-
-          vendor: {
-            connect: {
-              id: user.id,
+        const userServiceID = await prisma.vendor.findUnique({
+          where: {
+            email: body.email,
+          },
+          select: {
+            services: {
+              select: {
+                id: true,
+              },
             },
           },
+        });
 
-          //category name is given so connect to category
-          category: {
-            connect: {
-              name: body.category,
+        // update service
+        const serviceUpdate = await prisma.service.update({
+          where: {
+            id: userServiceID.services[0].id,
+          },
+
+          data: {
+            title: body.service,
+            startingCost: body.startingCost,
+            companyName: body.companyName,
+            location: `${body.streetName}, ${body.city}`,
+            ...(body.cover && { cover: body.cover }),
+            category: {
+              connect: {
+                name: body.service,
+              },
             },
           },
-        },
-      });
+        });
 
-      return new Response(JSON.stringify("Vendor Created"), {
-        status: 201,
-      });
+        return new Response(JSON.stringify("Vendor Updated"), {
+          status: 200,
+        });
+        break;
+
+      case "fetchSingle":
+        const vendorInfo = await prisma.vendor.findUnique({
+          where: {
+            email: body.email,
+          },
+          select: {
+            id: true,
+            firstname: true,
+            lastname: true,
+            streetName: true,
+            city: true,
+            postAddress: true,
+            telephoneNumber: true,
+            description: true,
+            email: true,
+            password: false,
+            fileType: false,
+            file: false,
+            avi: true,
+            services: {
+              select: {
+                id: true,
+                title: true,
+                startingCost: true,
+                companyName: true,
+                location: false,
+                cover: true,
+                rating: false,
+                noOfComments: false,
+                category: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+          },
+        });
+        return new Response(JSON.stringify(vendorInfo), {
+          status: 200,
+        });
+        break;
+
+      case "block":
+        const blockVendor = await prisma.vendor.update({
+          where: {
+            id: body.id,
+          },
+
+          data: {
+            blocked: true,
+          },
+        });
+        return new Response(JSON.stringify("Vendor Blocked"), {
+          status: 200,
+        });
+        break;
+
+      case "unblock":
+        const unblockVendor = await prisma.vendor.update({
+          where: {
+            id: body.id,
+          },
+
+          data: {
+            blocked: false,
+          },
+        });
+        return new Response(JSON.stringify("Vendor Unblocked"), {
+          status: 200,
+        });
+        break;
     }
   } catch (err) {
     console.log("Error creating vendor: ", err);
-    return new Response(JSON.stringify("Error creating vendor"), {
+    return new Response(JSON.stringify("Error in vendor action"), {
       status: 500,
     });
   }
@@ -120,15 +269,3 @@ export async function POST(request) {
 //       "password": "KanyeLeast",
 //       "documentType": "Ghana Card",
 // }
-
-// cloudinary.config({
-//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//   api_key: process.env.CLOUDINARY_API_KEY,
-//   api_secret: process.env.CLOUDINARY_API_SECRET,
-// });
-
-// const cloudinaryResponse = await cloudinary.uploader.upload(image, {
-//   upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
-// });
-
-// const cloudinaryPayload = await cloudinaryResponse.json();
