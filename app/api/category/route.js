@@ -8,7 +8,6 @@ export async function POST(request) {
     switch (body.action) {
       case "add":
         // Check if category already exists (if category is not null)
-
         const categoryExists = await prisma.category.findUnique({
           where: {
             ...(body.category && { name: body.category }),
@@ -26,6 +25,7 @@ export async function POST(request) {
           data: {
             name: body.category,
             ...(body.image && { image: body.image }),
+            ...(body.description && { description: body.description }),
           },
         });
         return new Response(JSON.stringify("Category Added"), {

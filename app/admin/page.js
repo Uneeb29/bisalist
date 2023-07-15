@@ -13,10 +13,10 @@ import {
   CardContent,
   CardActions,
   CardActionArea,
-  Link
+  Link,
 } from "@mui/material";
 import { set, useForm } from "react-hook-form";
-import DoneIcon from '@mui/icons-material/Done';
+import DoneIcon from "@mui/icons-material/Done";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SearchIcon from "@mui/icons-material/Search";
 import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
@@ -24,13 +24,12 @@ import BlockIcon from "@mui/icons-material/Block";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import KeyboardAltOutlinedIcon from "@mui/icons-material/KeyboardAltOutlined";
 import Person2Icon from "@mui/icons-material/Person2";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CreateIcon from "@mui/icons-material/Create";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 export default function AddCategories() {
-
   const [editService, setEditService] = useState("listings");
   const searchParams = useSearchParams();
   const { register, handleSubmit, errors } = useForm();
@@ -51,6 +50,7 @@ export default function AddCategories() {
       const dataToSend = {
         action: "add",
         category: data.name,
+        description: data.description,
         image: img,
       };
 
@@ -96,7 +96,6 @@ export default function AddCategories() {
     setListings(res);
   }
 
-
   useEffect(() => {
     console.log("listings: ", listings);
   }, [listings]);
@@ -136,7 +135,7 @@ export default function AddCategories() {
       });
       const data = await res.json();
       // console.log(data);
-      console.log("YE HAI DATA: ", data)
+      console.log("YE HAI DATA: ", data);
       return data;
     } catch (err) {
       console.log(err);
@@ -168,7 +167,6 @@ export default function AddCategories() {
   useEffect(() => {
     fetchListings().then((data) => setServices(data));
   }, []);
-
 
   return (
     <Container
@@ -297,7 +295,7 @@ export default function AddCategories() {
                         alignItems: "center",
                         justifyContent: "space-between",
                         p: 0.75,
-                        display:"none"
+                        display: "none",
                       }}
                     >
                       <DoneIcon
@@ -363,63 +361,82 @@ export default function AddCategories() {
           flexDirection: "column",
           p: 2,
           borderRadius: "10px",
-          width:"95%",
+          width: "95%",
           display: editService == "listings" ? "flex" : "none",
         }}
       >
-      <Box sx={{display:"flex", flexDirection:"row", width:"100%", alignItems:"center", justifyContent:"space-between"}}>
-        <Typography
+        <Box
           sx={{
             display: "flex",
-            alignSelf: "center",
-            fontSize: "20px",
-            fontWeight: "bold",
-            mb: 4,
+            flexDirection: "row",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          Edit Categories
-        </Typography>
-        <Button sx={{bgcolor:"#334576", "&:hover":{bgcolor:"#334576"}, p:1}} onClick={()=>{setEditService("new")}}><Typography sx={{textTransform:"capitalize", color:"white"}}>Create new category</Typography></Button>
+          <Typography
+            sx={{
+              display: "flex",
+              alignSelf: "center",
+              fontSize: "20px",
+              fontWeight: "bold",
+              mb: 4,
+            }}
+          >
+            Edit Categories
+          </Typography>
+          <Button
+            sx={{ bgcolor: "#334576", "&:hover": { bgcolor: "#334576" }, p: 1 }}
+            onClick={() => {
+              setEditService("new");
+            }}
+          >
+            <Typography sx={{ textTransform: "capitalize", color: "white" }}>
+              Create new category
+            </Typography>
+          </Button>
         </Box>
         {/* {services?.map((service) => ( */}
-            <Card
-              // key={service.title}
-              sx={{
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                width: "30%",
-                mb: 4,
-                borderRadius: "10px",
-                cursor: "pointer",
-                height: "400px",
-                mr: 3,
-                // display:
-                //   service.category.name === selectedCategory ||
-                //   selectedCategory == "All"
-                //     ? "block"
-                //     : "none",
-              }}
-              onClick={() => {setEditService("edit")}}
-            >
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  height="250"
-                  image={"electrician.jpg"}
-                ></CardMedia>
+        <Card
+          // key={service.title}
+          sx={{
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            width: "30%",
+            mb: 4,
+            borderRadius: "10px",
+            cursor: "pointer",
+            height: "400px",
+            mr: 3,
+            // display:
+            //   service.category.name === selectedCategory ||
+            //   selectedCategory == "All"
+            //     ? "block"
+            //     : "none",
+          }}
+          onClick={() => {
+            setEditService("edit");
+          }}
+        >
+          <CardActionArea>
+            <CardMedia
+              component="img"
+              height="250"
+              image={"electrician.jpg"}
+            ></CardMedia>
 
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: 10,
-                    left: 10,
-                    zIndex: 1,
-                    width: "90%",
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  {/* <Box
+            <Box
+              sx={{
+                position: "absolute",
+                top: 10,
+                left: 10,
+                zIndex: 1,
+                width: "90%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              {/* <Box
                     sx={{
                       bgcolor: "#334576",
                       borderRadius: "50%",
@@ -440,35 +457,35 @@ export default function AddCategories() {
                       }}
                     ></FavoriteBorderIcon>
                   </Box> */}
-                  <Box
-                    sx={{
-                      p: 0.5,
-                      borderRadius: "20px",
-                      bgcolor: "grey",
-                      width: "35%",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        bgcolor: "#1de9b6",
-                        borderRadius: "16px",
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        p: 0.75,
-                      }}
-                    >
-                      <CreateIcon
-                        sx={{ color: "white", height: "15px", width: "20px" }}
-                      ></CreateIcon>
-                      <Typography sx={{ color: "white", fontSize: "10px" }}>
-                        Edit Service
-                      </Typography>
-                    </Box>
-                  </Box>
+              <Box
+                sx={{
+                  p: 0.5,
+                  borderRadius: "20px",
+                  bgcolor: "grey",
+                  width: "35%",
+                }}
+              >
+                <Box
+                  sx={{
+                    bgcolor: "#1de9b6",
+                    borderRadius: "16px",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    p: 0.75,
+                  }}
+                >
+                  <CreateIcon
+                    sx={{ color: "white", height: "15px", width: "20px" }}
+                  ></CreateIcon>
+                  <Typography sx={{ color: "white", fontSize: "10px" }}>
+                    Edit Service
+                  </Typography>
                 </Box>
-                {/* <Box
+              </Box>
+            </Box>
+            {/* <Box
                   sx={{
                     position: "absolute",
                     top: 190,
@@ -480,7 +497,7 @@ export default function AddCategories() {
                     alignItems: "center",
                   }}
                 > */}
-                  {/* <Box
+            {/* <Box
                     sx={{
                       p: 1.25,
                       bgcolor: "#334576",
@@ -502,32 +519,32 @@ export default function AddCategories() {
                     {service.comments} comments
                   </Typography>
                 </Box> */}
-                <CardContent sx={{}}>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {"Electrician"}
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      mb: 3,
-                    }}
-                  >
-                    <LocationOnOutlinedIcon
-                      sx={{ color: "#4db4f9", fontSize: "15px", mr: 1 }}
-                    ></LocationOnOutlinedIcon>
-                    <Typography sx={{ fontSize: "12px" }}>
-                      {"service.location"}
-                    </Typography>
-                  </Box>
-                  <Typography variant="body2" color="text.secondary">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quisquam
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
+            <CardContent sx={{}}>
+              <Typography gutterBottom variant="h5" component="div">
+                {"Electrician"}
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  mb: 3,
+                }}
+              >
+                <LocationOnOutlinedIcon
+                  sx={{ color: "#4db4f9", fontSize: "15px", mr: 1 }}
+                ></LocationOnOutlinedIcon>
+                <Typography sx={{ fontSize: "12px" }}>
+                  {"service.location"}
+                </Typography>
+              </Box>
+              <Typography variant="body2" color="text.secondary">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Quisquam
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* <Box
             sx={{
@@ -671,26 +688,42 @@ export default function AddCategories() {
           flexDirection: "column",
           p: 2,
           borderRadius: "10px",
-          width:"95%",
+          width: "95%",
           display: editService == "edit" ? "flex" : "none",
         }}
       >
-      <Box sx={{display:"flex", flexDirection:"row", width:"100%", alignItems:"center", justifyContent:"space-between"}}>
-        <Typography
+        <Box
           sx={{
             display: "flex",
-            alignSelf: "center",
-            fontSize: "20px",
-            fontWeight: "bold",
-            mb: 4,
+            flexDirection: "row",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          Edit Category
-        </Typography>
-        <Link href="/admin" underline="none">
-              <ArrowBackIcon sx={{mt:2 , fontSize:"30px", color:"#245cbc", cursor:"pointer", "&:hover":{color:"#334576"}}}/>
-            </Link>
-        {/* <Button sx={{bgcolor:"#334576", "&:hover":{bgcolor:"#334576"}, p:1}} onClick={()=>{setEditService("new")}}><Typography sx={{textTransform:"capitalize", color:"white"}}>Create new category</Typography></Button> */}
+          <Typography
+            sx={{
+              display: "flex",
+              alignSelf: "center",
+              fontSize: "20px",
+              fontWeight: "bold",
+              mb: 4,
+            }}
+          >
+            Edit Category
+          </Typography>
+          <Link href="/admin" underline="none">
+            <ArrowBackIcon
+              sx={{
+                mt: 2,
+                fontSize: "30px",
+                color: "#245cbc",
+                cursor: "pointer",
+                "&:hover": { color: "#334576" },
+              }}
+            />
+          </Link>
+          {/* <Button sx={{bgcolor:"#334576", "&:hover":{bgcolor:"#334576"}, p:1}} onClick={()=>{setEditService("new")}}><Typography sx={{textTransform:"capitalize", color:"white"}}>Create new category</Typography></Button> */}
         </Box>
         {/* {services?.map((service) => ( */}
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -720,7 +753,7 @@ export default function AddCategories() {
                   justifyContent: "center",
                   width: "30%",
                   height: "200px",
-                  borderRadius:"16px"
+                  borderRadius: "16px",
                 }}
               >
                 <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
@@ -746,58 +779,58 @@ export default function AddCategories() {
                 />
               </Button>
             </Box>
-            <Box sx={{display:"flex", flexDirection:"row"}}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                mb: 4,
-                width: "45%",
-                mr:4
-              }}
-            >
-              <Typography sx={{ fontSize: "14px", mb: 1 }}>
-                Category Name
-              </Typography>
-              <TextField
-                size="small"
-                placeholder="Category Name"
-                variant="standard"
+            <Box sx={{ display: "flex", flexDirection: "row" }}>
+              <Box
                 sx={{
-                  bgcolor: "#eeeeee",
-                  p: 1,
-                  borderRadius: "5px",
-                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  mb: 4,
+                  width: "45%",
+                  mr: 4,
                 }}
-                InputProps={{ disableUnderline: true }}
-                {...register("name", { required: true })}
-              ></TextField>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                mb: 4,
-                width: "45%",
-              }}
-            >
-              <Typography sx={{ fontSize: "14px", mb: 1 }}>
-                Category Description
-              </Typography>
-              <TextField
-                size="small"
-                placeholder="Description"
-                variant="standard"
+              >
+                <Typography sx={{ fontSize: "14px", mb: 1 }}>
+                  Category Name
+                </Typography>
+                <TextField
+                  size="small"
+                  placeholder="Category Name"
+                  variant="standard"
+                  sx={{
+                    bgcolor: "#eeeeee",
+                    p: 1,
+                    borderRadius: "5px",
+                    width: "100%",
+                  }}
+                  InputProps={{ disableUnderline: true }}
+                  {...register("name", { required: true })}
+                ></TextField>
+              </Box>
+              <Box
                 sx={{
-                  bgcolor: "#eeeeee",
-                  p: 1,
-                  borderRadius: "5px",
-                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  mb: 4,
+                  width: "45%",
                 }}
-                InputProps={{ disableUnderline: true }}
-                {...register("name", { required: true })}
-              ></TextField>
-            </Box>
+              >
+                <Typography sx={{ fontSize: "14px", mb: 1 }}>
+                  Category Description
+                </Typography>
+                <TextField
+                  size="small"
+                  placeholder="Description"
+                  variant="standard"
+                  sx={{
+                    bgcolor: "#eeeeee",
+                    p: 1,
+                    borderRadius: "5px",
+                    width: "100%",
+                  }}
+                  InputProps={{ disableUnderline: true }}
+                  {...register("name", { required: true })}
+                ></TextField>
+              </Box>
             </Box>
           </Box>
           <Box
@@ -811,13 +844,13 @@ export default function AddCategories() {
                 p: 1,
                 color: "white",
                 cursor: "pointer",
-                "&:hover": { bgcolor: "#245cbc", cursor:"pointer" },
+                "&:hover": { bgcolor: "#245cbc", cursor: "pointer" },
               }}
               disableUnderline
               value={"Update Category"}
             />
           </Box>
-           {/* <input
+          {/* <input
             type="text"
             placeholder="Category Name"
             {...register("name", { required: true })}
@@ -836,26 +869,42 @@ export default function AddCategories() {
           flexDirection: "column",
           p: 2,
           borderRadius: "10px",
-          width:"95%",
+          width: "95%",
           display: editService == "new" ? "flex" : "none",
         }}
       >
-      <Box sx={{display:"flex", flexDirection:"row", width:"100%", alignItems:"center", justifyContent:"space-between"}}>
-        <Typography
+        <Box
           sx={{
             display: "flex",
-            alignSelf: "center",
-            fontSize: "20px",
-            fontWeight: "bold",
-            mb: 4,
+            flexDirection: "row",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          Add Category
-        </Typography>
-        <Link href="/admin" underline="none">
-              <ArrowBackIcon sx={{mt:2 , fontSize:"30px", color:"#245cbc", cursor:"pointer", "&:hover":{color:"#334576"}}}/>
-            </Link>
-        {/* <Button sx={{bgcolor:"#334576", "&:hover":{bgcolor:"#334576"}, p:1}} onClick={()=>{setEditService("new")}}><Typography sx={{textTransform:"capitalize", color:"white"}}>Create new category</Typography></Button> */}
+          <Typography
+            sx={{
+              display: "flex",
+              alignSelf: "center",
+              fontSize: "20px",
+              fontWeight: "bold",
+              mb: 4,
+            }}
+          >
+            Add Category
+          </Typography>
+          <Link href="/admin" underline="none">
+            <ArrowBackIcon
+              sx={{
+                mt: 2,
+                fontSize: "30px",
+                color: "#245cbc",
+                cursor: "pointer",
+                "&:hover": { color: "#334576" },
+              }}
+            />
+          </Link>
+          {/* <Button sx={{bgcolor:"#334576", "&:hover":{bgcolor:"#334576"}, p:1}} onClick={()=>{setEditService("new")}}><Typography sx={{textTransform:"capitalize", color:"white"}}>Create new category</Typography></Button> */}
         </Box>
         {/* {services?.map((service) => ( */}
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -885,7 +934,7 @@ export default function AddCategories() {
                   justifyContent: "center",
                   width: "30%",
                   height: "200px",
-                  borderRadius:"16px"
+                  borderRadius: "16px",
                 }}
               >
                 <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
@@ -911,58 +960,58 @@ export default function AddCategories() {
                 />
               </Button>
             </Box>
-            <Box sx={{display:"flex", flexDirection:"row"}}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                mb: 4,
-                width: "45%",
-                mr:4
-              }}
-            >
-              <Typography sx={{ fontSize: "14px", mb: 1 }}>
-                Category Name
-              </Typography>
-              <TextField
-                size="small"
-                placeholder="Category Name"
-                variant="standard"
+            <Box sx={{ display: "flex", flexDirection: "row" }}>
+              <Box
                 sx={{
-                  bgcolor: "#eeeeee",
-                  p: 1,
-                  borderRadius: "5px",
-                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  mb: 4,
+                  width: "45%",
+                  mr: 4,
                 }}
-                InputProps={{ disableUnderline: true }}
-                {...register("name", { required: true })}
-              ></TextField>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                mb: 4,
-                width: "45%",
-              }}
-            >
-              <Typography sx={{ fontSize: "14px", mb: 1 }}>
-                Category Description
-              </Typography>
-              <TextField
-                size="small"
-                placeholder="Description"
-                variant="standard"
+              >
+                <Typography sx={{ fontSize: "14px", mb: 1 }}>
+                  Category Name
+                </Typography>
+                <TextField
+                  size="small"
+                  placeholder="Category Name"
+                  variant="standard"
+                  sx={{
+                    bgcolor: "#eeeeee",
+                    p: 1,
+                    borderRadius: "5px",
+                    width: "100%",
+                  }}
+                  InputProps={{ disableUnderline: true }}
+                  {...register("name", { required: true })}
+                ></TextField>
+              </Box>
+              <Box
                 sx={{
-                  bgcolor: "#eeeeee",
-                  p: 1,
-                  borderRadius: "5px",
-                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  mb: 4,
+                  width: "45%",
                 }}
-                InputProps={{ disableUnderline: true }}
-                {...register("desc", { required: false })}
-              ></TextField>
-            </Box>
+              >
+                <Typography sx={{ fontSize: "14px", mb: 1 }}>
+                  Category Description
+                </Typography>
+                <TextField
+                  size="small"
+                  placeholder="Description"
+                  variant="standard"
+                  sx={{
+                    bgcolor: "#eeeeee",
+                    p: 1,
+                    borderRadius: "5px",
+                    width: "100%",
+                  }}
+                  InputProps={{ disableUnderline: true }}
+                  {...register("desc", { required: false })}
+                ></TextField>
+              </Box>
             </Box>
           </Box>
           <Box
@@ -976,13 +1025,13 @@ export default function AddCategories() {
                 p: 1,
                 color: "white",
                 cursor: "pointer",
-                "&:hover": { bgcolor: "#245cbc", cursor:"pointer" },
+                "&:hover": { bgcolor: "#245cbc", cursor: "pointer" },
               }}
               disableUnderline
               value={"Add Category"}
             />
           </Box>
-           {/* <input
+          {/* <input
             type="text"
             placeholder="Category Name"
             {...register("name", { required: true })}
