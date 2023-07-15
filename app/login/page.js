@@ -342,42 +342,38 @@ export default function Login() {
                       mr: 2,
                     }}
                   ></TextField>
-                  <Box
-                    sx={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "end",
-                    }}
-                  >
-                    <Link underline="none">
-                      <Typography
-                        sx={{
-                          color: "#245cbc",
-                          fontSize: "12px",
-                          cursor: "pointer",
-                          "&:hover": { textDecoration: "underline" },
-                          mt: 1,
-                        }}
-                      >
-                        Resend OTP
-                      </Typography>
-                    </Link>
-                  </Box>
-                  {/* <Button sx={{bgcolor:"#245cbc", color:"white", "&:hover":{bgcolor:"#334576"}, p:1}}><Typography sx={{textTransform:"capitalize"}}>Enter</Typography></Button> */}
-                  <Button
-                    sx={{
-                      bgcolor: "#245cbc",
-                      color: "white",
-                      "&:hover": { bgcolor: "#334576" },
-                      p: 1,
-                      mt: 2,
-                    }}
-                  >
-                    <Typography sx={{ textTransform: "capitalize" }}>
-                      Enter
-                    </Typography>
-                  </Button>
                 </Box>
+                <Box
+                  sx={{ width: "100%", display: "flex", justifyContent: "end" }}
+                >
+                  <Link underline="none">
+                    <Typography
+                      sx={{
+                        color: "#245cbc",
+                        fontSize: "12px",
+                        cursor: "pointer",
+                        "&:hover": { textDecoration: "underline" },
+                        mt: 1,
+                      }}
+                    >
+                      Resend OTP
+                    </Typography>
+                  </Link>
+                </Box>
+                {/* <Button sx={{bgcolor:"#245cbc", color:"white", "&:hover":{bgcolor:"#334576"}, p:1}}><Typography sx={{textTransform:"capitalize"}}>Enter</Typography></Button> */}
+                <Button
+                  sx={{
+                    bgcolor: "#245cbc",
+                    color: "white",
+                    "&:hover": { bgcolor: "#334576" },
+                    p: 1,
+                    mt: 2,
+                  }}
+                >
+                  <Typography sx={{ textTransform: "capitalize" }}>
+                    Enter
+                  </Typography>
+                </Button>
               </Box>
             </Modal>
           </Container>
