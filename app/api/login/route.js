@@ -27,7 +27,7 @@ export async function POST(request) {
           status: 200,
         });
       } else {
-        return new Response(null, {
+        return new Response(JSON.stringify("Incorrect Password"), {
           status: 401,
         });
       }
@@ -53,12 +53,16 @@ export async function POST(request) {
           status: 200,
         });
       } else {
-        return new Response(null, {
+        return new Response(JSON.stringify("Incorrect Password"), {
           status: 401,
         });
       }
     }
-    return new Response(null);
+
+    // if user is not in either table, return an error message
+    return new Response(JSON.stringify("User not found"), {
+      status: 404,
+    });
   } catch (err) {
     console.log("login1", err);
   }

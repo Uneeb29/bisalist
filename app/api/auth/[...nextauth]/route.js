@@ -17,12 +17,31 @@ export const authOptions = {
         const result = await res.POST(credentials);
 
         if (result.status !== 200) {
-          return null;
-          //throw new Error("Login Failed");
+          // all login errors are handled in the login route
+          // and will be returned as a 400 status code
+          // we will return specific error messages from the login route
+          switch (result.status) {
+            case 404:
+              // user not found
+              return null;
+
+            case 401:
+              // incorrect password
+              return null;
+
+            default:
+              return null;
+          }
         }
 
         const payload = await result.json();
         console.log(payload);
+
+        if (payload.blocked === true) {
+          // user is blocked
+          return null;
+        }
+
         const user = {
           // if the role is customer then name: payload.name else name: payload.firstName+payload.lastName
           ...(payload.role === "customer" && { name: payload.name }),
@@ -37,12 +56,7 @@ export const authOptions = {
         if (user) {
           console.log("NextAuth Got this reponse: returning user", user);
           return user;
-        } else {
-          console.log("NextAuth Got this reponse: returning null", user);
-          return null;
         }
-        // console.log('credentials', credentials)
-        // return null
       },
     }),
   ],
