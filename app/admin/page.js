@@ -30,11 +30,124 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 export default function AddCategories() {
+  const [selectedProfilePicture, setselectedProfilePicture] = useState(null);
+  const [selectedProfilePicture2, setselectedProfilePicture2] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setselectedProfilePicture(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const handleFileChange2 = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setselectedProfilePicture2(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const [categories, setCategories] = useState([]);
+
+  async function editCategory(data) {
+    // use FileReader to convert the image to base64 and send to backend endpoint
+    console.log(data);
+    if (data.image1.length === 0) {
+      const dataToSend = {
+        action: "update",
+        ...(data.name1 && { category: data.name1 }),
+        ...(data.description1 && { description: data.description1 }),
+        id: selectedCategory.id,
+      };
+
+      const response = await fetch("/api/category", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToSend),
+      });
+
+      console.log("Status Code : ", response.status);
+
+      const res = await response.json();
+
+      console.log("Response : ", res);
+    } else {
+      const reader1 = new FileReader();
+
+      reader1.onload = async function () {
+        const img = reader1.result;
+        const dataToSend = {
+          action: "update",
+          ...(data.name1 && { category: data.name1 }),
+          ...(data.description1 && { description: data.description1 }),
+          image: img,
+          id: selectedCategory.id,
+        };
+
+        const response = await fetch("/api/category", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataToSend),
+        });
+
+        console.log("Status Code : ", response.status);
+
+        const res = await response.json();
+
+        console.log("Response : ", res);
+      };
+
+      reader1.readAsDataURL(data.image1[0]);
+    }
+  }
+
+  async function fetchAllCategories() {
+    try {
+      const res = await fetch("/api/category", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "fetchAll",
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(() => {
+    {
+      fetchAllCategories().then((data) => setCategories(data));
+    }
+  }, []);
+
   const [editService, setEditService] = useState("listings");
   const searchParams = useSearchParams();
   const { register, handleSubmit, errors } = useForm();
   // for another form
   const { register: register2, handleSubmit: handleSubmit2 } = useForm();
+  const {
+    register: register3,
+    handleSubmit: handleSubmit3,
+    setValue,
+  } = useForm();
 
   const [listings, setListings] = useState([]);
 
@@ -279,7 +392,7 @@ export default function AddCategories() {
                       p: 0.5,
                       borderRadius: "20px",
                       bgcolor: "grey",
-                      width: "35%",
+                      width: service.vendor.blocked ? "40%" : "35%",
                     }}
                   >
                     {service.vendor.blocked ? (
@@ -292,7 +405,6 @@ export default function AddCategories() {
                           alignItems: "center",
                           justifyContent: "space-between",
                           p: 0.75,
-                          display: "none",
                         }}
                         // asyncly unblock vendor by sending a request to backend
                         onClick={async () => {
@@ -469,47 +581,47 @@ export default function AddCategories() {
             </Typography>
           </Button>
         </Box>
-        {/* {services?.map((service) => ( */}
-        <Card
-          // key={service.title}
-          sx={{
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            width: "30%",
-            mb: 4,
-            borderRadius: "10px",
-            cursor: "pointer",
-            height: "400px",
-            mr: 3,
-            // display:
-            //   service.category.name === selectedCategory ||
-            //   selectedCategory == "All"
-            //     ? "block"
-            //     : "none",
-          }}
-          onClick={() => {
-            setEditService("edit");
-          }}
-        >
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              height="250"
-              image={"electrician.jpg"}
-            ></CardMedia>
+        {categories?.map((category) => (
+          <Card
+            key={category.name}
+            sx={{
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              width: "30%",
+              mb: 4,
+              borderRadius: "10px",
+              cursor: "pointer",
+              height: "400px",
+              mr: 3,
+              // display:
+              //   service.category.name === selectedCategory ||
+              //   selectedCategory == "All"
+              //     ? "block"
+              //     : "none",
+            }}
+            onClick={() => {
+              setEditService("edit");
+            }}
+          >
+            <CardActionArea>
+              <CardMedia
+                component="img"
+                height="250"
+                image={category.image ? category.image : null}
+              ></CardMedia>
 
-            <Box
-              sx={{
-                position: "absolute",
-                top: 10,
-                left: 10,
-                zIndex: 1,
-                width: "90%",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              {/* <Box
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 10,
+                  left: 10,
+                  zIndex: 1,
+                  width: "90%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                {/* <Box
                     sx={{
                       bgcolor: "#334576",
                       borderRadius: "50%",
@@ -530,35 +642,41 @@ export default function AddCategories() {
                       }}
                     ></FavoriteBorderIcon>
                   </Box> */}
-              <Box
-                sx={{
-                  p: 0.5,
-                  borderRadius: "20px",
-                  bgcolor: "grey",
-                  width: "35%",
-                }}
-              >
                 <Box
                   sx={{
-                    bgcolor: "#1de9b6",
-                    borderRadius: "16px",
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    p: 0.75,
+                    p: 0.5,
+                    borderRadius: "20px",
+                    bgcolor: "grey",
+                    width: "35%",
                   }}
                 >
-                  <CreateIcon
-                    sx={{ color: "white", height: "15px", width: "20px" }}
-                  ></CreateIcon>
-                  <Typography sx={{ color: "white", fontSize: "10px" }}>
-                    Edit Service
-                  </Typography>
+                  <Box
+                    sx={{
+                      bgcolor: "#1de9b6",
+                      borderRadius: "16px",
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      p: 0.75,
+                    }}
+                    onClick={() => {
+                      setSelectedCategory(category);
+                      // setValue("name1", category.name);
+                      // setValue("description1", category.description);
+                      // setValue("image1", category.image);
+                    }}
+                  >
+                    <CreateIcon
+                      sx={{ color: "white", height: "15px", width: "20px" }}
+                    ></CreateIcon>
+                    <Typography sx={{ color: "white", fontSize: "10px" }}>
+                      Edit Category
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-            {/* <Box
+              {/* <Box
                   sx={{
                     position: "absolute",
                     top: 190,
@@ -570,7 +688,7 @@ export default function AddCategories() {
                     alignItems: "center",
                   }}
                 > */}
-            {/* <Box
+              {/* <Box
                     sx={{
                       p: 1.25,
                       bgcolor: "#334576",
@@ -592,11 +710,11 @@ export default function AddCategories() {
                     {service.comments} comments
                   </Typography>
                 </Box> */}
-            <CardContent sx={{}}>
-              <Typography gutterBottom variant="h5" component="div">
-                {"Electrician"}
-              </Typography>
-              <Box
+              <CardContent sx={{}}>
+                <Typography gutterBottom variant="h5" component="div">
+                  {category.name}
+                </Typography>
+                {/* <Box
                 sx={{
                   display: "flex",
                   flexDirection: "row",
@@ -608,16 +726,17 @@ export default function AddCategories() {
                   sx={{ color: "#4db4f9", fontSize: "15px", mr: 1 }}
                 ></LocationOnOutlinedIcon>
                 <Typography sx={{ fontSize: "12px" }}>
-                  {"service.location"}
+                  {category.location}
                 </Typography>
-              </Box>
-              <Typography variant="body2" color="text.secondary">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
+              </Box> */}
+                <Typography variant="body2" color="text.secondary">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Quisquam
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        ))}
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* <Box
             sx={{
@@ -799,7 +918,8 @@ export default function AddCategories() {
           {/* <Button sx={{bgcolor:"#334576", "&:hover":{bgcolor:"#334576"}, p:1}} onClick={()=>{setEditService("new")}}><Typography sx={{textTransform:"capitalize", color:"white"}}>Create new category</Typography></Button> */}
         </Box>
         {/* {services?.map((service) => ( */}
-        <form onSubmit={handleSubmit(onSubmit)}>
+
+        <form onSubmit={handleSubmit3(editCategory)}>
           <Box
             sx={{
               display: "flex",
@@ -829,7 +949,17 @@ export default function AddCategories() {
                   borderRadius: "16px",
                 }}
               >
-                <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
+                {selectedProfilePicture ? (
+                  <img
+                    src={selectedProfilePicture}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  />
+                ) : (
+                  selectedCategory?.image
+                )}
               </Paper>
               <Button
                 sx={{
@@ -846,9 +976,10 @@ export default function AddCategories() {
                   sx={{ fontSize: "20px", color: "black" }}
                 ></CreateIcon>
                 <input
-                  {...register("image", { required: true })}
+                  {...register3("image1", { required: true })}
                   type="file"
                   hidden
+                  onChange={handleFileChange}
                 />
               </Button>
             </Box>
@@ -867,7 +998,7 @@ export default function AddCategories() {
                 </Typography>
                 <TextField
                   size="small"
-                  placeholder="Category Name"
+                  placeholder={selectedCategory?.name}
                   variant="standard"
                   sx={{
                     bgcolor: "#eeeeee",
@@ -876,7 +1007,7 @@ export default function AddCategories() {
                     width: "100%",
                   }}
                   InputProps={{ disableUnderline: true }}
-                  {...register("name", { required: true })}
+                  {...register("name1", { required: true })}
                 ></TextField>
               </Box>
               <Box
@@ -892,7 +1023,7 @@ export default function AddCategories() {
                 </Typography>
                 <TextField
                   size="small"
-                  placeholder="Description"
+                  placeholder={selectedCategory?.description}
                   variant="standard"
                   sx={{
                     bgcolor: "#eeeeee",
@@ -901,7 +1032,7 @@ export default function AddCategories() {
                     width: "100%",
                   }}
                   InputProps={{ disableUnderline: true }}
-                  {...register("description", { required: true })}
+                  {...register("description1", { required: true })}
                 ></TextField>
               </Box>
             </Box>
@@ -909,7 +1040,7 @@ export default function AddCategories() {
           <Box
             sx={{ width: "100%", display: "flex", justifyContent: "center" }}
           >
-            <Input
+            <Button
               type="submit"
               sx={{
                 bgcolor: "#245cbc",
@@ -920,8 +1051,9 @@ export default function AddCategories() {
                 "&:hover": { bgcolor: "#245cbc", cursor: "pointer" },
               }}
               disableUnderline
-              value={"Update Category"}
-            />
+            >
+              Update Category
+            </Button>
           </Box>
           {/* <input
             type="text"
@@ -1010,7 +1142,17 @@ export default function AddCategories() {
                   borderRadius: "16px",
                 }}
               >
-                <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
+                {selectedProfilePicture2 ? (
+                  <img
+                    src={selectedProfilePicture2}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  />
+                ) : (
+                  <Person2Icon sx={{ fontSize: "180px" }}></Person2Icon>
+                )}
               </Paper>
               <Button
                 sx={{
@@ -1030,6 +1172,7 @@ export default function AddCategories() {
                   {...register("image", { required: true })}
                   type="file"
                   hidden
+                  onChange={handleFileChange2}
                 />
               </Button>
             </Box>
