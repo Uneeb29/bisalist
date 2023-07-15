@@ -68,7 +68,7 @@ CREATE TABLE "Category" (
 -- CreateTable
 CREATE TABLE "OtpVerfiy" (
     "id" SERIAL NOT NULL,
-    "otp" TEXT NOT NULL,
+    "otp" INTEGER NOT NULL,
     "email" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "expiresAt" TIMESTAMP(3),

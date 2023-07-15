@@ -297,6 +297,7 @@ export default function Login() {
                 >
                   Enter OTP
                 </Typography>
+                <Box sx={{display:"flex", flexDirection:"row", width:"100%"}}>
                 <TextField
                   variant="standard"
                   InputProps={{ disableUnderline: true }}
@@ -305,6 +306,7 @@ export default function Login() {
                     bgcolor: "#eeeeee",
                     p: 1,
                     borderRadius: "8px",
+<<<<<<< HEAD
                     width: "100%",
                     mr:2
                   }}
@@ -318,6 +320,15 @@ export default function Login() {
               </Box>
                 {/* <Button sx={{bgcolor:"#245cbc", color:"white", "&:hover":{bgcolor:"#334576"}, p:1}}><Typography sx={{textTransform:"capitalize"}}>Enter</Typography></Button> */}
                 <Button sx={{bgcolor:"#245cbc", color:"white", "&:hover":{bgcolor:"#334576"}, p:1, mt:2}}><Typography sx={{textTransform:"capitalize"}}>Enter</Typography></Button>
+=======
+                    width: "90%",
+                    mr:2
+                  }}
+                ></TextField>
+                <Button sx={{bgcolor:"#245cbc", color:"white", "&:hover":{bgcolor:"#334576"}, p:1}}><Typography sx={{textTransform:"capitalize"}}>Enter</Typography></Button>
+                </Box>
+                <Button sx={{bgcolor:"#245cbc", color:"white", "&:hover":{bgcolor:"#334576"}, p:1, mt:4}}><Typography sx={{textTransform:"capitalize"}}>Resend OTP</Typography></Button>
+>>>>>>> 7f31de5bc841b1c07e2dd98af49e696e4467fa9d
               </Box>
             </Modal>
           </Container>
