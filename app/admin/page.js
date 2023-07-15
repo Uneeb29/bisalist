@@ -100,73 +100,69 @@ export default function AddCategories() {
     console.log("listings: ", listings);
   }, [listings]);
 
-  async function fetchCategories() {
-    try {
-      const res = await fetch("/api/category", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          action: "fetchAll",
-        }),
-      });
-      const data = await res.json();
-      console.log(data);
-      return data;
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // async function fetchCategories() {
+  //   try {
+  //     const res = await fetch("/api/category", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         action: "fetchAll",
+  //       }),
+  //     });
+  //     const data = await res.json();
+  //     console.log(data);
+  //     return data;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
-  async function fetchListings() {
-    try {
-      // if the url of current page does not contain a category, fetch the services of
-      // the category that is selected by the user
-      const res = await fetch(`/api/services`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+  // async function fetchListings() {
+  //   try {
+  //     // if the url of current page does not contain a category, fetch the services of
+  //     // the category that is selected by the user
+  //     const res = await fetch(`/api/services`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
 
-        body: JSON.stringify({
-          action: "fetchAll",
-        }),
-      });
-      const data = await res.json();
-      // console.log(data);
-      console.log("YE HAI DATA: ", data);
-      return data;
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  //       body: JSON.stringify({
+  //         action: "fetchAll",
+  //       }),
+  //     });
+  //     const data = await res.json();
+  //     // console.log(data);
+  //     console.log("YE HAI DATA: ", data);
+  //     return data;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
-  const [categories, setCategories] = useState(["All"]);
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [services, setServices] = useState([]);
+  // useEffect(() => {
+  //   fetchCategories().then((data) =>
+  //     setCategories(() => {
+  //       return ["All", ...data];
+  //     })
+  //   );
+  //   const category = searchParams.get("category");
+  //   console.log("cat : ", category);
 
-  useEffect(() => {
-    fetchCategories().then((data) =>
-      setCategories(() => {
-        return ["All", ...data];
-      })
-    );
-    const category = searchParams.get("category");
-    console.log("cat : ", category);
+  //   // if (category) {
+  //   //   setSelectedCategory(category);
+  //   // } else {
+  //   //   setSelectedCategory("All");
+  //   // }
 
-    // if (category) {
-    //   setSelectedCategory(category);
-    // } else {
-    //   setSelectedCategory("All");
-    // }
+  //   // fetchListings("All").then((data) => setServices(data));
+  // }, []);
 
-    // fetchListings("All").then((data) => setServices(data));
-  }, []);
-
-  useEffect(() => {
-    fetchListings().then((data) => setServices(data));
-  }, []);
+  // useEffect(() => {
+  //   fetchListings().then((data) => setServices(data));
+  // }, []);
 
   return (
     <Container
@@ -286,43 +282,120 @@ export default function AddCategories() {
                       width: "35%",
                     }}
                   >
-                    <Box
-                      sx={{
-                        bgcolor: "#1de9b6",
-                        borderRadius: "16px",
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        p: 0.75,
-                        display: "none",
-                      }}
-                    >
-                      <DoneIcon
-                        sx={{ color: "white", height: "15px", width: "20px" }}
-                      ></DoneIcon>
-                      <Typography sx={{ color: "white", fontSize: "10px" }}>
-                        Unblock Vendor
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        bgcolor: "red",
-                        borderRadius: "16px",
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        p: 0.75,
-                      }}
-                    >
-                      <BlockIcon
-                        sx={{ color: "white", height: "15px", width: "20px" }}
-                      ></BlockIcon>
-                      <Typography sx={{ color: "white", fontSize: "10px" }}>
-                        Block Vendor
-                      </Typography>
-                    </Box>
+                    {service.vendor.blocked ? (
+                      <Box
+                        sx={{
+                          bgcolor: "#1de9b6",
+                          borderRadius: "16px",
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          p: 0.75,
+                          display: "none",
+                        }}
+                        // asyncly unblock vendor by sending a request to backend
+                        onClick={async () => {
+                          const res = await fetch(`/api/vendor`, {
+                            method: "POST",
+                            headers: {
+                              "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                              action: "unblock",
+                              id: service.vendor.id,
+                            }),
+                          });
+
+                          console.log("res: ", res);
+
+                          if (res.status === 200) {
+                            // if vendor is unblocked successfully, update the state
+                            // so that the changes are reflected in the UI
+                            const updatedServices = listings.map((s) => {
+                              if (s.vendor.id === service.vendor.id) {
+                                return {
+                                  ...s,
+                                  vendor: {
+                                    ...s.vendor,
+                                    blocked: false,
+                                  },
+                                };
+                              } else {
+                                return s;
+                              }
+                            });
+                            setListings(updatedServices);
+                          }
+                        }}
+                      >
+                        <DoneIcon
+                          sx={{ color: "white", height: "15px", width: "20px" }}
+                        ></DoneIcon>
+                        <Typography sx={{ color: "white", fontSize: "10px" }}>
+                          Unblock Vendor
+                        </Typography>
+                      </Box>
+                    ) : (
+                      <Box
+                        sx={{
+                          bgcolor: "red",
+                          borderRadius: "16px",
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          p: 0.75,
+                        }}
+                        // asyncly block vendor by sending a request to backend
+                        onClick={async () => {
+                          const res = await fetch(`/api/vendor`, {
+                            method: "POST",
+                            headers: {
+                              "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                              action: "block",
+                              id: service.vendor.id,
+                            }),
+                          });
+
+                          console.log("res: ", res.status);
+                          const data = await res.json();
+                          console.log(data);
+
+                          if (res.status === 200) {
+                            // if vendor is blocked successfully, update the state
+                            // so that the changes are reflected in the UI
+                            const updatedServices = listings.map((s) => {
+                              if (s.vendor.id === service.vendor.id) {
+                                return {
+                                  ...s,
+                                  vendor: {
+                                    ...s.vendor,
+                                    blocked: true,
+                                  },
+                                };
+                              } else {
+                                return s;
+                              }
+                            });
+                            setListings(updatedServices);
+                          }
+                        }}
+                      >
+                        <BlockIcon
+                          sx={{ color: "white", height: "15px", width: "20px" }}
+                        ></BlockIcon>
+                        <Typography sx={{ color: "white", fontSize: "10px" }}>
+                          Block Vendor
+                        </Typography>
+                      </Box>
+                    )}
+
+                    {/* Unblock */}
+
+                    {/* Block */}
                   </Box>
                 </Box>
                 <CardContent sx={{}}>
@@ -1009,7 +1082,7 @@ export default function AddCategories() {
                     width: "100%",
                   }}
                   InputProps={{ disableUnderline: true }}
-                  {...register("desc", { required: false })}
+                  {...register("description", { required: false })}
                 ></TextField>
               </Box>
             </Box>
@@ -1017,7 +1090,7 @@ export default function AddCategories() {
           <Box
             sx={{ width: "100%", display: "flex", justifyContent: "center" }}
           >
-            <Input
+            <Button
               type="submit"
               sx={{
                 bgcolor: "#245cbc",
@@ -1028,8 +1101,9 @@ export default function AddCategories() {
                 "&:hover": { bgcolor: "#245cbc", cursor: "pointer" },
               }}
               disableUnderline
-              value={"Add Category"}
-            />
+            >
+              Add Category
+            </Button>
           </Box>
           {/* <input
             type="text"

@@ -418,7 +418,9 @@ export default function BecomeVendor() {
                   cursor: "pointer",
                   backgroundColor: "#eeeeee",
                   "&:hover": { backgroundColor: "#f5f5f5" },
-                  boxShadow: selectedCoverPicture ? "none" : "2px 2px 2px 2px #eeeeee",
+                  boxShadow: selectedCoverPicture
+                    ? "none"
+                    : "2px 2px 2px 2px #eeeeee",
                   minWidth: "fit-content",
                   display: "flex",
                   mt: 2,

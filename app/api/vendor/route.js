@@ -54,7 +54,7 @@ export async function POST(request) {
             email: body.email,
             password: await bcrypt.hash(body.password, 10),
             fileType: body.documentType,
-            file: body.document,
+            file: body.file,
 
             // optional
             ...(body.avi && { avi: body.avi }),
