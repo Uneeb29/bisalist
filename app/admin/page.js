@@ -828,7 +828,7 @@ export default function AddCategories() {
                     width: "100%",
                   }}
                   InputProps={{ disableUnderline: true }}
-                  {...register("name", { required: true })}
+                  {...register("description", { required: true })}
                 ></TextField>
               </Box>
             </Box>

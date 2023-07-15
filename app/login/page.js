@@ -12,7 +12,7 @@ import {
   Modal,
 } from "@mui/material";
 
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useForm } from "react-hook-form";
 import { signIn, useSession } from "next-auth/react";
 import { use, useState } from "react";
@@ -84,34 +84,53 @@ export default function Login() {
       >
         <form onSubmit={handleSubmit(sendData)}>
           <Container>
-          <Box sx={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-            <Typography
+            <Box
               sx={{
-                mt: 2,
-                fontSize: "22px",
-                fontWeight: "bold",
-                mb: 4,
-                display: forgotPassword ? "none" : "block",
+                width: "100%",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
               }}
             >
-              Log In
-            </Typography>
-            
-            <Typography
-              sx={{
-                mt: 2,
-                fontSize: "22px",
-                fontWeight: "bold",
-                mb: 4,
-                display: forgotPassword ? "block" : "none",
-              }}
-            >
-              Forgot Password
-            </Typography>
-            <Link href="/login" underline="none" sx={{display: forgotPassword ? "block" : "none"}}>
-              <ArrowBackIcon sx={{mt:2 , fontSize:"30px", color:"#245cbc", cursor:"pointer", "&:hover":{color:"#334576"}}}/>
-            </Link>
-          </Box>
+              <Typography
+                sx={{
+                  mt: 2,
+                  fontSize: "22px",
+                  fontWeight: "bold",
+                  mb: 4,
+                  display: forgotPassword ? "none" : "block",
+                }}
+              >
+                Log In
+              </Typography>
+
+              <Typography
+                sx={{
+                  mt: 2,
+                  fontSize: "22px",
+                  fontWeight: "bold",
+                  mb: 4,
+                  display: forgotPassword ? "block" : "none",
+                }}
+              >
+                Forgot Password
+              </Typography>
+              <Link
+                href="/login"
+                underline="none"
+                sx={{ display: forgotPassword ? "block" : "none" }}
+              >
+                <ArrowBackIcon
+                  sx={{
+                    mt: 2,
+                    fontSize: "30px",
+                    color: "#245cbc",
+                    cursor: "pointer",
+                    "&:hover": { color: "#334576" },
+                  }}
+                />
+              </Link>
+            </Box>
             {/* <Box
               sx={{
                 display: "flex",
@@ -219,8 +238,19 @@ export default function Login() {
                 /> */}
                 {/* <Typography sx={{ fontSize: "14px" }}>Remember Me</Typography> */}
               </Box>
-              <Link underline="none" onClick={handleForgotPassword} sx={{display: forgotPassword ? "none" : "block"}}>
-                <Typography sx={{ color: "#245cbc", fontSize: "14px", cursor:"pointer", "&:hover":{textDecoration:"underline"} }}>
+              <Link
+                underline="none"
+                onClick={handleForgotPassword}
+                sx={{ display: forgotPassword ? "none" : "block" }}
+              >
+                <Typography
+                  sx={{
+                    color: "#245cbc",
+                    fontSize: "14px",
+                    cursor: "pointer",
+                    "&:hover": { textDecoration: "underline" },
+                  }}
+                >
                   Forgot Password?
                 </Typography>
               </Link>
@@ -297,30 +327,57 @@ export default function Login() {
                 >
                   Enter OTP
                 </Typography>
-                <Box sx={{display:"flex", flexDirection:"row", width:"100%"}}>
-                <TextField
-                  variant="standard"
-                  InputProps={{ disableUnderline: true }}
-                  placeholder="OTP"
-                  sx={{
-                    bgcolor: "#eeeeee",
-                    p: 1,
-                    borderRadius: "8px",
-<<<<<<< HEAD
-                    width: "100%",
-                    mr:2
-                  }}
-                ></TextField>
-                <Box sx={{width:"100%", display:"flex", justifyContent:"end"}}>
-                <Link underline="none">
-                <Typography sx={{ color: "#245cbc", fontSize: "12px", cursor:"pointer", "&:hover":{textDecoration:"underline"}, mt:1 }}>
-                  Resend OTP
-                </Typography>
-              </Link>
-              </Box>
-                {/* <Button sx={{bgcolor:"#245cbc", color:"white", "&:hover":{bgcolor:"#334576"}, p:1}}><Typography sx={{textTransform:"capitalize"}}>Enter</Typography></Button> */}
-                <Button sx={{bgcolor:"#245cbc", color:"white", "&:hover":{bgcolor:"#334576"}, p:1, mt:2}}><Typography sx={{textTransform:"capitalize"}}>Enter</Typography></Button>
-              </Box>
+                <Box
+                  sx={{ display: "flex", flexDirection: "row", width: "100%" }}
+                >
+                  <TextField
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                    placeholder="OTP"
+                    sx={{
+                      bgcolor: "#eeeeee",
+                      p: 1,
+                      borderRadius: "8px",
+                      width: "100%",
+                      mr: 2,
+                    }}
+                  ></TextField>
+                  <Box
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "end",
+                    }}
+                  >
+                    <Link underline="none">
+                      <Typography
+                        sx={{
+                          color: "#245cbc",
+                          fontSize: "12px",
+                          cursor: "pointer",
+                          "&:hover": { textDecoration: "underline" },
+                          mt: 1,
+                        }}
+                      >
+                        Resend OTP
+                      </Typography>
+                    </Link>
+                  </Box>
+                  {/* <Button sx={{bgcolor:"#245cbc", color:"white", "&:hover":{bgcolor:"#334576"}, p:1}}><Typography sx={{textTransform:"capitalize"}}>Enter</Typography></Button> */}
+                  <Button
+                    sx={{
+                      bgcolor: "#245cbc",
+                      color: "white",
+                      "&:hover": { bgcolor: "#334576" },
+                      p: 1,
+                      mt: 2,
+                    }}
+                  >
+                    <Typography sx={{ textTransform: "capitalize" }}>
+                      Enter
+                    </Typography>
+                  </Button>
+                </Box>
               </Box>
             </Modal>
           </Container>
