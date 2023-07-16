@@ -9,11 +9,29 @@ import {
   Checkbox,
   Button,
   Paper,
+  Modal
 } from "@mui/material";
 
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import CircularProgress from '@mui/joy/CircularProgress';
 
 export default function BecomeCustomer() {
+
+  const [registeredSuccessfully, setRegisteredSuccessfully] = useState([false]);
+  const [registeredFailed, setRegisteredFailed] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  
+  const [open1, setOpen1] = useState(false);
+  const handleOpen1 = () => setOpen1(true);
+  const handleClose1 = () => setOpen1(false);
+
+  const [open2, setOpen2] = useState(false);
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
   // default values added here only for testing purposes and will be removed later
   const {
     register,
@@ -63,6 +81,7 @@ export default function BecomeCustomer() {
         password: data.password,
         offers: data.offers,
         agreement: data.agreement,
+        action: "create",
       };
 
       const result = await fetch("/api/customer", {
@@ -74,6 +93,19 @@ export default function BecomeCustomer() {
       });
 
       const response = await result.json();
+      if (result.status) {
+        if (result.status === 200)
+        {
+          handleClose2();
+          setRegisteredSuccessfully(true);
+          handleOpen();
+        }
+        else{
+          handleClose2();
+          setRegisteredFailed(true);
+          handleOpen1();
+        }
+      }
       console.log("Response: ", response);
     } else {
       // check if email format is valid
@@ -118,6 +150,154 @@ export default function BecomeCustomer() {
         mt: 4,
       }}
     >
+    <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        sx={{display: registeredSuccessfully ? "block": "none"}}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "40%",
+            left: "30%",
+            //transform: "translate(-50%, -50%)",
+            width: 500,
+            bgcolor: "background.paper",
+            borderRadius: "8px",
+            boxShadow: 24,
+            p: 4,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          {/* <Link
+            href="becomecustomer"
+            sx={{
+              bgcolor: "#4db4f9",
+              color: "white",
+              borderRadius: "8px",
+              p: 1,
+              width: "40%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            underline="none"
+          >
+            <Typography>Become a Customer</Typography>
+          </Link>
+          <Link
+            href="\becomevendor"
+            sx={{
+              bgcolor: "#4db4f9",
+              color: "white",
+              borderRadius: "8px",
+              p: 1,
+              width: "40%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            underline="none"
+          >
+            <Typography>Become a Vendor</Typography>
+          </Link> */}
+            <Box sx={{display:"flex", justifyContent:"center", alignItems:"center" ,flexDirection:"column", width:"100%", textAlign:"center"}}>
+              <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>You have been successfully registered!</Typography>
+              <Button onClick={handleClose} sx={{bgcolor:"#245cbc", color:"white", mt:1, width:"40%", "&:hover":{bgcolor:"#334576"}}}><Typography>Ok</Typography></Button>
+            </Box>
+          
+        </Box>
+      </Modal>
+      <Modal
+        open={open2}
+        onClose={handleClose2}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "40%",
+            left: "48%",
+            //transform: "translate(-50%, -50%)",
+            width: 500,
+            bgcolor: "transparent",
+            borderRadius: "8px",
+            boxShadow: 24,
+            p: 4,
+            width:"fit-content",
+            height:"fit-content",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+            <Box sx={{display:"flex", justifyContent:"center", alignItems:"center" ,flexDirection:"column", width:"100%", textAlign:"center"}}>
+            <CircularProgress variant="solid" />
+            </Box>
+          
+        </Box>
+      </Modal>
+      <Modal
+        open={open1}
+        onClose={handleClose1}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        sx={{display: registeredFailed ? "block": "none"}}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "40%",
+            left: "30%",
+            //transform: "translate(-50%, -50%)",
+            width: 500,
+            bgcolor: "background.paper",
+            borderRadius: "8px",
+            boxShadow: 24,
+            p: 4,
+            display: "flex",
+          }}
+        >
+          {/* <Link
+            href="becomecustomer"
+            sx={{
+              bgcolor: "#4db4f9",
+              color: "white",
+              borderRadius: "8px",
+              p: 1,
+              width: "40%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            underline="none"
+          >
+            <Typography>Become a Customer</Typography>
+          </Link>
+          <Link
+            href="\becomevendor"
+            sx={{
+              bgcolor: "#4db4f9",
+              color: "white",
+              borderRadius: "8px",
+              p: 1,
+              width: "40%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            underline="none"
+          >
+            <Typography>Become a Vendor</Typography>
+          </Link> */}
+            <Box sx={{display:"flex", justifyContent:"center", alignItems:"center" ,flexDirection:"column", width:"100%", textAlign:"center"}}>
+            <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>Registration failed. Please try again.</Typography>
+            <Button onClick={handleClose1} sx={{bgcolor:"#245cbc", color:"white", mt:1, width:"40%", "&:hover":{bgcolor:"#334576"}}}><Typography>Ok</Typography></Button>
+            </Box>
+          
+        </Box>
+      </Modal>
       <Paper
         sx={{
           display: "flex",
@@ -335,6 +515,7 @@ export default function BecomeCustomer() {
                     bgcolor: !isValid || !isDirty ? "#cccccc" : "#245cbc",
                   },
                 }}
+                onClick={handleOpen2}
                 type="submit"
                 disabled={!isValid || !isDirty}
               >
