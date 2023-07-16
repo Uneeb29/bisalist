@@ -106,7 +106,7 @@ export async function POST(request) {
         // }
 
         return new Response(JSON.stringify("Vendor Created"), {
-          status: 201,
+          status: 200,
         });
         break;
 
