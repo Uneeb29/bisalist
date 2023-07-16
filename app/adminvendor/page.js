@@ -10,6 +10,7 @@ import {
   MenuItem,
   Input,
   Button,
+  Modal
 } from "@mui/material";
 import Person2Icon from "@mui/icons-material/Person2";
 import CreateIcon from "@mui/icons-material/Create";
@@ -20,11 +21,28 @@ import { useForm } from "react-hook-form";
 import { basePath } from "../../next.config";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import CircularProgress from '@mui/joy/CircularProgress';
 
 // Reminders:
 // create a check on the starting cost (It should be a number greater than 0)
 
 export default function EditVendor() {
+
+  const [categories, setCategories] = useState([]);
+  const [registeredSuccessfully, setRegisteredSuccessfully] = useState([false]);
+  const [registeredFailed, setRegisteredFailed] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  
+  const [open1, setOpen1] = useState(false);
+  const handleOpen1 = () => setOpen1(true);
+  const handleClose1 = () => setOpen1(false);
+
+  const [open2, setOpen2] = useState(false);
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
 
   const [selectedProfilePicture, setselectedProfilePicture] = useState(null);
   const [selectedCoverPicture, setselectedCoverPicture] = useState(null);
@@ -39,6 +57,30 @@ export default function EditVendor() {
       reader.readAsDataURL(file);
     }
   };
+
+  async function fetchAllCategories() {
+    try {
+      const res = await fetch("/api/category", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "fetchAll",
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(() => {
+    {
+      fetchAllCategories().then((data) => setCategories(data));
+    }
+  }, []);
 
   const handleCoverChange = (event) => {
     const file = event.target.files[0];
@@ -241,6 +283,19 @@ export default function EditVendor() {
                   console.log("Response Status: ", result.status);
 
                   const response = await result.json();
+                  if (result.status) {
+                    if (result.status === 200)
+                    {
+                      handleClose2();
+                      setRegisteredSuccessfully(true);
+                      handleOpen();
+                    }
+                    else{
+                      handleClose2();
+                      setRegisteredFailed(true);
+                      handleOpen1();
+                    }
+                  }
 
                   console.log("Data Response: ", response);
                 };
@@ -277,6 +332,19 @@ export default function EditVendor() {
                 console.log("Response Status: ", result.status);
 
                 const response = await result.json();
+                if (result.status) {
+                  if (result.status === 200)
+                  {
+                    handleClose2();
+                    setRegisteredSuccessfully(true);
+                    handleOpen();
+                  }
+                  else{
+                    handleClose2();
+                    setRegisteredFailed(true);
+                    handleOpen1();
+                  }
+                }
 
                 console.log("Data Response: ", response);
               }
@@ -322,6 +390,19 @@ export default function EditVendor() {
                 console.log("Response Status: ", result.status);
 
                 const response = await result.json();
+                if (result.status) {
+                  if (result.status === 200)
+                  {
+                    handleClose2();
+                    setRegisteredSuccessfully(true);
+                    handleOpen();
+                  }
+                  else{
+                    handleClose2();
+                    setRegisteredFailed(true);
+                    handleOpen1();
+                  }
+                }
 
                 console.log("Data Response: ", response);
               };
@@ -356,6 +437,19 @@ export default function EditVendor() {
               console.log("Response Status: ", result.status);
 
               const response = await result.json();
+              if (result.status) {
+                if (result.status === 200)
+                {
+                  handleClose2();
+                  setRegisteredSuccessfully(true);
+                  handleOpen();
+                }
+                else{
+                  handleClose2();
+                  setRegisteredFailed(true);
+                  handleOpen1();
+                }
+              }
 
               console.log("Data Response: ", response);
             }
@@ -411,6 +505,19 @@ export default function EditVendor() {
                 console.log("Response Status: ", result.status);
 
                 const response = await result.json();
+                if (result.status) {
+                  if (result.status === 200)
+                  {
+                    handleClose2();
+                    setRegisteredSuccessfully(true);
+                    handleOpen();
+                  }
+                  else{
+                    handleClose2();
+                    setRegisteredFailed(true);
+                    handleOpen1();
+                  }
+                }
 
                 console.log("Data Response: ", response);
               };
@@ -447,6 +554,19 @@ export default function EditVendor() {
               console.log("Response Status: ", result.status);
 
               const response = await result.json();
+              if (result.status) {
+                if (result.status === 200)
+                {
+                  handleClose2();
+                  setRegisteredSuccessfully(true);
+                  handleOpen();
+                }
+                else{
+                  handleClose2();
+                  setRegisteredFailed(true);
+                  handleOpen1();
+                }
+              }
 
               console.log("Data Response: ", response);
             }
@@ -491,6 +611,19 @@ export default function EditVendor() {
               console.log("Response Status: ", result.status);
 
               const response = await result.json();
+              if (result.status) {
+                if (result.status === 200)
+                {
+                  handleClose2();
+                  setRegisteredSuccessfully(true);
+                  handleOpen();
+                }
+                else{
+                  handleClose2();
+                  setRegisteredFailed(true);
+                  handleOpen1();
+                }
+              }
 
               console.log("Data Response: ", response);
             };
@@ -524,6 +657,19 @@ export default function EditVendor() {
             console.log("Response Status: ", result.status);
 
             const response = await result.json();
+            if (result.status) {
+              if (result.status === 200)
+              {
+                handleClose2();
+                setRegisteredSuccessfully(true);
+                handleOpen();
+              }
+              else{
+                handleClose2();
+                setRegisteredFailed(true);
+                handleOpen1();
+              }
+            }
 
             console.log("Data Response: ", response);
           }
@@ -573,6 +719,154 @@ export default function EditVendor() {
     if (session.user.role === "vendor") {
       return (
         <Container sx={{ mt: 14 }}>
+        <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        sx={{display: registeredSuccessfully ? "block": "none"}}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "40%",
+            left: "30%",
+            //transform: "translate(-50%, -50%)",
+            width: 500,
+            bgcolor: "background.paper",
+            borderRadius: "8px",
+            boxShadow: 24,
+            p: 4,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          {/* <Link
+            href="becomecustomer"
+            sx={{
+              bgcolor: "#4db4f9",
+              color: "white",
+              borderRadius: "8px",
+              p: 1,
+              width: "40%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            underline="none"
+          >
+            <Typography>Become a Customer</Typography>
+          </Link>
+          <Link
+            href="\becomevendor"
+            sx={{
+              bgcolor: "#4db4f9",
+              color: "white",
+              borderRadius: "8px",
+              p: 1,
+              width: "40%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            underline="none"
+          >
+            <Typography>Become a Vendor</Typography>
+          </Link> */}
+            <Box sx={{display:"flex", justifyContent:"center", alignItems:"center" ,flexDirection:"column", width:"100%", textAlign:"center"}}>
+              <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>Credentials Updated</Typography>
+              <Button onClick={handleClose} sx={{bgcolor:"#245cbc", color:"white", mt:1, width:"40%", "&:hover":{bgcolor:"#334576"}}}><Typography>Ok</Typography></Button>
+            </Box>
+          
+        </Box>
+      </Modal>
+      <Modal
+        open={open2}
+        onClose={handleClose2}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "40%",
+            left: "48%",
+            //transform: "translate(-50%, -50%)",
+            width: 500,
+            bgcolor: "transparent",
+            borderRadius: "8px",
+            boxShadow: 24,
+            p: 4,
+            width:"fit-content",
+            height:"fit-content",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+            <Box sx={{display:"flex", justifyContent:"center", alignItems:"center" ,flexDirection:"column", width:"100%", textAlign:"center"}}>
+            <CircularProgress variant="solid" />
+            </Box>
+          
+        </Box>
+      </Modal>
+      <Modal
+        open={open1}
+        onClose={handleClose1}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        sx={{display: registeredFailed ? "block": "none"}}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "40%",
+            left: "30%",
+            //transform: "translate(-50%, -50%)",
+            width: 500,
+            bgcolor: "background.paper",
+            borderRadius: "8px",
+            boxShadow: 24,
+            p: 4,
+            display: "flex",
+          }}
+        >
+          {/* <Link
+            href="becomecustomer"
+            sx={{
+              bgcolor: "#4db4f9",
+              color: "white",
+              borderRadius: "8px",
+              p: 1,
+              width: "40%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            underline="none"
+          >
+            <Typography>Become a Customer</Typography>
+          </Link>
+          <Link
+            href="\becomevendor"
+            sx={{
+              bgcolor: "#4db4f9",
+              color: "white",
+              borderRadius: "8px",
+              p: 1,
+              width: "40%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            underline="none"
+          >
+            <Typography>Become a Vendor</Typography>
+          </Link> */}
+            <Box sx={{display:"flex", justifyContent:"center", alignItems:"center" ,flexDirection:"column", width:"100%", textAlign:"center"}}>
+            <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>An error occurred. Please try again.</Typography>
+            <Button onClick={handleClose1} sx={{bgcolor:"#245cbc", color:"white", mt:1, width:"40%", "&:hover":{bgcolor:"#334576"}}}><Typography>Ok</Typography></Button>
+            </Box>
+          
+        </Box>
+      </Modal>
           <Paper
             elevation={3}
             sx={{ display: "flex", flexDirection: "column", pb: 2 }}
@@ -1076,29 +1370,11 @@ export default function EditVendor() {
                         sx={{ width: "45%", bgcolor: "#eeeeee" }}
                         size="small"
                       >
-                        <MenuItem value="Cleaning Service">
-                          Cleaning Services
+                      {categories.map((category) => (
+                        <MenuItem value={category.name}>
+                          {category.name}
                         </MenuItem>
-                        <MenuItem value="Carpentry">Carpentry</MenuItem>
-                        <MenuItem value="Masonry">Masonry</MenuItem>
-                        <MenuItem value="Plumber">Plumber</MenuItem>
-                        <MenuItem value="Electrician">Electrician</MenuItem>
-                        <MenuItem value="General Contractor">
-                          General Contractor
-                        </MenuItem>
-                        <MenuItem value="Property Management">
-                          Property Management
-                        </MenuItem>
-                        <MenuItem value="Appliance Services/Repair">
-                          Appliance Services/Repair
-                        </MenuItem>
-                        <MenuItem value="Home Services/Installation">
-                          Home Services/Installation
-                        </MenuItem>
-                        <MenuItem value="Salons">Salons</MenuItem>
-                        <MenuItem value="Event Planning">
-                          Event Planning
-                        </MenuItem>
+                      ))}
                       </Select>
                     </Box>
                   </Box>
@@ -1455,6 +1731,7 @@ export default function EditVendor() {
                   // button is disabled if form has not been changed
                   // or if there are errors
                   disabled={!isValid}
+                  onClick={handleOpen2}
                 >
                   <Typography
                     sx={{
